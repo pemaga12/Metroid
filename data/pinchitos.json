@@ -1,0 +1,4 @@
+{
+    "pinchitos-naranjas":{"sx": 0, "sy": 0, "tileW": 16, "TileH": 32, "frames":4},
+    "pinchitos-rojos":{"sx": 128, "sy":0, "tileW":16, "TileH": 32, "frames":4}
+}

@@ -1,0 +1,5 @@
+{
+    "taladrillo-naranja":{"sx":0, "sy":0, "tileW": 16, "tileH": 24,"frames": 3},
+    "taladrillo-morado":{"sx":108, "sy":0, "tileW": 16, "tileH": 24,"frames": 3},
+    "taladrillo-azul":{"sx":216, "sy":0, "tileW": 16, "tileH": 24,"frames": 3}
+}

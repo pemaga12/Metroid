@@ -9,32 +9,92 @@ var game = function () {
         })
         .controls().controls().enableSound().touch();
 
+    //Samus
+    Q.Sprite.extend("Samus",{
+        init: function(p) {
+            this._super(p,{
+                sheet: "samus",
+                sprite: "samus_anim",
+                x:35,
+                y:92,
+                frame: 0,
+                scale: 1,
+                gravityY: 550
+            });
+            this.add("2d , platformerControls, animation, tween, dancer");
+            Q.input.on("up", this, function(){
+        
+            if (this.p.vy == 0){
+                Q.audio.play("/sounds/elevatormusic.mp3");
+            }
+        });
+        },
+        step: function (dt) {
+            if (this.p.vx > 0) {
+                this.play("walk_right");
+            } else if (this.p.vx < 0) {
+                this.play("walk_left");
+            }
+
+            if (this.p.vy < 0) {
+                if (this.p.vx < 0)
+                    this.play("jump_left");
+
+                else if (this.p.vx > 0)
+                    this.play("jump_right");
+            }
+        }
+    });
+
+    //Taladrillo
+    Q.Sprite.extend("Taladrillo",{
+
+    });
 
 
-
-
-    Q.load(["map1.tmx","tiles_metroid_!6x16.png","title-screen.png"],
+    Q.load(["map1.tmx","tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json"],
         function () {
+            
+            Q.compileSheets("samus.png", "samus.json");
+            Q.compileSheets("./Enemys/taladrillo.png", "taladrillo.json");
+            Q.compileSheets("./Enemys/pinchitos.png", "pinchito.json");
 
-            // Q.compileSheets("mario_small.png", "mario_small.json");
-            // Q.compileSheets("goomba.png", "goomba.json");
-            // Q.compileSheets("coin.png", "coin.json");
-            // Q.compileSheets("bloopa.png", "bloopa.json");
+            Q.state.set({ lives: 4,
+                pause:false,enJuego:false, //States
+            });
+
+
+            Q.animations("samus_anim",{
+                walk_right: {frames: [11,12,13,14,15,16,17,18,19],rate: 1/6, next: "parado_r" },
+                walk_left: {frames: [27,26,25,24],rate: 1/6, next: "parado_l" },
+                jump_right: {frames: [7,8,9,10],rate: 1/6, next: "parado_r" },
+                jump_left: {frames: [7,8,9,10],rate: 1/6, next: "parado_l" },
+                parado_r: {frames: [53] },
+                parado_l: {frames: [52] },
+                morir:{frames: [49,48],rate:1/50},
+                ball:{frames: [11,12,13,14], rate:1/6, next: "parado_r"}
+            });
 
             Q.scene("level1", function (stage) {
 
                 Q.stageTMX("map1.tmx", stage);
 
-                // mario = new Q.Mario();
-                // stage.insert(mario);
+                Q.loadTMX("map1.tmx", function(){
+                    Q.stageScene("level1");
+                })
 
-                 stage.add("viewport").follow(mario, { x: true, y: false });
-                 stage.viewport.scale = 1;
+                var Samus = new Q.Samus();
+                stage.insert(Samus);
+
+                stage.add("viewport").follow(Samus, { x: true, y: false });
+            
+
+                stage.viewport.scale = 1;
                 stage.viewport.offsetX = -200;
 
-                // stage.on("destroy", function () {
-                    // mario.destroy();
-                // });
+                stage.on("destroy", function () {
+                    Samus.destroy();
+                });
 
 
 
@@ -47,11 +107,11 @@ var game = function () {
                 var button = new Q.UI.Button({
                     x: Q.width / 2,
                     y: Q.height / 2,
-                    asset: "title-screen.png"
+                    asset: "title-screen.gif"
                 });
                 button.on("click", function () {
                     Q.clearStages();
-                    Q.stageScene("level1", 1);
+                    Q.stageScene("map1", 1);
                     //Q.stageScene("hud", 2);
                 });
                 stage.insert(button);
