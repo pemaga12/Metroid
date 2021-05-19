@@ -13,7 +13,7 @@ var game = function () {
 
 
 
-    Q.load(["map1.tmx","tiles_metroid_!6x16.png"],
+    Q.load(["map1.tmx","tiles_metroid_!6x16.png","title-screen.png"],
         function () {
 
             // Q.compileSheets("mario_small.png", "mario_small.json");
@@ -23,7 +23,7 @@ var game = function () {
 
             Q.scene("level1", function (stage) {
 
-                Q.stageTMX("map2.tmx", stage);
+                Q.stageTMX("map1.tmx", stage);
 
                 // mario = new Q.Mario();
                 // stage.insert(mario);
@@ -37,7 +37,7 @@ var game = function () {
                 // });
 
 
-         
+
 
             });
 
@@ -94,4 +94,4 @@ var game = function () {
             Q.stageScene("mainTitle");
 
         });
-}
+} 
