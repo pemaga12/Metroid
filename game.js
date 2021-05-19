@@ -13,7 +13,7 @@ var game = function () {
 
 
 
-    Q.load(["map2.tmx","tiles_metroid_!6x16.png","tiles.png","title-screen.png"],
+    Q.load(["map1.tmx","tiles_metroid_!6x16.png"],
         function () {
 
             // Q.compileSheets("mario_small.png", "mario_small.json");
