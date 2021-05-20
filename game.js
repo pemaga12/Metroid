@@ -15,8 +15,8 @@ var game = function () {
             this._super(p,{
                 sheet: "samus",
                 sprite: "samus_anim",
-                x:35,
-                y:92,
+                x:570,
+                y:1470,
                 frame: 0,
                 scale: 1,
                 gravityY: 550
@@ -52,7 +52,7 @@ var game = function () {
     });
 
 
-    Q.load(["map1.tmx","tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json"],
+    Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx"],
         function () {
             
             Q.compileSheets("samus.png", "samus.json");
@@ -75,28 +75,22 @@ var game = function () {
                 ball:{frames: [11,12,13,14], rate:1/6, next: "parado_r"}
             });
 
-            Q.scene("level1", function (stage) {
+            Q.scene("map1", function (stage) {
 
                 Q.stageTMX("map1.tmx", stage);
 
-                Q.loadTMX("map1.tmx", function(){
-                    Q.stageScene("level1");
-                })
+                var samus = new Q.Samus();
+                stage.insert(samus);
 
-                var Samus = new Q.Samus();
-                stage.insert(Samus);
-
-                stage.add("viewport").follow(Samus, { x: true, y: false });
-            
-
+                stage.add("viewport").follow(samus, { x: true, y: true });
                 stage.viewport.scale = 1;
                 stage.viewport.offsetX = -200;
 
                 stage.on("destroy", function () {
-                    Samus.destroy();
+                    samus.destroy();
                 });
 
-
+                Q.state.reset({lives: 4, coins: 0, score: 0});
 
 
             });
