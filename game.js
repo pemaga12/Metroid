@@ -3,11 +3,23 @@ var game = function () {
     var Q = window.Q = Quintus()
         .include(["Sprites", "Scenes", "Input", "2D", "UI", "Anim", "TMX", "Audio", "Touch"])
         .setup("myGame", {
-            width: 800,
-            height: 600,
-            scaleToFit: true
+            width: 768,
+            height: 720,
+            // scaleToFit: true
         })
         .controls().controls().enableSound().touch();
+
+        function drawLines(ctx) {
+            ctx.save();
+            ctx.strokeStyle = '#FFFFFF';
+            for(var x = 0;x < 1000;x+=100) {
+              ctx.beginPath();
+              ctx.moveTo(x,0);
+              ctx.lineTo(x,800);
+              ctx.stroke();
+            }
+            ctx.restore();
+          }
 
     //Samus
     Q.Sprite.extend("Samus",{
@@ -19,7 +31,7 @@ var game = function () {
                 y:1470,
                 frame: 0,
                 scale: 1,
-                gravityY: 550
+                gravityY: 540
             });
             this.add("2d , platformerControls, animation, tween, dancer");
             Q.input.on("up", this, function(){
@@ -35,6 +47,7 @@ var game = function () {
             } else if (this.p.vx < 0) {
                 this.play("walk_left");
             }
+            
 
             if (this.p.vy < 0) {
                 if (this.p.vx < 0)
@@ -66,8 +79,8 @@ var game = function () {
 
 
             Q.animations("samus_anim",{
-                walk_right: {frames: [11,12,13,14,15,16,17,18,19],rate: 1/6, next: "parado_r" },
-                walk_left: {frames: [27,26,25,24],rate: 1/6, next: "parado_l" },
+                walk_right: {frames: [15,16,17],rate: 1/6, next: "parado_r" },
+                walk_left: {frames: [30,31,32],rate: 1/6, next: "parado_l" },
                 jump_right: {frames: [7,8,9,10],rate: 1/6, next: "parado_r" },
                 jump_left: {frames: [7,8,9,10],rate: 1/6, next: "parado_l" },
                 parado_r: {frames: [53] },
@@ -81,6 +94,12 @@ var game = function () {
 
                 var samus = new Q.Samus();
                 stage.insert(samus);
+                //stage.on('postrender',drawLines);
+                stage.add("viewport").follow(samus, { x: true, y: false });
+                stage.viewport.scale = 3.05;
+                stage.viewport.offsetX = 0;//-200
+                stage.viewport.offsetY = 55;
+                stage.viewport.y = 1300;
                 Q.audio.stop();
                 Q.audio.play("../sounds/start.mp3");
                 setTimeout(function(){
@@ -88,17 +107,14 @@ var game = function () {
                 }, 5000);
                 
 
-                stage.add("viewport").follow(samus, { x: true, y: true });
-                stage.viewport.scale = 1;
-                stage.viewport.offsetX = -200;
-
                 stage.on("destroy", function () {
                     samus.destroy();
                 });
 
                 Q.state.reset({lives: 4, coins: 0, score: 0});
 
-
+                
+                //Q.debug = true;
             });
 
 
