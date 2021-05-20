@@ -9,6 +9,24 @@ var game = function () {
         })
         .controls().controls().enableSound().touch();
 
+
+    //title-screen
+    Q.Sprite.extend("Titlescreen", {
+        init: function(p) {
+            this._super(p,{
+                sheet: "title-screen",
+                sprite: "title-screen",
+                x:570,
+                y:1470,
+                frame: 0,
+                scale: 1,
+                gravityY: 0
+            });
+            this.add("2d , platformerControls, animation, tween");
+            this.play("animation");
+        }
+    });
+
     //Samus
     Q.Sprite.extend("Samus",{
         init: function(p) {
@@ -53,12 +71,13 @@ var game = function () {
 
 
     Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
-    "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3"],
+    "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainicio.png"],
         function () {
             
             Q.compileSheets("samus.png", "samus.json");
             Q.compileSheets("./Enemys/taladrillo.png", "taladrillo.json");
             Q.compileSheets("./Enemys/pinchitos.png", "pinchito.json");
+            Q.compileSheets("./titleScreens/pantallainicio/pantallainicio.png","title-screen.json");
 
             Q.state.set({ lives: 4,
                 pause:false,enJuego:false, //States
@@ -76,6 +95,11 @@ var game = function () {
                 ball:{frames: [11,12,13,14], rate:1/6, next: "parado_r"}
             });
 
+            Q.animations("title-screen",{
+                animation: {frames: [0,1,2,3,4,5,6,7], rate: 1/6}
+            });
+            
+
             Q.scene("map1", function (stage) {
                 Q.stageTMX("map1.tmx", stage);
 
@@ -89,8 +113,9 @@ var game = function () {
                 
 
                 stage.add("viewport").follow(samus, { x: true, y: true });
-                stage.viewport.scale = 1;
-                stage.viewport.offsetX = -200;
+                stage.viewport.scale = 1.7;
+                stage.viewport.offsetX = 0;
+                stage.viewport.offsetY = 70;
 
                 stage.on("destroy", function () {
                     samus.destroy();
@@ -105,11 +130,15 @@ var game = function () {
             Q.scene("mainTitle", function (stage) {
                 console.log("main");
                 Q.audio.play("../sounds/titlescreen.mp3");
+                
                 var button = new Q.UI.Button({
                     x: Q.width / 2,
                     y: Q.height / 2,
                     asset: "title-screen.gif"
                 });
+                
+                // var titlescreen = new Q.Titlescreen();
+                //stage.insert(titlescreen);      \(>.<)/  
                 button.on("click", function () {
                     Q.clearStages();
                     Q.stageScene("map1", 1);
