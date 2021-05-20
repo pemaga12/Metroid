@@ -119,6 +119,7 @@ var game = function () {
                 var samus = new Q.Samus();
                 stage.insert(samus);
                 //stage.on('postrender',drawLines);
+                /*
                 stage.add("viewport").follow(samus, { x: true, y: false });
                 stage.viewport.scale = 3.05;
                 stage.viewport.offsetX = 0;//-200
@@ -129,8 +130,8 @@ var game = function () {
                 setTimeout(function(){
                     Q.audio.play("../sounds/elevatormusic.mp3");
                 }, 5000);
-                
-
+                */
+               
                 stage.add("viewport").follow(samus, { x: true, y: true });
                 stage.viewport.scale = 1.7;
                 stage.viewport.offsetX = 0;
