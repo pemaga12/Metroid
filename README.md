@@ -9,7 +9,8 @@
 # Mecanicas implementadas
 ## Samus
 ### Disparos ❎
-### Movimiento ❎
+### Movimiento ✅
+Samus puede moverse en ambas direcciones y saltar hacia ambos lados. Además en función de cuánto tiempo mantengas pulsado el botón de salto lo hará en mayor o menor medida.
 ## Enemigos
 ### Pinchitos ❎
 ### Libelulas ❎
