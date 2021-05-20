@@ -56,7 +56,7 @@ var game = function () {
         
             if (this.p.vy == 0){
                 this.play("jump_left");
-                Q.audio.play("/sounds/elevatormusic.mp3");
+                Q.audio.play("/sounds/jump.mp3");
             }
         });
         },
@@ -122,7 +122,7 @@ var game = function () {
             Q.compileSheets("./titleScreens/pantallainicio/pantallainicio.png","title-screen.json");
             Q.compileSheets("metroid_door.png", "puertas.json");
 
-            Q.state.set({ lives: 4,
+            Q.state.set({ energy: 30,
                 pause:false,enJuego:false, //States
             });
 
@@ -200,7 +200,7 @@ var game = function () {
                 button.on("click", function () {
                     Q.clearStages();
                     Q.stageScene("map1", 1);
-                    //Q.stageScene("hud", 2);
+                    Q.stageScene("hud", 2);
                 });
                 stage.insert(button);
             });
@@ -237,6 +237,19 @@ var game = function () {
                     Q.stageScene('mainTitle');
                 });
                 container.fit(20);
+            });
+
+            Q.scene("hud", function(stage){
+                label_lives = new Q.UI.Text({
+                    family: "Metroid-Fusion",
+                    color: "blue",
+                    x:100, 
+                    y:50, 
+                    label: "En ·· 30"});
+                stage.insert(label_lives);
+                Q.state.on("change.energy", this, function(){
+                  label_lives.p.label = "En ·· " + Q.state.get("energy");
+                });
             });
 
             Q.stageScene("mainTitle");
