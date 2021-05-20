@@ -55,6 +55,7 @@ var game = function () {
             Q.input.on("up", this, function(){
         
             if (this.p.vy == 0){
+                this.play("jump_left");
                 Q.audio.play("/sounds/elevatormusic.mp3");
             }
         });
@@ -82,15 +83,44 @@ var game = function () {
 
     });
 
+    //PuertaIzquierda
+    Q.Sprite.extend("PuertaIzquierda",{
+        init: function(p) {
+            this._super(p,{
+                asset: "metroid_door.png",
+                sheet: "puertas",
+                sprite: "puerta_anim",
+                frame: 3,
+                scale: 1
+            });
+            this.add("animation");
+        }
+    });
+    //PuertaDerecha
+    Q.Sprite.extend("PuertaDerecha",{
+        init: function(p) {
+            this._super(p,{
+                asset: "metroid_door.png",
+                sheet: "puertas",
+                sprite: "puerta_anim",
+                frame: 0,
+                scale: 1
+            });
+            this.add("animation");
+        }
+    });
+
 
     Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
-    "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainicio.png"],
+    "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainicio.png",
+    "metroid_door.png", "puertas.json"],
         function () {
             
             Q.compileSheets("samus.png", "samus.json");
             Q.compileSheets("./Enemys/taladrillo.png", "taladrillo.json");
             Q.compileSheets("./Enemys/pinchitos.png", "pinchito.json");
             Q.compileSheets("./titleScreens/pantallainicio/pantallainicio.png","title-screen.json");
+            Q.compileSheets("metroid_door.png", "puertas.json");
 
             Q.state.set({ lives: 4,
                 pause:false,enJuego:false, //States
@@ -112,6 +142,11 @@ var game = function () {
                 animation: {frames: [0,1,2,3,4,5,6,7], rate: 1/6}
             });
             
+            Q.animations("puerta_anim", {
+                puerta_derecha: {frames: [0,1,2], rate: 1/6, next: "puerta_rota"},
+                puerta_rota: {frames:[2]},
+                puerta_izquierda: {frames: [3,4,5], rate: 1/6, next: "puerta_rota"}
+            });
 
             Q.scene("map1", function (stage) {
                 Q.stageTMX("map1.tmx", stage);
@@ -125,12 +160,14 @@ var game = function () {
                 stage.viewport.offsetX = 0;//-200
                 stage.viewport.offsetY = 55;
                 stage.viewport.y = 1300;
+                */
                 Q.audio.stop();
                 Q.audio.play("../sounds/start.mp3");
+                
                 setTimeout(function(){
                     Q.audio.play("../sounds/elevatormusic.mp3");
                 }, 5000);
-                */
+                
                
                 stage.add("viewport").follow(samus, { x: true, y: true });
                 stage.viewport.scale = 1.7;

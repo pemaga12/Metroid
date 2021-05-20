@@ -1,7 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="203" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="1">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="203" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="9">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="54" columns="9">
   <image source="../images/tiles_metroid_!6x16.png" width="144" height="96"/>
+ </tileset>
+ <tileset firstgid="55" name="puertas" tilewidth="16" tileheight="48" tilecount="6" columns="6">
+  <properties>
+   <property name="Class" value="Puerta"/>
+  </properties>
+  <image source="../images/metroid_door.png" width="96" height="48"/>
+  <tile id="0">
+   <properties>
+    <property name="Class" value="PuertaDerecha"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Class" value="PuertaDerecha"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="Class" value="PuertaDerecha"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="Class" value="PuertaIzquierda"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="Class" value="PuertaIzquierda"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="Class" value="PuertaIzquierda"/>
+   </properties>
+  </tile>
  </tileset>
  <layer id="1" name="colision" width="203" height="200">
   <properties>
@@ -40610,4 +40646,8 @@
    <tile gid="10"/>
   </data>
  </layer>
+ <objectgroup id="4" name="objetos">
+  <object id="3" gid="55" x="1072.5" y="1424.5" width="16" height="48"/>
+  <object id="4" gid="58" x="1023.5" y="1425" width="16" height="48"/>
+ </objectgroup>
 </map>
