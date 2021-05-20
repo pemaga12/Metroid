@@ -52,7 +52,7 @@ var game = function () {
     });
 
 
-    Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx"],
+    Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3"],
         function () {
             
             Q.compileSheets("samus.png", "samus.json");
@@ -76,7 +76,8 @@ var game = function () {
             });
 
             Q.scene("map1", function (stage) {
-
+                Q.audio.stop();
+                Q.audio.play("../sounds/elevatormusic.mp3");
                 Q.stageTMX("map1.tmx", stage);
 
                 var samus = new Q.Samus();
@@ -98,6 +99,7 @@ var game = function () {
 
             Q.scene("mainTitle", function (stage) {
                 console.log("main");
+                Q.audio.play("../sounds/titlescreen.mp3");
                 var button = new Q.UI.Button({
                     x: Q.width / 2,
                     y: Q.height / 2,
