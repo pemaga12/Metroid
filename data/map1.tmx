@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="203" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="9">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="203" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="23">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="54" columns="9">
   <image source="../images/tiles_metroid_!6x16.png" width="144" height="96"/>
  </tileset>
@@ -18039,10 +18039,10 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="121"/>
+   <tile/>
    <tile gid="7"/>
    <tile gid="7"/>
-   <tile gid="118"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -24145,10 +24145,10 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="121"/>
+   <tile/>
    <tile gid="7"/>
    <tile gid="7"/>
-   <tile gid="118"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -40647,7 +40647,19 @@
   </data>
  </layer>
  <objectgroup id="4" name="objetos">
-  <object id="3" gid="55" x="1072.5" y="1424.5" width="16" height="48"/>
-  <object id="4" gid="58" x="1023.5" y="1425" width="16" height="48"/>
+  <object id="9" gid="58" x="1024" y="2144" width="16" height="48"/>
+  <object id="10" gid="55" x="1072" y="2144" width="16" height="48"/>
+  <object id="11" gid="55" x="1328.13" y="2144" width="16" height="48"/>
+  <object id="12" gid="58" x="1279.88" y="2144" width="16" height="48"/>
+  <object id="13" gid="58" x="1280" y="1424" width="16" height="48"/>
+  <object id="14" gid="55" x="1328" y="1424" width="16" height="48"/>
+  <object id="15" gid="55" x="2144" y="1424" width="16" height="48"/>
+  <object id="16" gid="58" x="2096" y="1424" width="16" height="48"/>
+  <object id="17" gid="55" x="2400" y="1904" width="16" height="48"/>
+  <object id="18" gid="58" x="2352" y="1904" width="16" height="48"/>
+  <object id="19" gid="58" x="1024" y="2384" width="16" height="48"/>
+  <object id="20" gid="55" x="1072" y="2384" width="16" height="48"/>
+  <object id="21" gid="55" x="1072" y="1424" width="16" height="48"/>
+  <object id="22" gid="58" x="1024" y="1424" width="16" height="48"/>
  </objectgroup>
 </map>
