@@ -52,7 +52,8 @@ var game = function () {
     });
 
 
-    Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3"],
+    Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
+    "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3"],
         function () {
             
             Q.compileSheets("samus.png", "samus.json");
@@ -76,12 +77,16 @@ var game = function () {
             });
 
             Q.scene("map1", function (stage) {
-                Q.audio.stop();
-                Q.audio.play("../sounds/elevatormusic.mp3");
                 Q.stageTMX("map1.tmx", stage);
 
                 var samus = new Q.Samus();
                 stage.insert(samus);
+                Q.audio.stop();
+                Q.audio.play("../sounds/start.mp3");
+                setTimeout(function(){
+                    Q.audio.play("../sounds/elevatormusic.mp3");
+                }, 5000);
+                
 
                 stage.add("viewport").follow(samus, { x: true, y: true });
                 stage.viewport.scale = 1;
