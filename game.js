@@ -163,9 +163,9 @@ var game = function () {
         },
 
         collision: function(col){
-            // if(col){
-            //     col.obj.damage(this.p.damage);
-            // }
+            if(col){
+                col.obj.damage(this.p.damage);
+            }
            
 		   this.destroy();
         },
@@ -209,19 +209,38 @@ var game = function () {
             this.on("bump.left", this, "open"); 
         },
         
-        open: function(collision){
-            console.log("he tocado una puerta"); 
-            this.play("puerta_izquierda");
+        open: function (collision) {
+            if (collision.obj.isA("Samus") && this.p.is_open){
+                console.log("he tocado una puerta");
+                this.play("puerta_izquierda");
 
-            Q.audio.play("../sounds/go_through_door.mp3");
-            collision.obj.p.x += 81;
+                Q.audio.play("../sounds/go_through_door.mp3");
+                collision.obj.p.x += 81;
 
-            setViewport(this);
-            
-            var that = this;
-            setTimeout(function(){
-               that.play("puerta_iz_arreglando");
-            }, 5000); 
+                setViewport(this);
+
+                var that = this;
+                setTimeout(function () {
+                    that.play("puerta_iz_arreglando");
+                }, 5000);
+            }
+        },
+
+        damage: function(dmg){
+            this.p.lives = this.p.lives - dmg;
+            if(this.p.lives == 1){
+                this.play("puerta_iz_rompiendo");
+            }
+            else if(this.p.lives == 0){
+                this.play("puerta_rota");
+                this.p.is_open = true;
+                var that = this;
+                setTimeout(function () {
+                    that.p.lives = 2;
+                    this.p.is_open = false;
+                    that.play("puerta_iz_arreglando");
+                }, 5000);
+            }
         }
     });
     //PuertaDerecha
@@ -231,24 +250,45 @@ var game = function () {
                 sheet: "puertas",
                 sprite: "puerta_anim",
                 frame: 0,
-                scale: 1
+                scale: 1,
+                gravity: 0,
+                is_open: false,
+                lives: 2
             });
             this.add("2d, animation");
             this.on("bump.right", this, "open");
         },
 
-        open: function(collision){
-            console.log("he tocado una puerta");
-            this.play("puerta_derecha");
-            Q.audio.play("../sounds/go_through_door.mp3");
-            collision.obj.p.x -= 81;
+        open: function (collision) {
+            if (collision.obj.isA("Samus") && this.p.is_open) {
+                console.log("he tocado una puerta");
+                this.play("puerta_derecha");
+                Q.audio.play("../sounds/go_through_door.mp3");
+                collision.obj.p.x -= 81;
 
-            setViewport(this);
+                setViewport(this);
 
-            var that = this;
-            setTimeout(function(){
-               that.play("puerta_der_arreglando");
-            }, 5000);
+                var that = this;
+                setTimeout(function () {
+                    that.play("puerta_der_arreglando");
+                }, 5000);
+            }
+        },
+        damage: function(dmg){
+            this.p.lives = this.p.lives - dmg;
+            if(this.p.lives == 1){
+                this.play("puerta_der_rompiendo");
+            }
+            else if(this.p.lives == 0){
+                this.play("puerta_rota");
+                this.p.is_open = true;
+                var that = this;
+                setTimeout(function () {
+                    that.p.lives = 2;
+                    this.p.is_open = false;
+                    that.play("puerta_der_arreglando");
+                }, 5000);
+            }
         }
     });
 
@@ -301,9 +341,11 @@ var game = function () {
                 puerta_rota: {frames:[2]},
                 puerta_izquierda: {frames: [3,4,5], rate: 1/6, next: "puerta_rota"},
                 puerta_iz_arreglada: {frames: [3]},
+                puerta_iz_rompiendo: {frames: [4]},
+                puerta_der_rompiendo: {frames: [1]},
                 puerta_der_arreglada: {frames: [0]},
                 puerta_iz_arreglando: {frames: [5,4,3], rate: 1/6, next: "puerta_iz_arreglada"},
-                puerta_der_arreglando: {frames: [2,1,0], rate: 1/6, next: "puerta_der_arreglada"}
+                puerta_der_arreglando: {frames: [0,1,2], rate: 1/6, next: "puerta_der_arreglada"}
             });
 
             Q.scene("map1", function (stage) {
