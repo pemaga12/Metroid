@@ -245,7 +245,7 @@ var game = function () {
                 var that = this;
                 setTimeout(function () {
                     that.play("puerta_iz_arreglando");
-                }, 5000);
+                }, 2000);
             }
         },
 
@@ -262,7 +262,7 @@ var game = function () {
                     that.p.lives = 2;
                     that.p.is_open = false;
                     that.play("puerta_iz_arreglando");
-                }, 5000);
+                }, 3000);
             }
         }
     });
@@ -294,7 +294,7 @@ var game = function () {
                 var that = this;
                 setTimeout(function () {
                     that.play("puerta_der_arreglando");
-                }, 5000);
+                }, 2000);
             }
         },
         damage: function(dmg){
@@ -310,7 +310,7 @@ var game = function () {
                     that.p.lives = 2;
                     that.p.is_open = false;
                     that.play("puerta_der_arreglando");
-                }, 5000);
+                }, 3000);
             }
         }
     });
