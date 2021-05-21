@@ -61,6 +61,19 @@ var game = function () {
         ctx.restore();
         }
 
+    function setViewport(door){
+        var samus = Q("Samus").first();
+
+        if(door.p.nextRoom === "vertical"){
+            door.stage.add("viewport").follow(samus, { x: false, y: true });
+            door.stage.viewport.x = door.p.viewport;
+        }else{
+            door.stage.add("viewport").follow(samus, { x: true, y: false });
+            door.stage.viewport.y = door.p.viewport;
+        }
+        
+    }
+
     //Samus
     Q.Sprite.extend("Samus",{
         init: function(p) {
@@ -132,18 +145,12 @@ var game = function () {
         open: function(collision){
             console.log("he tocado una puerta"); 
             this.play("puerta_izquierda");
+
+            Q.audio.play("../sounds/go_through_door.mp3");
             collision.obj.p.x += 81;
-            //this.stage.add("viewport").unfollow();
-            var samus = Q("Samus").first();
-            this.stage.add("viewport").follow(samus, { x: false, y: true });
-            this.stage.viewport.x += 177;
-            /* 
-            stage.add("viewport").follow(samus, { x: true, y: false });
-                stage.viewport.scale = 3.05;
-                stage.viewport.offsetX = 0;//-200
-                stage.viewport.offsetY = 55;
-                stage.viewport.y = 1300;
-            */
+
+            setViewport(this);
+            
             var that = this;
             setTimeout(function(){
                that.play("puerta_iz_arreglando");
@@ -166,10 +173,10 @@ var game = function () {
         open: function(collision){
             console.log("he tocado una puerta");
             this.play("puerta_derecha");
-            var samus = Q("Samus").first();
-            this.stage.add("viewport").follow(samus, { x: true, y: false });
-            this.stage.viewport.y = 1300;
             collision.obj.p.x -= 81;
+
+            setViewport(this);
+
             var that = this;
             setTimeout(function(){
                that.play("puerta_der_arreglando");
@@ -180,7 +187,7 @@ var game = function () {
 
     Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
     "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
-    "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3"],
+    "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3","../sounds/go_through_door.mp3"],
         
         function () {
             
@@ -385,8 +392,8 @@ var game = function () {
             Q.stageScene("startGame");
            
 
-            //Q.stageScene("map1", 1);
-            //Q.stageScene("hud", 2);
+            // Q.stageScene("map1", 1);
+            // Q.stageScene("hud", 2);
 
         });
 } 

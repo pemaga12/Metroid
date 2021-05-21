@@ -39,7 +39,6 @@
    </properties>
   </tile>
  </tileset>
-
  <layer id="1" name="colision" width="203" height="200">
   <properties>
    <property name="collision" value="true"/>
@@ -18186,8 +18185,8 @@
    <tile/>
    <tile gid="11"/>
    <tile gid="52"/>
-   <tile gid="52"/>
    <tile gid="11"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile gid="11"/>
@@ -18998,9 +18997,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="11"/>
+   <tile gid="52"/>
+   <tile gid="11"/>
    <tile/>
    <tile/>
    <tile/>
@@ -26503,10 +26502,10 @@
    <tile gid="6"/>
    <tile gid="2147483659"/>
    <tile gid="2147483659"/>
+   <tile/>
    <tile gid="11"/>
    <tile gid="52"/>
    <tile gid="11"/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -30971,17 +30970,17 @@
    <tile gid="53"/>
    <tile gid="11"/>
    <tile gid="11"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="53"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
    <tile gid="53"/>
    <tile/>
    <tile/>
@@ -31172,18 +31171,18 @@
    <tile gid="6"/>
    <tile gid="11"/>
    <tile gid="11"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="4"/>
+   <tile gid="4"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="4"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="20"/>
+   <tile gid="4"/>
    <tile gid="11"/>
    <tile gid="11"/>
    <tile/>
@@ -40648,23 +40647,93 @@
   </data>
  </layer>
  <objectgroup id="4" name="objetos">
-  <object id="9" gid="58" x="1024" y="2144" width="16" height="48"/>
-  <object id="10" gid="55" x="1072" y="2144" width="16" height="48"/>
-  <object id="11" gid="55" x="1328.13" y="2144" width="16" height="48"/>
-  <object id="12" gid="58" x="1279.88" y="2144" width="16" height="48"/>
-  <object id="13" gid="58" x="1280" y="1424" width="16" height="48"/>
-  <object id="14" gid="55" x="1328" y="1424" width="16" height="48"/>
+  <object id="9" gid="58" x="1024" y="2144" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="vertical"/>
+    <property name="viewport" type="int" value="1060"/>
+   </properties>
+  </object>
+  <object id="10" gid="55" x="1072" y="2144" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="horizontal"/>
+    <property name="viewport" type="int" value="2044"/>
+   </properties>
+  </object>
+  <object id="11" gid="55" x="1328.13" y="2144" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="vertical"/>
+    <property name="viewport" type="int" value="1060"/>
+   </properties>
+  </object>
+  <object id="12" gid="58" x="1279.88" y="2144" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="horizontal"/>
+    <property name="viewport" type="int" value="2020"/>
+   </properties>
+  </object>
+  <object id="13" gid="58" x="1280" y="1424" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="horizontal"/>
+    <property name="viewport" type="int" value="1300"/>
+   </properties>
+  </object>
+  <object id="14" gid="55" x="1328" y="1424" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="vertical"/>
+    <property name="viewport" type="int" value="1060"/>
+   </properties>
+  </object>
   <object id="15" gid="55" x="2144" y="1424" width="16" height="48"/>
   <object id="16" gid="58" x="2096" y="1424" width="16" height="48"/>
   <object id="17" gid="55" x="2400" y="1904" width="16" height="48"/>
   <object id="18" gid="58" x="2352" y="1904" width="16" height="48"/>
-  <object id="19" gid="58" x="1024" y="2384" width="16" height="48"/>
-  <object id="20" gid="55" x="1072" y="2384" width="16" height="48"/>
-  <object id="21" gid="55" x="1072" y="1424" width="16" height="48"/>
-  <object id="22" gid="58" x="1023.82" y="1424.18" width="16" height="48"/>
-  <object id="25" gid="55" x="272" y="2384" width="16" height="48"/>
-  <object id="26" gid="55" x="272" y="2160" width="16" height="48"/>
-  <object id="27" gid="58" x="224" y="2384" width="16" height="48"/>
-  <object id="28" gid="58" x="224" y="2160" width="16" height="48"/>
+  <object id="19" gid="58" x="1024" y="2384" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="vertical"/>
+    <property name="viewport" type="int" value="1060"/>
+   </properties>
+  </object>
+  <object id="20" gid="55" x="1072" y="2384" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="horizontal"/>
+    <property name="viewport" type="int" value="2258"/>
+   </properties>
+  </object>
+  <object id="21" gid="55" x="1072" y="1424" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="horizontal"/>
+    <property name="viewport" type="int" value="1300"/>
+   </properties>
+  </object>
+  <object id="22" gid="58" x="1023.82" y="1424.18" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="vertical"/>
+    <property name="viewport" type="int" value="1060"/>
+   </properties>
+  </object>
+  <object id="25" gid="55" x="272" y="2384" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="vertical"/>
+    <property name="viewport" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="26" gid="55" x="272" y="2160" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="vertical"/>
+    <property name="viewport" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="27" gid="58" x="224" y="2384" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="horizontal"/>
+    <property name="viewport" type="int" value="2258"/>
+   </properties>
+  </object>
+  <object id="28" gid="58" x="224" y="2160" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="horizontal"/>
+    <property name="viewport" type="int" value="2044"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
