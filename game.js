@@ -134,9 +134,11 @@ var game = function () {
         shoot: function (){
             Q.audio.play("../sounds/shot.mp3");
             if(this.p.direction == "right"){
+                this.play("shoot_r");
                 Q.stage(1).insert(new Q.Bala({x: this.p.x + this.p.w, y: this.p.y, direction: this.p.direction, vx: 400, init: this.p.x}));
             }
             else if(this.p.direction == "left"){
+                this.play("shoot_l");
                 Q.stage(1).insert(new Q.Bala({x: this.p.x - this.p.w, y: this.p.y, direction: this.p.direction, vx: -400, init: this.p.x}));
             }
             else{
@@ -279,6 +281,8 @@ var game = function () {
                 parado_l: {frames: [52] },
                 parado_up_r: {frames: [2]},
                 parado_up_l: {frames:[29]},
+                shoot_r : {frames: [1]},
+                shoot_l : {frames: [28]},
                 morir:{frames: [49,48],rate:1/50},
                 ball:{frames: [11,12,13,14], rate:1/6, next: "parado_r"}
             });
