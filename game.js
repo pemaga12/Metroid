@@ -14,7 +14,7 @@ var game = function () {
     Q.Sprite.extend("Titlescreen", {
         init: function(p) {
             this._super(p,{
-                sheet: "title-screen",
+                // sheet: "title-screen",
                 sprite: "title-screen",
                 x:570,
                 y:1470,
@@ -23,7 +23,24 @@ var game = function () {
                 gravityY: 0
             });
             this.add("2d , platformerControls, animation, tween");
-            this.play("animation");
+            this.play("title-screen");
+        }
+    });
+
+    //title-screen
+    Q.Sprite.extend("Startscreen", {
+        init: function(p) {
+            this._super(p,{
+                // sheet: "start-screen",
+                sprite: "start-screen",
+                x:570,
+                y:1470,
+                frame: 0,
+                scale: 1,
+                gravityY: 0
+            });
+            this.add("2d , platformerControls, animation, tween");
+            this.play("start-screen");
         }
     });
     
@@ -53,12 +70,17 @@ var game = function () {
             });
             this.add("2d , platformerControls, animation, tween, dancer");
             Q.input.on("up", this, function(){
-        
             if (this.p.vy == 0){
                 this.play("jump_left");
                 Q.audio.play("../sounds/titlescreen.mp3");
             }
         });
+            Q.input.on("fire", this, function(){
+                if (this.p.vy == 0){
+                    this.play("parado_up_r");
+                }
+            });
+        
         },
         step: function (dt) {
             if (this.p.vx > 0) {
@@ -139,14 +161,16 @@ var game = function () {
 
 
     Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
-    "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainicio.png",
-    "metroid_door.png", "puertas.json"],
+    "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
+    "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png"],
+        
         function () {
             
             Q.compileSheets("samus.png", "samus.json");
             Q.compileSheets("./Enemys/taladrillo.png", "taladrillo.json");
             Q.compileSheets("./Enemys/pinchitos.png", "pinchito.json");
-            Q.compileSheets("./titleScreens/pantallainicio/pantallainicio.png","title-screen.json");
+            Q.compileSheets("./titleScreens/pantallainicio/pantallainiciotitulo.png","title-screen.json");
+            Q.compileSheets("./titleScreens/pantallainicio/pantallainiciostart.png", "title-start.json");
             Q.compileSheets("metroid_door.png", "puertas.json");
 
             Q.state.set({ energy: 30,
@@ -161,12 +185,18 @@ var game = function () {
                 jump_left: {frames: [7,8,9,10],rate: 1/6, next: "parado_l" },
                 parado_r: {frames: [53] },
                 parado_l: {frames: [52] },
+                parado_up_r: {frames: [2]},
+                parado_up_l: {frames:[29]},
                 morir:{frames: [49,48],rate:1/50},
                 ball:{frames: [11,12,13,14], rate:1/6, next: "parado_r"}
             });
 
             Q.animations("title-screen",{
-                animation: {frames: [0,1,2,3,4,5,6,7], rate: 1/6}
+                title_screen: {frames: [0,1,2,3,4,5,6,7], rate: 1/6}
+            });
+
+            Q.animations("start-screen" , {
+                title_start: {frames: [0,1,2,3,4] , rate: 1/6}
             });
             
             Q.animations("puerta_anim", {
@@ -184,26 +214,21 @@ var game = function () {
 
                 var samus = new Q.Samus();
                 stage.insert(samus);
-                stage.on('postrender',drawLines);
-                /*
+                // stage.on('postrender',drawLines);
+                
                 stage.add("viewport").follow(samus, { x: true, y: false });
                 stage.viewport.scale = 3.05;
                 stage.viewport.offsetX = 0;//-200
                 stage.viewport.offsetY = 55;
                 stage.viewport.y = 1300;
-                */
-                Q.audio.stop();
-                Q.audio.play("../sounds/start.mp3");
                 
-                setTimeout(function(){
-                    Q.audio.play("../sounds/elevatormusic.mp3");
-                }, 5000);
+                
                 
                
-                stage.add("viewport").follow(samus, { x: true, y: true });
-                stage.viewport.scale = 1.7;
-                stage.viewport.offsetX = 0;
-                stage.viewport.offsetY = 70;
+                // stage.add("viewport").follow(samus, { x: true, y: true });
+                // stage.viewport.scale = 1.7;
+                // stage.viewport.offsetX = 0;
+                // stage.viewport.offsetY = 70;
 
                 stage.on("destroy", function () {
                     samus.destroy();
@@ -218,22 +243,52 @@ var game = function () {
 
             Q.scene("mainTitle", function (stage) {
                 console.log("main");
-                Q.audio.play("../sounds/titlescreen.mp3");
+                Q.audio.play("../sounds/titlescreen.mp3", {loop: true});
                 
                 var button = new Q.UI.Button({
-                    x: Q.width / 2,
-                    y: Q.height / 2,
-                    asset: "title-screen.gif"
+                    // x: Q.width / 2,
+                    // y: Q.height / 2,
+                    // asset: "title-screen.gif"
+                    x: 100,
+                    y: 100,
+                    font: "Metroid-Fusion",
+                    label: "PULSA AQUI o SPACE PARA EMPEZAR"
                 });
                 
-                // var titlescreen = new Q.Titlescreen();
-                //stage.insert(titlescreen);      \(>.<)/  
+                var titlescreen = new Q.Titlescreen();
+                stage.insert(titlescreen);      //\(>.<)/  
+
+                button.on("click", function () {
+                    Q.clearStages();
+                    Q.stageScene("startGame", 1);
+                });
+
+                stage.insert(button);
+            });
+
+            Q.scene("startGame", function(stage){
+                console.log("start");
+                Q.audio.stop();
+                Q.audio.play("../sounds/start.mp3");
+
+                var button = new Q.UI.Button({
+                    x: 100,
+                    y: 100,
+                    font: "Metroid-Fusion",
+                    label: "PULSA AQUI PARA CONTINUAR"
+                });
+
+                var startscreen = new Q.Startscreen();
+                stage.insert(startscreen);
+
                 button.on("click", function () {
                     Q.clearStages();
                     Q.stageScene("map1", 1);
                     Q.stageScene("hud", 2);
                 });
+
                 stage.insert(button);
+
             });
 
             Q.scene('endGame', function (stage) {
@@ -271,19 +326,28 @@ var game = function () {
             });
 
             Q.scene("hud", function(stage){
+                var life_icon = stage.insert(new Q.UI.Button({
+                    x:80,
+                    y:70,
+                    asset: 'energia.png'
+                }));
                 label_lives = new Q.UI.Text({
                     family: "Metroid-Fusion",
-                    color: "blue",
-                    x:100, 
+                    color: "white",
+                    x:155, 
                     y:50, 
-                    label: "En ·· 30"});
+                    label: "30"});
                 stage.insert(label_lives);
                 Q.state.on("change.energy", this, function(){
-                  label_lives.p.label = "En ·· " + Q.state.get("energy");
+                  label_lives.p.label = Q.state.get("energy");
                 });
             });
 
-            Q.stageScene("mainTitle");
+            // Q.stageScene("startGame");
+           
+
+            Q.stageScene("map1", 1);
+            Q.stageScene("hud", 2);
 
         });
 } 
