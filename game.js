@@ -93,6 +93,23 @@ var game = function () {
                     Q.audio.play("../sounds/jump.mp3");
                 }
             });
+            Q.input.on("left", this, function () {
+                this.p.direction = "left";
+            });
+            Q.input.on("right", this, function () {
+                this.p.direction = "right";
+            });
+
+            Q.input.on("action", this, function () {
+                if(this.p.direction == "right"){
+                    this.play("parado_up_r");
+                    this.p.direction= "up";
+                }
+                else{
+                    this.play("parado_up_l");
+                    this.p.direction= "up";
+                }
+            });
 
             Q.input.on("fire", this, "shoot");
 
@@ -106,11 +123,12 @@ var game = function () {
             
 
             if (this.p.vy < 0) {
-                if (this.p.vx < 0)
+                if (this.p.vx < 0){
                     this.play("jump_left");
-
-                else if (this.p.vx > 0)
+                }
+                else if (this.p.vx > 0){
                     this.play("jump_right");
+                }
             }
         },
         shoot: function (){
@@ -122,7 +140,7 @@ var game = function () {
                 Q.stage(1).insert(new Q.Bala({x: this.p.x - this.p.w, y: this.p.y, direction: this.p.direction, vx: -400, init: this.p.x}));
             }
             else{
-                Q.stage(1).insert(new Q.Bala({x: this.p.x, y: this.p.y - this.p.w, direction: this.p.direction, vy: -400, init: this.p.y}));
+                Q.stage(1).insert(new Q.Bala({x: this.p.x, y: this.p.y - (this.p.h - 10), direction: this.p.direction, vy: -400, init: this.p.y}));
             }
         }
     });
@@ -135,7 +153,7 @@ var game = function () {
                 vx: -400,
                 direction: "left",
                 init: 0,
-                max: 1000
+                max: 120
             });
 
             this.on("hit" , this, "collision");
@@ -143,14 +161,25 @@ var game = function () {
         },
 
         collision: function(col){
-           col.obj.damage(this.p.damage)
+            // if(col){
+            //     col.obj.damage(this.p.damage);
+            // }
+           
 		   this.destroy();
         },
 
         step: function(dt){
-            this.p.x += this.p.vx * dt;
-			if(this.p.x < this.p.init - this.p.max || this.p.x > this.p.init + this.p.max)
-				this.destroy();
+            if(this.p.direction == "up"){
+                this.p.y += this.p.vy*dt;
+                if(this.p.y < this.p.init - this.p.max || this.p.y > this.p.init + this.p.max)
+                    this.destroy();
+            }
+            else{
+                this.p.x += this.p.vx * dt;
+			    if(this.p.x < this.p.init - this.p.max || this.p.x > this.p.init + this.p.max)
+				    this.destroy();
+            }
+            
         }
     });
 
