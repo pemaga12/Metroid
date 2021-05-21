@@ -84,10 +84,14 @@ var game = function () {
                 y: 1470,
                 frame: 0,
                 scale: 1,
-                gravityY: 540
+                gravityY: 540,
+                canBecomeBall: false,
+                ballmode: false
             });
             this.add("2d , platformerControls, animation, tween, dancer");
             Q.input.on("up", this, function () {
+                this.p.ballmode = false;
+                this.p.points =  [ [ -this.p.w/2, -this.p.h/2 ], [ this.p.w/2, -this.p.h/2 ], [ this.p.w/2, this.p.h/2 ], [-this.p.w/2, this.p.h/2 ] ];
                 if (this.p.vy == 0) {
                     this.play("jump_left");
                     Q.audio.play("../sounds/jump.mp3");
@@ -99,7 +103,14 @@ var game = function () {
             Q.input.on("right", this, function () {
                 this.p.direction = "right";
             });
-
+            Q.input.on("down", this, function () {
+                //this.p.sheet = "samusball";
+                if(canBecomeBall){
+                    this.play("samusball");
+                    this.p.points =  [ [ -this.p.w/2, -this.p.h/32 ], [ this.p.w/2, -this.p.h/32 ], [ this.p.w/2, this.p.h/2 ], [-this.p.w/2, this.p.h/2 ] ];
+                    this.p.ballmode = true;
+                }
+            });
             Q.input.on("action", this, function () {
                 if(this.p.direction == "right"){
                     this.play("parado_up_r");
@@ -116,9 +127,19 @@ var game = function () {
         },
         step: function (dt) {
             if (this.p.vx > 0) {
-                this.play("walk_right");
+                if(this.p.ballmode){
+                    this.play("samusball");
+                }
+                else{
+                    this.play("walk_right");
+                }
             } else if (this.p.vx < 0) {
-                this.play("walk_left");
+                if(this.p.ballmode){
+                    this.play("samusball");
+                }
+                else{
+                    this.play("walk_left");
+                }
             }
             
 
@@ -324,7 +345,7 @@ var game = function () {
                 shoot_r : {frames: [1]},
                 shoot_l : {frames: [28]},
                 morir:{frames: [49,48],rate:1/50},
-                ball:{frames: [11,12,13,14], rate:1/6, next: "parado_r"}
+                samusball:{frames: [11,12,13,14], rate:1/6}
             });
 
             Q.animations("title-screen",{
@@ -353,7 +374,7 @@ var game = function () {
 
                 var samus = new Q.Samus();
                 stage.insert(samus);
-                // stage.on('postrender',drawLines);
+                //stage.on('postrender',drawLines);
                 
                 stage.add("viewport").follow(samus, { x: true, y: false });
                 stage.viewport.scale = 3.05;
@@ -382,7 +403,7 @@ var game = function () {
                 Q.state.reset({lives: 4, coins: 0, score: 0});
 
                 
-                // Q.debug = true;
+                 //Q.debug = true;
             });
 
 
@@ -407,7 +428,7 @@ var game = function () {
                     Q.clearStages();
                     Q.stageScene("map1", 1);
                     Q.stageScene("hud", 2);
-                }, 5000);
+                }, 0);
     
                
 
