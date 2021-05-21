@@ -86,6 +86,7 @@ var game = function () {
                 scale: 1,
                 gravityY: 540,
                 canBecomeBall: false,
+                canBreakWall: false,
                 ballmode: false
             });
             this.add("2d , platformerControls, animation, tween, dancer");
@@ -105,7 +106,8 @@ var game = function () {
             });
             Q.input.on("down", this, function () {
                 //this.p.sheet = "samusball";
-                if(canBecomeBall){
+                
+                if(this.p.canBecomeBall){
                     this.play("samusball");
                     this.p.points =  [ [ -this.p.w/2, -this.p.h/32 ], [ this.p.w/2, -this.p.h/32 ], [ this.p.w/2, this.p.h/2 ], [-this.p.w/2, this.p.h/2 ] ];
                     this.p.ballmode = true;
@@ -313,11 +315,40 @@ var game = function () {
         }
     });
 
+    Q.Sprite.extend("Orbe",{
+        init: function(p) {
+            this._super(p,{
+                sheet: "orbes",
+                sprite: "orbe_anim",
+                frame: 0,
+                scale: 1,
+                gravity: 0,
+                sensor: true,
+                taken: false
+            });
+            this.add("tween");
+
+            this.on("sensor", this, "hit");
+        },
+        hit: function(collision){
+            if(this.taken) return;
+            if(!collision.isA("Samus")) return;
+            console.log(this);
+            this.taken = true;
+            if(this.p.type == "ball") collision.p.canBecomeBall = true;
+            else if(this.p.type == "breakWall") collision.p.canBreakWall = true;
+            console.log("He cogido el orbe ");
+            //collision.p.vy = -400;
+            //Q.audio.play("1up.mp3");
+            this.destroy();
+        }
+    });
+
 
     Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
     "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
     "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3",
-    "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png"],
+    "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png"],
         
         function () {
             
@@ -327,6 +358,7 @@ var game = function () {
             Q.compileSheets("./titleScreens/pantallainicio/pantallainiciotitulo.png","title-screen.json");
             Q.compileSheets("./titleScreens/pantallainicio/pantallainiciostart.png", "title-start.json");
             Q.compileSheets("metroid_door.png", "puertas.json");
+            Q.compileSheets("orbes.png", "orbe.json");
 
             Q.state.set({ energy: 30,
                 pause:false,enJuego:false, //States

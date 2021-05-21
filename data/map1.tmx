@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="203" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="29">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="203" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="32">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="54" columns="9">
   <image source="../images/tiles_metroid_!6x16.png" width="144" height="96"/>
  </tileset>
@@ -36,6 +36,31 @@
   <tile id="5">
    <properties>
     <property name="Class" value="PuertaIzquierda"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="61" name="orbes" tilewidth="16" tileheight="16" tilecount="4" columns="4">
+  <image source="../images/orbes.png" width="64" height="16"/>
+  <tile id="0">
+   <properties>
+    <property name="Class" value="Orbe"/>
+    <property name="type" value="ball"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Class" value="Orbe"/>
+    <property name="type" value="breakWall"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="Class" value="Orbe"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="Class" value="Orbe"/>
    </properties>
   </tile>
  </tileset>
@@ -40735,5 +40760,7 @@
     <property name="viewport" type="int" value="2044"/>
    </properties>
   </object>
+  <object id="29" gid="61" x="256" y="1456" width="16" height="16"/>
+  <object id="31" gid="62" x="480" y="2128" width="16" height="16"/>
  </objectgroup>
 </map>
