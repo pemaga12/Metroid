@@ -61,6 +61,19 @@ var game = function () {
         ctx.restore();
         }
 
+    function setViewport(door){
+        var samus = Q("Samus").first();
+
+        if(door.p.nextRoom === "vertical"){
+            door.stage.add("viewport").follow(samus, { x: false, y: true });
+            door.stage.viewport.x = door.p.viewport;
+        }else{
+            door.stage.add("viewport").follow(samus, { x: true, y: false });
+            door.stage.viewport.y = door.p.viewport;
+        }
+        
+    }
+
     //Samus
     Q.Sprite.extend("Samus",{
         init: function (p) {
@@ -168,19 +181,12 @@ var game = function () {
         open: function(collision){
             console.log("he tocado una puerta"); 
             this.play("puerta_izquierda");
-            collision.obj.p.x += 81;
-            //this.stage.add("viewport").unfollow();
-            var samus = Q("Samus").first();
-            this.stage.add("viewport").follow(samus, { x: false, y: true });
+
             Q.audio.play("../sounds/go_through_door.mp3");
-            this.stage.viewport.x += 177;
-            /* 
-            stage.add("viewport").follow(samus, { x: true, y: false });
-                stage.viewport.scale = 3.05;
-                stage.viewport.offsetX = 0;//-200
-                stage.viewport.offsetY = 55;
-                stage.viewport.y = 1300;
-            */
+            collision.obj.p.x += 81;
+
+            setViewport(this);
+            
             var that = this;
             setTimeout(function(){
                that.play("puerta_iz_arreglando");
@@ -203,11 +209,11 @@ var game = function () {
         open: function(collision){
             console.log("he tocado una puerta");
             this.play("puerta_derecha");
-            var samus = Q("Samus").first();
-            this.stage.add("viewport").follow(samus, { x: true, y: false });
             Q.audio.play("../sounds/go_through_door.mp3");
-            this.stage.viewport.y = 1300;
             collision.obj.p.x -= 81;
+
+            setViewport(this);
+
             var that = this;
             setTimeout(function(){
                that.play("puerta_der_arreglando");
@@ -424,8 +430,8 @@ var game = function () {
             Q.stageScene("startGame");
            
 
-            //Q.stageScene("map1", 1);
-            //Q.stageScene("hud", 2);
+            // Q.stageScene("map1", 1);
+            // Q.stageScene("hud", 2);
 
         });
 } 
