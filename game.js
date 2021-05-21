@@ -245,7 +245,7 @@ var game = function () {
                 var that = this;
                 setTimeout(function () {
                     that.play("puerta_iz_arreglando");
-                }, 2000);
+                }, 5000);
             }
         },
 
@@ -262,7 +262,7 @@ var game = function () {
                     that.p.lives = 2;
                     that.p.is_open = false;
                     that.play("puerta_iz_arreglando");
-                }, 3000);
+                }, 5000);
             }
         }
     });
@@ -294,7 +294,7 @@ var game = function () {
                 var that = this;
                 setTimeout(function () {
                     that.play("puerta_der_arreglando");
-                }, 2000);
+                }, 5000);
             }
         },
         damage: function(dmg){
@@ -310,7 +310,7 @@ var game = function () {
                     that.p.lives = 2;
                     that.p.is_open = false;
                     that.play("puerta_der_arreglando");
-                }, 3000);
+                }, 5000);
             }
         }
     });
@@ -320,13 +320,13 @@ var game = function () {
             this._super(p,{
                 sheet: "orbes",
                 sprite: "orbe_anim",
-                frame: 0,
+                //frame: 0,
                 scale: 1,
                 gravity: 0,
                 sensor: true,
                 taken: false
             });
-            this.add("tween");
+            this.add("2d, tween");
 
             this.on("sensor", this, "hit");
         },
@@ -337,7 +337,7 @@ var game = function () {
             this.taken = true;
             if(this.p.type == "ball") collision.p.canBecomeBall = true;
             else if(this.p.type == "breakWall") collision.p.canBreakWall = true;
-            console.log("He cogido el orbe ");
+            console.log("He cogido el orbe ", collision.p.canBecomeBall);
             //collision.p.vy = -400;
             //Q.audio.play("1up.mp3");
             this.destroy();
@@ -460,7 +460,7 @@ var game = function () {
                     Q.clearStages();
                     Q.stageScene("map1", 1);
                     Q.stageScene("hud", 2);
-                }, 0);
+                }, 5000);
     
                
 
