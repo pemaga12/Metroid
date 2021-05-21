@@ -63,29 +63,26 @@ var game = function () {
 
     //Samus
     Q.Sprite.extend("Samus",{
-        init: function(p) {
-            this._super(p,{
+        init: function (p) {
+            this._super(p, {
                 sheet: "samus",
                 sprite: "samus_anim",
-                x:570,
-                y:1470,
+                x: 570,
+                y: 1470,
                 frame: 0,
                 scale: 1,
                 gravityY: 540
             });
             this.add("2d , platformerControls, animation, tween, dancer");
-            Q.input.on("up", this, function(){
-            if (this.p.vy == 0){
-                this.play("jump_left");
-                Q.audio.play("../sounds/jump.mp3");
-            }
-        });
-            Q.input.on("fire", this, function(){
-                if (this.p.vy == 0){
-                    this.play("parado_up_r");
+            Q.input.on("up", this, function () {
+                if (this.p.vy == 0) {
+                    this.play("jump_left");
+                    Q.audio.play("../sounds/jump.mp3");
                 }
             });
-        
+
+            Q.input.on("fire", this, "shoot");
+
         },
         step: function (dt) {
             if (this.p.vx > 0) {
@@ -102,6 +99,45 @@ var game = function () {
                 else if (this.p.vx > 0)
                     this.play("jump_right");
             }
+        },
+        shoot: function (){
+            Q.audio.play("../sounds/shot.mp3");
+            if(this.p.direction == "right"){
+                Q.stage(1).insert(new Q.Bala({x: this.p.x + this.p.w, y: this.p.y, direction: this.p.direction, vx: 400, init: this.p.x}));
+            }
+            else if(this.p.direction == "left"){
+                Q.stage(1).insert(new Q.Bala({x: this.p.x - this.p.w, y: this.p.y, direction: this.p.direction, vx: -400, init: this.p.x}));
+            }
+            else{
+                Q.stage(1).insert(new Q.Bala({x: this.p.x, y: this.p.y - this.p.w, direction: this.p.direction, vy: -400, init: this.p.y}));
+            }
+        }
+    });
+
+    Q.Sprite.extend("Bala", {
+        init: function(p){
+            this._super(p, {
+                asset: "shot.png",
+                damage: 1,
+                vx: -400,
+                direction: "left",
+                init: 0,
+                max: 1000
+            });
+
+            this.on("hit" , this, "collision");
+
+        },
+
+        collision: function(col){
+           col.obj.damage(this.p.damage)
+		   this.destroy();
+        },
+
+        step: function(dt){
+            this.p.x += this.p.vx * dt;
+			if(this.p.x < this.p.init - this.p.max || this.p.x > this.p.init + this.p.max)
+				this.destroy();
         }
     });
 
@@ -136,6 +172,7 @@ var game = function () {
             //this.stage.add("viewport").unfollow();
             var samus = Q("Samus").first();
             this.stage.add("viewport").follow(samus, { x: false, y: true });
+            Q.audio.play("../sounds/go_through_door.mp3");
             this.stage.viewport.x += 177;
             /* 
             stage.add("viewport").follow(samus, { x: true, y: false });
@@ -168,6 +205,7 @@ var game = function () {
             this.play("puerta_derecha");
             var samus = Q("Samus").first();
             this.stage.add("viewport").follow(samus, { x: true, y: false });
+            Q.audio.play("../sounds/go_through_door.mp3");
             this.stage.viewport.y = 1300;
             collision.obj.p.x -= 81;
             var that = this;
@@ -180,7 +218,8 @@ var game = function () {
 
     Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
     "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
-    "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3"],
+    "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3",
+    "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png"],
         
         function () {
             
