@@ -56,7 +56,7 @@ var game = function () {
         
             if (this.p.vy == 0){
                 this.play("jump_left");
-                Q.audio.play("/sounds/jump.mp3");
+                Q.audio.play("../sounds/titlescreen.mp3");
             }
         });
         },
@@ -87,26 +87,53 @@ var game = function () {
     Q.Sprite.extend("PuertaIzquierda",{
         init: function(p) {
             this._super(p,{
-                asset: "metroid_door.png",
+                
                 sheet: "puertas",
                 sprite: "puerta_anim",
                 frame: 3,
-                scale: 1
+                scale: 1,
+                gravity: 0,
+                is_open: false,
+                lives: 2
+                
             });
-            this.add("animation");
+            this.add("2d, animation");
+            //this.on("sensor", this, "open");
+            this.on("bump.left", this, "open"); 
+        },
+        
+        open: function(collision){
+            console.log("he tocado una puerta"); 
+            this.play("puerta_izquierda");
+            collision.obj.p.x += 81;
+            var that = this;
+            setTimeout(function(){
+               that.play("puerta_iz_arreglando");
+            }, 5000); 
         }
     });
     //PuertaDerecha
     Q.Sprite.extend("PuertaDerecha",{
         init: function(p) {
             this._super(p,{
-                asset: "metroid_door.png",
+               
                 sheet: "puertas",
                 sprite: "puerta_anim",
                 frame: 0,
                 scale: 1
             });
-            this.add("animation");
+            this.add("2d, animation");
+            this.on("bump.right", this, "open");
+        },
+
+        open: function(collision){
+            console.log("he tocado una puerta");
+            this.play("puerta_derecha");
+            collision.obj.p.x -= 81;
+            var that = this;
+            setTimeout(function(){
+               that.play("puerta_der_arreglando");
+            }, 5000);
         }
     });
 
@@ -145,7 +172,11 @@ var game = function () {
             Q.animations("puerta_anim", {
                 puerta_derecha: {frames: [0,1,2], rate: 1/6, next: "puerta_rota"},
                 puerta_rota: {frames:[2]},
-                puerta_izquierda: {frames: [3,4,5], rate: 1/6, next: "puerta_rota"}
+                puerta_izquierda: {frames: [3,4,5], rate: 1/6, next: "puerta_rota"},
+                puerta_iz_arreglada: {frames: [3]},
+                puerta_der_arreglada: {frames: [0]},
+                puerta_iz_arreglando: {frames: [5,4,3], rate: 1/6, next: "puerta_iz_arreglada"},
+                puerta_der_arreglando: {frames: [2,1,0], rate: 1/6, next: "puerta_der_arreglada"}
             });
 
             Q.scene("map1", function (stage) {
@@ -153,7 +184,7 @@ var game = function () {
 
                 var samus = new Q.Samus();
                 stage.insert(samus);
-                //stage.on('postrender',drawLines);
+                stage.on('postrender',drawLines);
                 /*
                 stage.add("viewport").follow(samus, { x: true, y: false });
                 stage.viewport.scale = 3.05;
@@ -181,7 +212,7 @@ var game = function () {
                 Q.state.reset({lives: 4, coins: 0, score: 0});
 
                 
-                //Q.debug = true;
+                Q.debug = true;
             });
 
 

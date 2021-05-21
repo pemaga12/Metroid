@@ -1,4 +1,4 @@
 {
-    "puerta-derecha":{"sx": 0, "sy": 0, "tileW": 8, "tileH": 48, "frames":3},
-    "puerta-izquierda":{"sx": 48, "sy":0, "tileW":8, "tileH": 48, "frames":2}
+    "puerta-izquierda":{"sx": 48, "sy":0, "tileW": 16, "tileH": 48, "frames":3},
+    "puerta-derecha":{"sx": 0, "sy": 0, "tileW": 16, "tileH": 48, "frames":3}
 }
