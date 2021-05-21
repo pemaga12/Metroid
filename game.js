@@ -11,10 +11,10 @@ var game = function () {
 
 
     //title-screen
-    Q.Sprite.extend("Titlescreen", {
+    Q.Sprite.extend("TitleScreen", {
         init: function(p) {
             this._super(p,{
-                // sheet: "title-screen",
+                sheet: "title-screen",
                 sprite: "title-screen",
                 x:570,
                 y:1470,
@@ -22,8 +22,11 @@ var game = function () {
                 scale: 1,
                 gravityY: 0
             });
-            this.add("2d , platformerControls, animation, tween");
-            this.play("title-screen");
+            this.add("animation");
+            //this.play("title-screen");
+        },
+        playAnimation: function(){
+            this.play("animacion");
         }
     });
 
@@ -31,7 +34,7 @@ var game = function () {
     Q.Sprite.extend("Startscreen", {
         init: function(p) {
             this._super(p,{
-                // sheet: "start-screen",
+                sheet: "title-start",
                 sprite: "start-screen",
                 x:570,
                 y:1470,
@@ -39,8 +42,10 @@ var game = function () {
                 scale: 1,
                 gravityY: 0
             });
-            this.add("2d , platformerControls, animation, tween");
-            this.play("start-screen");
+            this.add("animation");
+        },
+        playAnimation: function(){
+            this.play("animacion2");
         }
     });
     
@@ -72,7 +77,7 @@ var game = function () {
             Q.input.on("up", this, function(){
             if (this.p.vy == 0){
                 this.play("jump_left");
-                Q.audio.play("../sounds/titlescreen.mp3");
+                Q.audio.play("../sounds/jump.mp3");
             }
         });
             Q.input.on("fire", this, function(){
@@ -138,7 +143,6 @@ var game = function () {
     Q.Sprite.extend("PuertaDerecha",{
         init: function(p) {
             this._super(p,{
-               
                 sheet: "puertas",
                 sprite: "puerta_anim",
                 frame: 0,
@@ -162,7 +166,7 @@ var game = function () {
 
     Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
     "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
-    "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png"],
+    "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "TitleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3"],
         
         function () {
             
@@ -192,11 +196,12 @@ var game = function () {
             });
 
             Q.animations("title-screen",{
-                title_screen: {frames: [0,1,2,3,4,5,6,7], rate: 1/6}
+                animacion: {frames: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], rate: 1/4}
             });
 
             Q.animations("start-screen" , {
-                title_start: {frames: [0,1,2,3,4] , rate: 1/6}
+                animacion2: {frames: [1,2,3,4] , rate: 1/4, next: "fin"},
+                fin: {frames: [4]}
             });
             
             Q.animations("puerta_anim", {
@@ -229,6 +234,12 @@ var game = function () {
                 // stage.viewport.scale = 1.7;
                 // stage.viewport.offsetX = 0;
                 // stage.viewport.offsetY = 70;
+                Q.audio.stop();
+                Q.audio.play("../sounds/start.mp3");
+                setTimeout(function(){
+                    Q.audio.play("../sounds/elevatormusic.mp3");
+                }, 5000);
+    
 
                 stage.on("destroy", function () {
                     samus.destroy();
@@ -242,53 +253,66 @@ var game = function () {
 
 
             Q.scene("mainTitle", function (stage) {
-                console.log("main");
-                Q.audio.play("../sounds/titlescreen.mp3", {loop: true});
+               
+                console.log("Voy a contar la historia");
+                //Q.audio.play("../sounds/titlescreen.mp3", {loop: true});
+                Q.stageTMX("map1.tmx", stage);
+
+                var samus = new Q.Startscreen();
+                stage.insert(samus);     //\(>.<)/ 
+                samus.playAnimation();
                 
-                var button = new Q.UI.Button({
-                    // x: Q.width / 2,
-                    // y: Q.height / 2,
-                    // asset: "title-screen.gif"
-                    x: 100,
-                    y: 100,
-                    font: "Metroid-Fusion",
-                    label: "PULSA AQUI o SPACE PARA EMPEZAR"
-                });
+                stage.add("viewport").follow(samus, { x: true, y: false });
+                stage.viewport.scale = 3.1;
+                stage.viewport.y = 1350;
+                stage.viewport.x = 400;
                 
-                var titlescreen = new Q.Titlescreen();
-                stage.insert(titlescreen);      //\(>.<)/  
-
-                button.on("click", function () {
-                    Q.clearStages();
-                    Q.stageScene("startGame", 1);
-                });
-
-                stage.insert(button);
-            });
-
-            Q.scene("startGame", function(stage){
-                console.log("start");
-                Q.audio.stop();
-                Q.audio.play("../sounds/start.mp3");
-
-                var button = new Q.UI.Button({
-                    x: 100,
-                    y: 100,
-                    font: "Metroid-Fusion",
-                    label: "PULSA AQUI PARA CONTINUAR"
-                });
-
-                var startscreen = new Q.Startscreen();
-                stage.insert(startscreen);
-
-                button.on("click", function () {
+                console.log("Ya he generado el titleScreen");
+                
+                setTimeout(function(){
                     Q.clearStages();
                     Q.stageScene("map1", 1);
                     Q.stageScene("hud", 2);
+                }, 5000);
+    
+               
+
+            });
+
+            Q.scene("startGame", function(stage){
+                
+                console.log("Pantalla del principio del todo");
+                Q.audio.play("../sounds/titlescreen.mp3", {loop: true});
+                Q.stageTMX("map1.tmx", stage);
+
+                var samus = new Q.TitleScreen();
+                stage.insert(samus);     //\(>.<)/ 
+                samus.playAnimation();
+                
+                stage.add("viewport").follow(samus, { x: true, y: false });
+                stage.viewport.scale = 3.1;
+                stage.viewport.y = 1350;
+                stage.viewport.x = 400;
+                
+                console.log("Ya he generado el titleScreen");
+                
+                var button = new Q.UI.Button({
+                    x: 574,
+                    y: 1480,
+                    scale:0.3,
+                    font: "Metroid-Fusion",
+                    label: "PULSA AQUI PARA CONTINUAR",
+                    asset: "letras.png"
+                });
+
+
+                button.on("click", function () {
+                    Q.clearStages();
+                    Q.stageScene("mainTitle", 1);
+                    //Q.stageScene("hud", 2);
                 });
 
                 stage.insert(button);
-
             });
 
             Q.scene('endGame', function (stage) {
@@ -343,11 +367,11 @@ var game = function () {
                 });
             });
 
-            // Q.stageScene("startGame");
+            Q.stageScene("startGame");
            
 
-            Q.stageScene("map1", 1);
-            Q.stageScene("hud", 2);
+            //Q.stageScene("map1", 1);
+            //Q.stageScene("hud", 2);
 
         });
 } 

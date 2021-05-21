@@ -39,6 +39,7 @@
    </properties>
   </tile>
  </tileset>
+
  <layer id="1" name="colision" width="203" height="200">
   <properties>
    <property name="collision" value="true"/>
@@ -2886,7 +2887,7 @@
    <tile/>
    <tile/>
    <tile gid="10"/>
-   <tile gid="10"/>
+   <tile gid="61"/>
    <tile/>
    <tile/>
    <tile/>
