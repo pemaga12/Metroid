@@ -237,7 +237,7 @@ var game = function () {
                 var that = this;
                 setTimeout(function () {
                     that.p.lives = 2;
-                    this.p.is_open = false;
+                    that.p.is_open = false;
                     that.play("puerta_iz_arreglando");
                 }, 5000);
             }
@@ -285,7 +285,7 @@ var game = function () {
                 var that = this;
                 setTimeout(function () {
                     that.p.lives = 2;
-                    this.p.is_open = false;
+                    that.p.is_open = false;
                     that.play("puerta_der_arreglando");
                 }, 5000);
             }
