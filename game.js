@@ -251,7 +251,7 @@ var game = function () {
                 Q.audio.stop();
                 Q.audio.play("../sounds/start.mp3");
                 setTimeout(function(){
-                    Q.audio.play("../sounds/elevatormusic.mp3");
+                    Q.audio.play("../sounds/elevatormusic.mp3", {loop: true});
                 }, 5000);
     
 
