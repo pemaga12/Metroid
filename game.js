@@ -128,6 +128,17 @@ var game = function () {
             console.log("he tocado una puerta"); 
             this.play("puerta_izquierda");
             collision.obj.p.x += 81;
+            //this.stage.add("viewport").unfollow();
+            var samus = Q("Samus").first();
+            this.stage.add("viewport").follow(samus, { x: false, y: true });
+            this.stage.viewport.x += 177;
+            /* 
+            stage.add("viewport").follow(samus, { x: true, y: false });
+                stage.viewport.scale = 3.05;
+                stage.viewport.offsetX = 0;//-200
+                stage.viewport.offsetY = 55;
+                stage.viewport.y = 1300;
+            */
             var that = this;
             setTimeout(function(){
                that.play("puerta_iz_arreglando");
@@ -151,6 +162,9 @@ var game = function () {
         open: function(collision){
             console.log("he tocado una puerta");
             this.play("puerta_derecha");
+            var samus = Q("Samus").first();
+            this.stage.add("viewport").follow(samus, { x: true, y: false });
+            this.stage.viewport.y = 1300;
             collision.obj.p.x -= 81;
             var that = this;
             setTimeout(function(){
@@ -237,7 +251,7 @@ var game = function () {
                 Q.state.reset({lives: 4, coins: 0, score: 0});
 
                 
-                Q.debug = true;
+                // Q.debug = true;
             });
 
 
@@ -335,7 +349,8 @@ var game = function () {
                     family: "Metroid-Fusion",
                     color: "white",
                     x:155, 
-                    y:50, 
+                    y:45, 
+                    size: 30,
                     label: "30"});
                 stage.insert(label_lives);
                 Q.state.on("change.energy", this, function(){
