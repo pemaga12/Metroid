@@ -99,4 +99,4 @@
    <property name="Class" value="TitleScreen"/>
   </properties>
  </tile>
-</tileset>
+</tileset>.
