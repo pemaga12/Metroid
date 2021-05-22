@@ -167,6 +167,16 @@ var game = function () {
             else{
                 Q.stage(1).insert(new Q.Bala({x: this.p.x, y: this.p.y - (this.p.h - 10), direction: this.p.direction, vy: -400, init: this.p.y}));
             }
+        },
+
+        die: function (damage){
+            console.log("Auch");
+            /*
+            Q.state.dec("energy", damage);
+            if(Q.state.get("energy") < 0){
+              this.destroy();
+            }
+            */
         }
     });
 
@@ -211,6 +221,46 @@ var game = function () {
     //Taladrillo
     Q.Sprite.extend("Taladrillo",{
 
+    });
+
+    //Pinchitos:
+    Q.Sprite.extend("Pinchitos", {
+        init: function(p) {
+            this._super(p,{
+            sheet: "pinchitos",
+            sprite: "pinchitos_anim",
+            x: 590,
+            y: 1465,
+            frame: 0,
+            gravityY: 540,
+            lives:3,
+            damage:5,
+            vx: 25
+            });
+            this.add("2d, aiBounce, animation");
+            this.play("pinchitos_normal");
+            this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
+            //this.on("bump.bottom, bump.left, bump.right", this, "kill");
+        }, 
+
+        onTop: function(collision){
+            this.destroy();
+        },
+        kill: function(collision){
+            if(!collision.obj.isA("Samus")) return;
+            console.log("te di HEHE");
+            collision.obj.p.vy = -200;
+            collision.obj.p.vx = collision.normalX*-500;
+            collision.obj.p.x += collision.normalX*-5;
+            collision.obj.die(this.p.damage);
+        },
+        damage: function(dmg){
+            this.p.lives = this.p.lives - dmg;
+            if(this.p.lives == 0){
+                this.destroy();
+            }
+            
+        }
     });
 
     //PuertaIzquierda
@@ -348,13 +398,13 @@ var game = function () {
     Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
     "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
     "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3",
-    "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png"],
+    "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "./Enemys/pinchitos.png", "pinchitos.json"],
         
         function () {
             
             Q.compileSheets("samus.png", "samus.json");
             Q.compileSheets("./Enemys/taladrillo.png", "taladrillo.json");
-            Q.compileSheets("./Enemys/pinchitos.png", "pinchito.json");
+            Q.compileSheets("./Enemys/pinchitos.png", "pinchitos.json");
             Q.compileSheets("./titleScreens/pantallainicio/pantallainiciotitulo.png","title-screen.json");
             Q.compileSheets("./titleScreens/pantallainicio/pantallainiciostart.png", "title-start.json");
             Q.compileSheets("metroid_door.png", "puertas.json");
@@ -401,28 +451,37 @@ var game = function () {
                 puerta_der_arreglando: {frames: [0,1,2], rate: 1/6, next: "puerta_der_arreglada"}
             });
 
+            Q.animations('pinchitos_anim', {
+                pinchitos_normal: { frames: [0,1], rate: 1/3},
+                pinchitos_derecha: { frames: [6,7], rate: 1/3},
+                pinchitos_izquierda: { frames: [2,3], rate: 1/3},
+                pinchitos_arriba: { frames: [4,5], rate: 1/3},
+            });
+
             Q.scene("map1", function (stage) {
                 Q.stageTMX("map1.tmx", stage);
 
                 var samus = new Q.Samus();
                 stage.insert(samus);
                 //stage.on('postrender',drawLines);
-                
+                var pin = new Q.Pinchitos();
+                stage.insert(pin);
+
                 stage.add("viewport").follow(samus, { x: true, y: false });
                 stage.viewport.scale = 3.05;
                 stage.viewport.offsetX = 0;//-200
                 stage.viewport.offsetY = 55;
                 stage.viewport.y = 1300;
                 
-                
-                
-               
                 // stage.add("viewport").follow(samus, { x: true, y: true });
                 // stage.viewport.scale = 1.7;
                 // stage.viewport.offsetX = 0;
                 // stage.viewport.offsetY = 70;
                 Q.audio.stop();
                 Q.audio.play("../sounds/start.mp3");
+
+               
+
                 setTimeout(function(){
                     Q.audio.play("../sounds/elevatormusic.mp3", {loop: true});
                 }, 5000);
@@ -432,9 +491,8 @@ var game = function () {
                     samus.destroy();
                 });
 
-                Q.state.reset({lives: 4, coins: 0, score: 0});
+                 Q.state.reset({energy: 30});
 
-                
                  //Q.debug = true;
             });
 
