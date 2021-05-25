@@ -92,6 +92,7 @@ var game = function () {
                 gravityY: 540,
                 canBecomeBall: false,
                 canBreakWall: false,
+                canBeHit: true,
                 ballmode: false
             });
             this.add("2d , platformerControls, animation, tween, dancer");
@@ -158,6 +159,13 @@ var game = function () {
                     this.play("jump_right");
                 }
             }
+
+            if(!this.p.canBeHit){
+                var that = this;
+                setInterval(function () {
+                    that.p.canBeHit = true;
+                }, 1000);
+            }
         },
         shoot: function (){
             Q.audio.play("../sounds/shot.mp3");
@@ -176,13 +184,16 @@ var game = function () {
         },
 
         die: function (damage){
-            console.log("Auch");
-            /*
-            Q.state.dec("energy", damage);
-            if(Q.state.get("energy") < 0){
-              this.destroy();
+            console.log(Q.state.get("lives"));
+            if(this.p.canBeHit){
+                this.p.canBeHit = false;
+                this.play("morir");
+                Q.state.dec("lives", damage);
+                if(Q.state.get("lives") < 0){
+                  this.destroy();
+                  Q.stageScene("endGame", 2);
+                } 
             }
-            */
         }
     });
 
@@ -239,8 +250,8 @@ var game = function () {
             y: 1465,
             frame: 0,
             gravityY: 540,
-            lives:2,
-            damage:5,
+            lives_e:2,
+            damage:7,
             vx: 50
             });
             //this.add("2d, aiBounce, animation");
@@ -257,16 +268,14 @@ var game = function () {
         kill: function(collision){
             if(!collision.obj.isA("Samus")) return;
             console.log("Me di contra un pinchito");
-            Q.state.dec("energy", 7);
-            console.log(Q.state.p.energy);
             collision.obj.p.vy = -5;
             collision.obj.p.vx = collision.normalX*-500;
             collision.obj.p.x += collision.normalX*-5;
             collision.obj.die(this.p.damage);
         },
         damage: function(dmg){
-            this.p.lives = this.p.lives - dmg;
-            if(this.p.lives == 0){
+            this.p.lives_e = this.p.lives_e - dmg;
+            if(this.p.lives_e == 0){
                 Q.audio.play("../sounds/gun.mp3");
                 this.destroy();
             }
@@ -284,8 +293,8 @@ var game = function () {
             y: 1465,
             frame: 0,
             gravityY: 540,
-            lives:2,
-            damage:5,
+            lives_e:2,
+            damage:7,
             vx: 25
             });
             //this.add("2d, aiBounce, animation");
@@ -302,13 +311,11 @@ var game = function () {
         kill: function(collision){
             if(!collision.obj.isA("Samus")) return;
             console.log("Me di contra un pinchito");
-            Q.state.dec("energy", 7);
-            console.log(Q.state.p.energy);
             collision.obj.die(this.p.damage);
         },
         damage: function(dmg){
-            this.p.lives = this.p.lives - dmg;
-            if(this.p.lives == 0){
+            this.p.lives_e = this.p.lives_e - dmg;
+            if(this.p.lives_e == 0){
                 this.destroy();
             }
             
@@ -490,6 +497,7 @@ var game = function () {
           frame: 0,
           vx: 60,
           gravity: 0,
+          damage: 7,
           lives: 2,
           });
           this.add("2d, aiBounce, animation");
@@ -512,21 +520,16 @@ var game = function () {
           //collision.obj.p.vx = collision.normalX*-500;
           //collision.obj.p.x += collision.normalX*-5;
           console.log("Me he chocado contra una larva");
-          Q.state.dec("energy", 7);
-          console.log(Q.state.p.energy);
-          if(Q.state.p.energy <= 0){
-              //Samus.destroy();
-          }
-          //collision.obj.die();
+          collision.obj.die(this.p.damage);
         }
       });
-
-       //Larva
+     //Lava
     Q.Sprite.extend("Lava", {
         init: function(p) {
           this._super(p,{
           sheet: "lava",
           sprite: "lava_anim",
+          damage: 7,
           frame: 0,
           });
           this.add("2d, aiBounce, animation");
@@ -541,21 +544,15 @@ var game = function () {
           //collision.obj.p.vy = -200;
           //collision.obj.p.vx = collision.normalX*-500;
           //collision.obj.p.x += collision.normalX*-5;
-          console.log("Me he chocado contra la lava");
-          Q.state.dec("energy", 7);
-          console.log(Q.state.p.energy);
-          if(Q.state.p.energy <= 0){
-              //Samus.destroy();
-          }
-          //collision.obj.die();
+          console.log("Me he caido en la lava");
+          collision.obj.die(this.p.damage);
         }
       });
-
 
     Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
     "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
     "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3",
-    "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "lava.png", "lava.json", "larvas.png", "larvas.json", "larvas.tsx", "pinchitosPared.tsx",
+     "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "lava.png", "lava.json", "larvas.png", "larvas.json", "larvas.tsx", "pinchitosPared.tsx",
     "../sounds/lava.mp3","../sounds/item.mp3","../sounds/gun.mp3"],
         
         function () {
@@ -570,8 +567,9 @@ var game = function () {
             Q.compileSheets("larvas.png", "larvas.json");
             Q.compileSheets("lava.png", "lava.json");
 
-            Q.state.set({ energy: 30,
-                pause:false,enJuego:false, //States
+            Q.state.set({ lives: 30,
+                pause:false,
+                enJuego:false //States
             });
 
 
@@ -594,16 +592,12 @@ var game = function () {
                 larva: {frames: [0]}
             });
 
-            Q.animations("lava_anim",{
-                lava: {frames: [0,1],rate: 1}
-            });
-
             Q.animations("title-screen",{
-                animacion: {frames: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], rate: 1}
+                animacion: {frames: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], rate: 1/4}
             });
 
             Q.animations("start-screen" , {
-                animacion2: {frames: [1,2,3,4] , rate: 1, next: "fin"},
+                animacion2: {frames: [1,2,3,4] , rate: 1/4, next: "fin"},
                 fin: {frames: [4]}
             });
             
@@ -626,6 +620,10 @@ var game = function () {
                 pinchitos_debajo: { frames: [4,5], rate: 1/3}
             });
 
+            Q.animations("lava_anim",{
+                lava: {frames: [0,1],rate: 1}
+            });
+
             Q.scene("map1", function (stage) {
                 Q.stageTMX("map1.tmx", stage);
 
@@ -646,22 +644,37 @@ var game = function () {
                 Q.audio.stop();
                 Q.audio.play("../sounds/start.mp3");
 
-               
-
                 setTimeout(function(){
                     Q.audio.play("../sounds/elevatormusic.mp3", {loop: true});
                 }, 5000);
-    
 
                 stage.on("destroy", function () {
                     samus.destroy();
                 });
 
-                 Q.state.reset({energy: 30});
+                Q.state.reset({lives: 30});
 
-                 //Q.debug = true;
             });
 
+            Q.scene("hud", function(stage){        
+                var life_icon = stage.insert(new Q.UI.Button({
+                    x:80,
+                    y:70,
+                    asset: 'energia.png'
+                })); 
+                var label_lives = new Q.UI.Text({
+                    family: "Metroid-Fusion",
+                    color: "white",
+                    x:155, 
+                    y:45, 
+                    size: 30,
+                    label: "30"});
+                stage.insert(label_lives);
+                Q.state.on("change.lives", this, function(){
+                    //console.log(Q.state.get("lives"));
+                    label_lives.p.label = "" + Q.state.get("lives");
+                });
+            });
 
             Q.scene("mainTitle", function (stage) {
                
@@ -670,7 +683,7 @@ var game = function () {
                 Q.stageTMX("map1.tmx", stage);
 
                 var samus = new Q.Startscreen();
-                stage.insert(samus);     //\(>.<)/ 
+                stage.insert(samus);     
                 samus.playAnimation();
                 
                 stage.add("viewport").follow(samus, { x: true, y: false });
@@ -686,8 +699,6 @@ var game = function () {
                     Q.stageScene("hud", 2);
                 }, 5000);
     
-               
-
             });
 
             Q.scene("startGame", function(stage){
@@ -697,7 +708,7 @@ var game = function () {
                 Q.stageTMX("map1.tmx", stage);
 
                 var samus = new Q.TitleScreen();
-                stage.insert(samus);     //\(>.<)/ 
+                stage.insert(samus);     
                 samus.playAnimation();
                 
                 stage.add("viewport").follow(samus, { x: true, y: false });
@@ -734,7 +745,7 @@ var game = function () {
                     x: 0, y: 0, fill: "#CCCCCC", label: "Play Again"
                 }));
                 var label = container.insert(new Q.UI.Text({
-                    x: 10, y: -10 - button2.p.h, label: "You Lose!"
+                    x: 10, y: -10 - button2.p.h, fill: "#000000", label: "You Lose!"
                 }));
                 button2.on("click", function () {
                     Q.clearStages();
@@ -760,31 +771,7 @@ var game = function () {
                 container.fit(20);
             });
 
-            Q.scene("hud", function(stage){        
-                var life_icon = stage.insert(new Q.UI.Button({
-                    x:80,
-                    y:70,
-                    asset: 'energia.png'
-                })); 
-                var label_lives = new Q.UI.Text({
-                    family: "Metroid-Fusion",
-                    color: "white",
-                    x:155, 
-                    y:45, 
-                    size: 30,
-                    label: "30"});
-                stage.insert(label_lives);
-                Q.state.on("change.energy", this, function(){
-                    console.log(Q.state.get("energy"));
-                    //label_lives.p.label = Q.state.get("energy");
-                });
-            });
-
             Q.stageScene("startGame");
-            //Q.stageScene("map1");
-
-            // Q.stageScene("map1", 1);
-            // Q.stageScene("hud", 2);
-
+        
         });
 } 
