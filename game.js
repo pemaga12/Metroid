@@ -190,8 +190,9 @@ var game = function () {
                 this.play("morir");
                 Q.state.dec("lives", damage);
                 if(Q.state.get("lives") < 0){
-                  this.destroy();
-                  Q.stageScene("endGame", 2);
+                    this.destroy();
+                    Q.stageScene("endGame", 2);
+                    Q.audio.play("../sounds/deathsound.mp3");
                 } 
             }
         }
@@ -479,7 +480,9 @@ var game = function () {
             if(this.p.type == "ball") collision.p.canBecomeBall = true;
             else if(this.p.type == "breakWall") collision.p.canBreakWall = true;
             console.log("He cogido el orbe ", collision.p.canBecomeBall);
+            Q.audio.stop();
             Q.audio.play("../sounds/item.mp3");
+            
             //collision.p.vy = -400;
             //Q.audio.play("1up.mp3");
             this.destroy();
@@ -553,7 +556,7 @@ var game = function () {
     "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
     "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3",
      "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "lava.png", "lava.json", "larvas.png", "larvas.json", "larvas.tsx", "pinchitosPared.tsx",
-    "../sounds/lava.mp3","../sounds/item.mp3","../sounds/gun.mp3"],
+    "../sounds/lava.mp3","../sounds/item.mp3","../sounds/gun.mp3","../sounds/deathsound.mp3"],
         
         function () {
             
@@ -745,7 +748,7 @@ var game = function () {
                     x: 0, y: 0, fill: "#CCCCCC", label: "Play Again"
                 }));
                 var label = container.insert(new Q.UI.Text({
-                    x: 10, y: -10 - button2.p.h, fill: "#000000", label: "You Lose!"
+                    x: 10, y: -10 - button2.p.h, fill: "#ffffff", label: "You Lose!"
                 }));
                 button2.on("click", function () {
                     Q.clearStages();
