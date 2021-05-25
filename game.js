@@ -63,7 +63,10 @@ var game = function () {
 
     function setViewport(door){
         var samus = Q("Samus").first();
-
+        if(door.p.nextRoom == "horizontal" && door.p.viewport == 2258){
+            console.log("sala con lava");
+            Q.audio.play("../sounds/lava.mp3");
+        }
         if(door.p.nextRoom === "vertical"){
             door.stage.add("viewport").follow(samus, { x: false, y: true });
             door.stage.viewport.x = door.p.viewport;
@@ -156,6 +159,7 @@ var game = function () {
         },
         shoot: function (){
             Q.audio.play("../sounds/shot.mp3");
+            
             if(this.p.direction == "right"){
                 this.play("shoot_r");
                 Q.stage(1).insert(new Q.Bala({x: this.p.x + this.p.w, y: this.p.y, direction: this.p.direction, vx: 400, init: this.p.x}));
@@ -235,10 +239,10 @@ var game = function () {
             gravityY: 540,
             lives:2,
             damage:5,
-            vx: 25
+            vx: 50
             });
             //this.add("2d, aiBounce, animation");
-            this.add("2d, animation");
+            this.add("2d, animation, aiBounce");
             this.play("pinchitos_normal");
             this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
             //this.on(this.p.vy > 0, this, "changeGravity");
@@ -261,70 +265,84 @@ var game = function () {
         damage: function(dmg){
             this.p.lives = this.p.lives - dmg;
             if(this.p.lives == 0){
+                Q.audio.play("../sounds/gun.mp3");
+                this.destroy();
+            }
+            
+        },
+    });
+
+       //PinchitosPared:
+       Q.Sprite.extend("PinchitoPared", {
+        init: function(p) {
+            this._super(p,{
+            sheet: "pinchitos",
+            sprite: "pinchitos_anim",
+            x: 590,
+            y: 1465,
+            frame: 0,
+            gravityY: 540,
+            lives:2,
+            damage:5,
+            vx: 25
+            });
+            //this.add("2d, aiBounce, animation");
+            this.add("2d, animation");
+            this.play("pinchitos_normal");
+            this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
+            //this.on(this.p.vy > 0, this, "changeGravity");
+            //this.on("bump.bottom, bump.left, bump.right", this, "kill");
+        }, 
+
+        onTop: function(collision){
+            this.destroy();
+        },
+        kill: function(collision){
+            if(!collision.obj.isA("Samus")) return;
+            console.log("Me di contra un pinchito");
+            Q.state.dec("energy", 7);
+            console.log(Q.state.p.energy);
+            collision.obj.die(this.p.damage);
+        },
+        damage: function(dmg){
+            this.p.lives = this.p.lives - dmg;
+            if(this.p.lives == 0){
                 this.destroy();
             }
             
         },
         step: function (dt) {
             if(this.p.vx > 5 && (this.p.vy == 0 || this.p.gravityX == 1000)){
+                this.play("pinchitos_normal");
                 this.p.vy = 0;
-                this.p.gravityY = 900;
+                this.p.gravityY = 1000;
                 this.p.vx = 10;
                 this.p.gravityX = 0;
                 
             }
-            else if(this.p.vy > 5 && (this.p.vx == 0 ||  this.p.gravityY == 900)){
+            else if(this.p.vy > 5 && (this.p.vx == 0 ||  this.p.gravityY == 1000)){
+                this.play("pinchitos_izquierda");
                 this.p.vy = 25
-                this.p.gravityX = -900;
+                this.p.gravityX = -1000;
                 this.p.vx = 0.000000001;
                 this.p.gravityY = 0;
             }
-            else if(this.p.vx < 5  && (this.p.vy == 0 || this.p.gravityX == -900) ){
+            else if(this.p.vx < 5  && (this.p.vy == 0 || this.p.gravityX == -1000) ){
+                this.play("pinchitos_debajo");
                 this.p.vy = 0;
-                this.p.gravityY = -900;
-                this.p.vx = -10;
+                this.p.gravityY = -1000;
+                this.p.vx = -15;
                 this.p.gravityX = 0;
             }
             
-            else if (this.p.vy < 5 && (this.p.vx == 0 || this.p.gravityY == -900)){
+            else if (this.p.vy < 5 && (this.p.vx == 0 || this.p.gravityY == -1000)){
+                this.play("pinchitos_derecha");
                 this.p.gravityY = 0;
                 this.p.vy = -25;
                 this.p.gravityX = 1000;
                 this.p.vx = 0;
             }
-            
-            /*
-            if(this.p.vy > 50  && this.p.gravityY > 0){
-                //console.log("Estoy cayendo");
-
-                this.p.gravityX = -5;
-                this.p.vy = 100;
-                this.p.gravityY = 0;
-                this.p.vx = 0;
-            }
-            else if(this.p.vy == 0 && this.p.gravityY == 0){
-                //console.log("He vuelto a tocar el suelo");
-                this.p.gravityX = 0;
-                this.p.vy = 0;
-                this.p.gravityY = 540;
-                this.p.vx = 100;
-            }
-            else if(this.p.vx < 0 && this.p.gravityY == 0){
-                this.p.gravityX = 0;
-                this.p.vy = 0;
-                this.p.gravityY = -100;
-                this.p.vx = -100;
-            }
-            
-            elseif(this.p.vy > 0 && this.p.gravityY < 0){
-                this.p.gravityY = 0;
-                this.p.vx = 0;
-                this.p.vy = 100;
-                this.p.gravityX = +100;
-            }
-            */
         }
-
     });
 
     //PuertaIzquierda
@@ -452,6 +470,7 @@ var game = function () {
             if(this.p.type == "ball") collision.p.canBecomeBall = true;
             else if(this.p.type == "breakWall") collision.p.canBreakWall = true;
             console.log("He cogido el orbe ", collision.p.canBecomeBall);
+            Q.audio.play("../sounds/item.mp3");
             //collision.p.vy = -400;
             //Q.audio.play("1up.mp3");
             this.destroy();
@@ -504,7 +523,8 @@ var game = function () {
     Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
     "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
     "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3",
-    "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "larvas.png", "larvas.json", "larvas.tsx"],
+    "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "larvas.png", "larvas.json", "larvas.tsx", "pinchitosPared.tsx",
+    "../sounds/lava.mp3","../sounds/item.mp3","../sounds/gun.mp3"],
         
         function () {
             
@@ -566,7 +586,7 @@ var game = function () {
                 pinchitos_normal: { frames: [0,1], rate: 1/3},
                 pinchitos_derecha: { frames: [6,7], rate: 1/3},
                 pinchitos_izquierda: { frames: [2,3], rate: 1/3},
-                pinchitos_arriba: { frames: [4,5], rate: 1/3},
+                pinchitos_debajo: { frames: [4,5], rate: 1/3}
             });
 
             Q.scene("map1", function (stage) {
@@ -574,7 +594,7 @@ var game = function () {
 
                 var samus = new Q.Samus();
                 stage.insert(samus);
-                stage.on('postrender',drawLines)
+                //stage.on('postrender',drawLines)
 
                 stage.add("viewport").follow(samus, { x: true, y: false });
                 stage.viewport.scale = 3.05;
@@ -602,7 +622,7 @@ var game = function () {
 
                  Q.state.reset({energy: 30});
 
-                 Q.debug = true;
+                 //Q.debug = true;
             });
 
 
@@ -709,6 +729,7 @@ var game = function () {
                     y:70,
                     asset: 'energia.png'
                 })); 
+                var label_lives = new Q.UI.Text({
                     family: "Metroid-Fusion",
                     color: "white",
                     x:155, 
