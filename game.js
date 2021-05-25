@@ -521,11 +521,41 @@ var game = function () {
         }
       });
 
+       //Larva
+    Q.Sprite.extend("Lava", {
+        init: function(p) {
+          this._super(p,{
+          sheet: "lava",
+          sprite: "lava_anim",
+          frame: 0,
+          });
+          this.add("2d, aiBounce, animation");
+            this.play("lava");
+          this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
+          //this.on("bump.bottom, bump.left, bump.right", this, "kill");
+          
+  
+        },
+        kill: function(collision){
+          if(!collision.obj.isA("Samus")) return;
+          //collision.obj.p.vy = -200;
+          //collision.obj.p.vx = collision.normalX*-500;
+          //collision.obj.p.x += collision.normalX*-5;
+          console.log("Me he chocado contra la lava");
+          Q.state.dec("energy", 7);
+          console.log(Q.state.p.energy);
+          if(Q.state.p.energy <= 0){
+              //Samus.destroy();
+          }
+          //collision.obj.die();
+        }
+      });
+
 
     Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
     "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
     "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3",
-    "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "larvas.png", "larvas.json", "larvas.tsx", "pinchitosPared.tsx",
+    "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "lava.png", "lava.json", "larvas.png", "larvas.json", "larvas.tsx", "pinchitosPared.tsx",
     "../sounds/lava.mp3","../sounds/item.mp3","../sounds/gun.mp3"],
         
         function () {
@@ -538,6 +568,7 @@ var game = function () {
             Q.compileSheets("metroid_door.png", "puertas.json");
             Q.compileSheets("orbes.png", "orbe.json");
             Q.compileSheets("larvas.png", "larvas.json");
+            Q.compileSheets("lava.png", "lava.json");
 
             Q.state.set({ energy: 30,
                 pause:false,enJuego:false, //States
@@ -563,12 +594,16 @@ var game = function () {
                 larva: {frames: [0]}
             });
 
+            Q.animations("lava_anim",{
+                lava: {frames: [0,1],rate: 1}
+            });
+
             Q.animations("title-screen",{
-                animacion: {frames: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], rate: 1/4}
+                animacion: {frames: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], rate: 1}
             });
 
             Q.animations("start-screen" , {
-                animacion2: {frames: [1,2,3,4] , rate: 1/4, next: "fin"},
+                animacion2: {frames: [1,2,3,4] , rate: 1, next: "fin"},
                 fin: {frames: [4]}
             });
             
