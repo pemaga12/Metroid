@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="203" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="42">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="203" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="64">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="54" columns="9">
   <image source="../images/tiles_metroid_!6x16.png" width="144" height="96"/>
  </tileset>
@@ -135,6 +135,52 @@
   <tile id="7">
    <properties>
     <property name="Class" value="Pinchito"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="102" name="pinchitosPared" tilewidth="16" tileheight="16" tilecount="32" columns="32">
+  <properties>
+   <property name="Class" value="PinchitoPared"/>
+  </properties>
+  <image source="../images/Enemys/pinchitos.png" width="512" height="16"/>
+  <tile id="0">
+   <properties>
+    <property name="Class" value="PinchitoPared"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="Class" value="PinchitoPared"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="Class" value="PinchitoPared"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="Class" value="PinchitoPared"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="Class" value="PinchitoPared"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="Class" value="PinchitoPared"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="Class" value="PinchitoPared"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="Class" value="PinchitoPared"/>
    </properties>
   </tile>
  </tileset>
@@ -17233,7 +17279,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="2"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -17435,8 +17481,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile gid="40"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
    <tile/>
    <tile/>
    <tile/>
@@ -17638,8 +17684,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="10"/>
-   <tile gid="10"/>
+   <tile gid="40"/>
+   <tile gid="40"/>
    <tile/>
    <tile/>
    <tile/>
@@ -40841,6 +40887,14 @@
   <object id="36" gid="65" x="1248" y="1840" width="16" height="8"/>
   <object id="37" gid="65" x="1232" y="1936" width="16" height="8"/>
   <object id="38" gid="65" x="720" y="1456" width="16" height="8"/>
-  <object id="41" gid="70" x="512" y="1360" width="16" height="16"/>
+  <object id="41" gid="70" x="768" y="1504" width="16" height="16"/>
+  <object id="53" gid="102" x="1184" y="1584" width="16" height="16"/>
+  <object id="54" gid="102" x="1120" y="1648" width="16" height="16"/>
+  <object id="58" gid="102" x="1120" y="2080" width="16" height="16"/>
+  <object id="59" gid="102" x="512" y="1360" width="16" height="16"/>
+  <object id="60" gid="71" x="608" y="1360" width="16" height="16"/>
+  <object id="61" gid="70" x="320" y="1504" width="16" height="16"/>
+  <object id="62" gid="70" x="688" y="1504" width="16" height="16"/>
+  <object id="63" gid="70" x="208" y="1472" width="16" height="16"/>
  </objectgroup>
 </map>
