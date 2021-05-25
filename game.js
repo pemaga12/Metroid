@@ -30,6 +30,26 @@ var game = function () {
         }
     });
 
+     //game-over
+     Q.Sprite.extend("GameOver", {
+        init: function(p) {
+            this._super(p,{
+                sheet: "game-over",
+                //sprite: "title-screen",
+                x:570,
+                y:1470,
+                frame: 0,
+                scale: 1,
+                gravityY: 0
+            });
+            //this.add("animation");
+            //this.play("title-screen");
+        },
+        playAnimation: function(){
+            //this.play("animacion");
+        }
+    });
+
     //title-screen
     Q.Sprite.extend("Startscreen", {
         init: function(p) {
@@ -191,7 +211,7 @@ var game = function () {
                 Q.state.dec("lives", damage);
                 if(Q.state.get("lives") < 0){
                     this.destroy();
-                    Q.stageScene("endGame", 2);
+                    Q.stageScene("gameOver", 2);
                     Q.audio.play("../sounds/deathsound.mp3");
                 } 
             }
@@ -482,7 +502,10 @@ var game = function () {
             console.log("He cogido el orbe ", collision.p.canBecomeBall);
             Q.audio.stop();
             Q.audio.play("../sounds/item.mp3");
-            
+            Q.audio.stop("../sounds/elevatormusic.mp3");
+            setTimeout(function(){
+                Q.audio.play("../sounds/elevatormusic.mp3");
+            }, 3000)
             //collision.p.vy = -400;
             //Q.audio.play("1up.mp3");
             this.destroy();
@@ -556,7 +579,7 @@ var game = function () {
     "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
     "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3",
      "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "lava.png", "lava.json", "larvas.png", "larvas.json", "larvas.tsx", "pinchitosPared.tsx",
-    "../sounds/lava.mp3","../sounds/item.mp3","../sounds/gun.mp3","../sounds/deathsound.mp3"],
+    "../sounds/lava.mp3","../sounds/item.mp3","../sounds/gun.mp3","../sounds/deathsound.mp3", "gameover.png", "game-over.json", "gameOver.tsx", "../sounds/ending_original.mp3"],
         
         function () {
             
@@ -569,6 +592,7 @@ var game = function () {
             Q.compileSheets("orbes.png", "orbe.json");
             Q.compileSheets("larvas.png", "larvas.json");
             Q.compileSheets("lava.png", "lava.json");
+            Q.compileSheets("gameover.png", "game-over.json");
 
             Q.state.set({ lives: 30,
                 pause:false,
@@ -700,12 +724,40 @@ var game = function () {
                     Q.clearStages();
                     Q.stageScene("map1", 1);
                     Q.stageScene("hud", 2);
+                    //Q.stageScene("gameOver", 1);
                 }, 5000);
     
             });
 
-            Q.scene("startGame", function(stage){
+            Q.scene("gameOver", function (stage) {
+               
+                console.log("Se acabo el juego");
+                Q.audio.stop();
+                Q.audio.play("../sounds/ending_original.mp3");
+                Q.stageTMX("map1.tmx", stage);
+
+                var samus = new Q.GameOver();
+                stage.insert(samus);     
+                samus.playAnimation();
+
                 
+                stage.add("viewport").follow(samus, { x: true, y: false });
+                stage.viewport.scale = 3.1;
+                stage.viewport.y = 1350;
+                stage.viewport.x = 400;
+
+                setTimeout(function(){
+                    Q.clearStages();
+                    Q.stageScene("startGame", 1);
+                    //Q.stageScene("hud", 2);
+                    //Q.stageScene("gameOver", 1);
+                }, 5000);
+
+                console.log("Ya he generado el gameOver");
+            });
+
+            Q.scene("startGame", function(stage){
+                Q.audio.stop();
                 console.log("Pantalla del principio del todo");
                 Q.audio.play("../sounds/titlescreen.mp3", {loop: true});
                 Q.stageTMX("map1.tmx", stage);
