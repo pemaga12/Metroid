@@ -643,11 +643,11 @@ var game = function () {
             });
 
             Q.animations("title-screen",{
-                animacion: {frames: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], rate: 1/4}
+                animacion: {frames: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15], rate: 1}
             });
 
             Q.animations("start-screen" , {
-                animacion2: {frames: [1,2,3,4] , rate: 1/4, next: "fin"},
+                animacion2: {frames: [1,2,3,4] , rate: 1, next: "fin"},
                 fin: {frames: [4]}
             });
             
@@ -818,17 +818,26 @@ var game = function () {
 
             Q.scene('endGame', function (stage) {
                 var container = stage.insert(new Q.UI.Container({
-                    x: Q.width / 2, y: Q.height / 2, fill: "rgba(0,0,0,0.5)"
+                    x: Q.width/2,
+                    y: Q.height/2,
+                    fill: "rgba(1, 81, 135, 0.75)"
                 }));
-                var button2 = container.insert(new Q.UI.Button({
-                    x: 0, y: 0, fill: "#CCCCCC", label: "Play Again"
+                var button = container.insert(new Q.UI.Button({
+                    x: 0,
+                    y: 0,
+                    fill: "#CCCCCC",
+                    label: "Play Again"
                 }));
                 var label = container.insert(new Q.UI.Text({
-                    x: 10, y: -10 - button2.p.h, fill: "#ffffff", label: "You Lose!"
+                    x: 0,
+                    y: -15 - button.p.h,
+                    color: "red",
+                    label: "Game Over"
                 }));
-                button2.on("click", function () {
+                
+                button.on("click",function() {
                     Q.clearStages();
-                    Q.stageScene('mainTitle');
+                    Q.stageScene("mainTitle", 1);
                 });
                 container.fit(20);
             });
