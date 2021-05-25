@@ -224,7 +224,7 @@ var game = function () {
     });
 
     //Pinchitos:
-    Q.Sprite.extend("Pinchitos", {
+    Q.Sprite.extend("Pinchito", {
         init: function(p) {
             this._super(p,{
             sheet: "pinchitos",
@@ -233,13 +233,15 @@ var game = function () {
             y: 1465,
             frame: 0,
             gravityY: 540,
-            lives:3,
+            lives:2,
             damage:5,
             vx: 25
             });
-            this.add("2d, aiBounce, animation");
+            //this.add("2d, aiBounce, animation");
+            this.add("2d, animation");
             this.play("pinchitos_normal");
             this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
+            //this.on(this.p.vy > 0, this, "changeGravity");
             //this.on("bump.bottom, bump.left, bump.right", this, "kill");
         }, 
 
@@ -248,8 +250,10 @@ var game = function () {
         },
         kill: function(collision){
             if(!collision.obj.isA("Samus")) return;
-            console.log("te di HEHE");
-            collision.obj.p.vy = -200;
+            console.log("Me di contra un pinchito");
+            Q.state.dec("energy", 7);
+            console.log(Q.state.p.energy);
+            collision.obj.p.vy = -5;
             collision.obj.p.vx = collision.normalX*-500;
             collision.obj.p.x += collision.normalX*-5;
             collision.obj.die(this.p.damage);
@@ -260,7 +264,67 @@ var game = function () {
                 this.destroy();
             }
             
+        },
+        step: function (dt) {
+            if(this.p.vx > 5 && (this.p.vy == 0 || this.p.gravityX == 1000)){
+                this.p.vy = 0;
+                this.p.gravityY = 900;
+                this.p.vx = 10;
+                this.p.gravityX = 0;
+                
+            }
+            else if(this.p.vy > 5 && (this.p.vx == 0 ||  this.p.gravityY == 900)){
+                this.p.vy = 25
+                this.p.gravityX = -900;
+                this.p.vx = 0.000000001;
+                this.p.gravityY = 0;
+            }
+            else if(this.p.vx < 5  && (this.p.vy == 0 || this.p.gravityX == -900) ){
+                this.p.vy = 0;
+                this.p.gravityY = -900;
+                this.p.vx = -10;
+                this.p.gravityX = 0;
+            }
+            
+            else if (this.p.vy < 5 && (this.p.vx == 0 || this.p.gravityY == -900)){
+                this.p.gravityY = 0;
+                this.p.vy = -25;
+                this.p.gravityX = 1000;
+                this.p.vx = 0;
+            }
+            
+            /*
+            if(this.p.vy > 50  && this.p.gravityY > 0){
+                //console.log("Estoy cayendo");
+
+                this.p.gravityX = -5;
+                this.p.vy = 100;
+                this.p.gravityY = 0;
+                this.p.vx = 0;
+            }
+            else if(this.p.vy == 0 && this.p.gravityY == 0){
+                //console.log("He vuelto a tocar el suelo");
+                this.p.gravityX = 0;
+                this.p.vy = 0;
+                this.p.gravityY = 540;
+                this.p.vx = 100;
+            }
+            else if(this.p.vx < 0 && this.p.gravityY == 0){
+                this.p.gravityX = 0;
+                this.p.vy = 0;
+                this.p.gravityY = -100;
+                this.p.vx = -100;
+            }
+            
+            elseif(this.p.vy > 0 && this.p.gravityY < 0){
+                this.p.gravityY = 0;
+                this.p.vx = 0;
+                this.p.vy = 100;
+                this.p.gravityX = +100;
+            }
+            */
         }
+
     });
 
     //PuertaIzquierda
@@ -394,21 +458,64 @@ var game = function () {
         }
     });
 
+    //Larva
+    Q.Sprite.extend("Larva", {
+        init: function(p) {
+          this._super(p,{
+          sheet: "larvas",
+          sprite: "larvas_anim",
+          //x:400+(Math.random()*200),
+          //y:250,
+          frame: 0,
+          vx: 60,
+          gravity: 0,
+          lives: 2,
+          });
+          this.add("2d, aiBounce, animation");
+          //this.play("goomba");
+          this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
+          //this.on("bump.bottom, bump.left, bump.right", this, "kill");
+          
+  
+        },
+        damage: function(dmg){
+            this.p.lives = this.p.lives - dmg;
+            if(this.p.lives == 0){
+                this.destroy();
+            }
+            
+        },
+        kill: function(collision){
+          if(!collision.obj.isA("Samus")) return;
+          //collision.obj.p.vy = -200;
+          //collision.obj.p.vx = collision.normalX*-500;
+          //collision.obj.p.x += collision.normalX*-5;
+          console.log("Me he chocado contra una larva");
+          Q.state.dec("energy", 7);
+          console.log(Q.state.p.energy);
+          if(Q.state.p.energy <= 0){
+              //Samus.destroy();
+          }
+          //collision.obj.die();
+        }
+      });
+
 
     Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
     "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
     "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3",
-    "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "./Enemys/pinchitos.png", "pinchitos.json"],
+    "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "larvas.png", "larvas.json", "larvas.tsx"],
         
         function () {
             
             Q.compileSheets("samus.png", "samus.json");
             Q.compileSheets("./Enemys/taladrillo.png", "taladrillo.json");
-            Q.compileSheets("./Enemys/pinchitos.png", "pinchitos.json");
+            Q.compileSheets("pinchitos.png", "pinchitos.json");
             Q.compileSheets("./titleScreens/pantallainicio/pantallainiciotitulo.png","title-screen.json");
             Q.compileSheets("./titleScreens/pantallainicio/pantallainiciostart.png", "title-start.json");
             Q.compileSheets("metroid_door.png", "puertas.json");
             Q.compileSheets("orbes.png", "orbe.json");
+            Q.compileSheets("larvas.png", "larvas.json");
 
             Q.state.set({ energy: 30,
                 pause:false,enJuego:false, //States
@@ -428,6 +535,10 @@ var game = function () {
                 shoot_l : {frames: [28]},
                 morir:{frames: [49,48],rate:1/50},
                 samusball:{frames: [11,12,13,14], rate:1/6}
+            });
+
+            Q.animations("larva_anim",{
+                larva: {frames: [0]}
             });
 
             Q.animations("title-screen",{
@@ -463,9 +574,7 @@ var game = function () {
 
                 var samus = new Q.Samus();
                 stage.insert(samus);
-                //stage.on('postrender',drawLines);
-                var pin = new Q.Pinchitos();
-                stage.insert(pin);
+                stage.on('postrender',drawLines)
 
                 stage.add("viewport").follow(samus, { x: true, y: false });
                 stage.viewport.scale = 3.05;
@@ -493,7 +602,7 @@ var game = function () {
 
                  Q.state.reset({energy: 30});
 
-                 //Q.debug = true;
+                 Q.debug = true;
             });
 
 
@@ -594,13 +703,12 @@ var game = function () {
                 container.fit(20);
             });
 
-            Q.scene("hud", function(stage){
+            Q.scene("hud", function(stage){        
                 var life_icon = stage.insert(new Q.UI.Button({
                     x:80,
                     y:70,
                     asset: 'energia.png'
-                }));
-                label_lives = new Q.UI.Text({
+                })); 
                     family: "Metroid-Fusion",
                     color: "white",
                     x:155, 
@@ -609,12 +717,13 @@ var game = function () {
                     label: "30"});
                 stage.insert(label_lives);
                 Q.state.on("change.energy", this, function(){
-                  label_lives.p.label = Q.state.get("energy");
+                    console.log(Q.state.get("energy"));
+                    //label_lives.p.label = Q.state.get("energy");
                 });
             });
 
             Q.stageScene("startGame");
-           
+            //Q.stageScene("map1");
 
             // Q.stageScene("map1", 1);
             // Q.stageScene("hud", 2);
