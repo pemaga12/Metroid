@@ -64,9 +64,11 @@ var game = function () {
     function setViewport(door){
         var samus = Q("Samus").first();
         if(door.p.nextRoom == "horizontal" && door.p.viewport == 2258){
-            console.log("sala con lava");
-            Q.audio.play("../sounds/lava.mp3");
+            console.log("sala con lava" );
+            Q.audio.play("../sounds/lava.mp3", {loop: true});
         }
+        else Q.audio.stop("../sounds/lava.mp3");
+
         if(door.p.nextRoom === "vertical"){
             door.stage.add("viewport").follow(samus, { x: false, y: true });
             door.stage.viewport.x = door.p.viewport;
