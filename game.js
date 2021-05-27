@@ -139,7 +139,7 @@ var game = function () {
                     this.p.ballmode = true;
                 }
             });
-            Q.input.on("action", this, function () {
+            Q.input.on("top", this, function () {
                 if(this.p.direction == "right"){
                     this.play("parado_up_r");
                     this.p.direction= "up";
@@ -299,8 +299,10 @@ var game = function () {
             if(this.p.lives_e == 0){
                 Q.audio.play("../sounds/gun.mp3");
                 this.destroy();
+                if((Math.floor(Math.random() * 100) + 1) < 50){
+                    Q.stage(1).insert(new Q.Vida({x: this.p.x, y: this.p.y}));
+                }
             }
-            
         },
     });
 
@@ -338,7 +340,11 @@ var game = function () {
             this.p.lives_e = this.p.lives_e - dmg;
             if(this.p.lives_e == 0){
                 this.destroy();
+                if((Math.floor(Math.random() * 100) + 1) < 50){
+                    Q.stage(1).insert(new Q.Vida({x: this.p.x, y: this.p.y}));
+                }
             }
+
             
         },
         step: function (dt) {
@@ -560,6 +566,9 @@ var game = function () {
             this.p.lives = this.p.lives - dmg;
             if(this.p.lives == 0){
                 this.destroy();
+                if((Math.floor(Math.random() * 100) + 1) < 50){
+                    Q.stage(1).insert(new Q.Vida({x: this.p.x, y: this.p.y}));
+                }
             }
             
         },
@@ -598,11 +607,44 @@ var game = function () {
         }
       });
 
+      //Vidas
+      Q.Sprite.extend("Vida", {
+        init: function(p) {
+          this._super(p,{
+          sheet: "vida",
+          sprite: "vida_anim",
+          scale: 1,
+          sensor: true,
+          taken: false
+          });
+          this.on("sensor", this, "hit");
+          this.add("tween","animation");
+          //this.play("vidas");
+          
+        },
+        hit: function(collision){
+  
+          if(this.taken) return;
+          if(!collision.isA("Samus")) return;
+          Q.state.inc("lives", 5);
+          this.taken = true;
+          this.destroy();
+          //Q.state.inc("lives", 1);
+          //console.log(Q.state.get("lives"));
+          //collision.p.vy = -400;
+          //Q.audio.play("1up.mp3");
+        //this.animate({y:this.p.y - 50, angle: 360}, 0.5, Q.Easing.Quadratic.In, {callback: function(){this.destroy();}});
+        }
+      
+      });
+
+
     Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
     "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
     "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3", "break_block.png",
      "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "lava.png", "lava.json", "larvas.png", "larvas.json", "larvas.tsx", "pinchitosPared.tsx",
-    "../sounds/lava.mp3","../sounds/item.mp3","../sounds/gun.mp3","../sounds/deathsound.mp3", "gameover.png", "game-over.json", "gameOver.tsx", "../sounds/ending_original.mp3"],
+    "../sounds/lava.mp3","../sounds/item.mp3","../sounds/gun.mp3","../sounds/deathsound.mp3", "gameover.png", "game-over.json", "gameOver.tsx", "../sounds/ending_original.mp3",
+"vidas.png","vidas.json"],
         function () {
             
             Q.compileSheets("samus.png", "samus.json");
@@ -615,6 +657,7 @@ var game = function () {
             Q.compileSheets("larvas.png", "larvas.json");
             Q.compileSheets("lava.png", "lava.json");
             Q.compileSheets("gameover.png", "game-over.json");
+            Q.compileSheets("vidas.png", "vidas.json");
 
 
             Q.state.set({ lives: 30,
@@ -672,6 +715,10 @@ var game = function () {
 
             Q.animations("lava_anim",{
                 lava: {frames: [0,1],rate: 1}
+            });
+
+            Q.animations("vida_anim",{
+                vidas: {frames: [0,1] ,rate: 1/2}
             });
 
             Q.scene("map1", function (stage) {
