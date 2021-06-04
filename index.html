@@ -1,35 +1,70 @@
 <!DOCTYPE HTML>
 <html lang="en">
-	<head>
-		<link src='Metroid-Fusion.ttf' rel="stylesheet" type="text/css"/>
-		<meta charset="UTF-8">
-			<title>Metroid</title>
-			<script src='lib/quintus.js'></script>
-			<script src='lib/quintus_sprites.js'></script>
-			<script src='lib/quintus_scenes.js'></script>
-			<script src='lib/quintus_2d.js'></script>
-			<script src='lib/quintus_input.js'></script>
-			<script src='lib/quintus_ui.js'></script>
-			<script src='lib/quintus_touch.js'></script>
-			<script src='lib/quintus_anim.js'></script>
-			<script src='lib/quintus_audio.js'></script>
-			<script src='lib/quintus_tmx.js'></script>
-			<script src='game.js'></script>
-		<style>
-	  		canvas { background-color:black;} 
-			  /* html{background-color: black;} */
-		@font-face {
-  			font-family: 'Metroid-Fusion';
- 			src: URL('Metroid-Fusion.ttf') format('truetype');
+
+<head>
+	<link src='Metroid-Fusion.ttf' rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="./css/main.css">
+	<meta charset="UTF-8">
+	<title>Metroid</title>
+	<script src='lib/quintus.js'></script>
+	<script src='lib/quintus_sprites.js'></script>
+	<script src='lib/quintus_scenes.js'></script>
+	<script src='lib/quintus_2d.js'></script>
+	<script src='lib/quintus_input.js'></script>
+	<script src='lib/quintus_ui.js'></script>
+	<script src='lib/quintus_touch.js'></script>
+	<script src='lib/quintus_anim.js'></script>
+	<script src='lib/quintus_audio.js'></script>
+	<script src='lib/quintus_tmx.js'></script>
+	<script src='game.js'></script>
+	<style>
+		canvas {
+			background-color: black;
 		}
-		</style>
-	</head>
-	<body>
-		<canvas id = 'myGame' width="768" height="720" > </canvas>
-		<script type="text/javascript">
-			window.onload = game;
-		</script>
-	</body>
-	
+
+		/* html{background-color: black;} */
+		@font-face {
+			font-family: 'Metroid-Fusion';
+			src: URL('Metroid-Fusion.ttf') format('truetype');
+		}
+	</style>
+</head>
+
+<body>
+	<canvas id='myGame' width="768" height="720"> </canvas>
+	<div class="controles">
+		<h1>Controles:</h1>
+		<div class="control">
+			<img style="width: 110px;height: 54px;" src="./images/movimiento.png">
+			<div class="texto">
+				<h2> Movimiento Izquierda / Derecha</h2>
+			</div>
+		</div>
+		<div class="control">
+			<img style="width: 220px;height: 54px;" src="./images/espacio.png">
+			<div class="texto">
+				<h2> Salto</h2>
+			</div>
+		</div>
+		<div class="control">
+			<img style="width: 55px;height: 54px;" src="./images/zeta.png">
+			<div class="texto">
+				<h2> Disparo</h2>
+			</div>
+		</div>
+		<div class="control">
+			<img style="width: 55px;height: 110px;" src="./images/apuntarBola.png">
+			<div class="texto">
+				<h2>Apuntar arriba</h2>
+				<h2>Convertirse en bola</h2>
+			</div>
+			
+		</div>
+	</div>
+	<script type="text/javascript">
+		window.onload = game;
+	</script>
+</body>
+
 
 </html>

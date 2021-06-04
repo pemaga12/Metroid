@@ -212,7 +212,7 @@ var game = function () {
                 if(Q.state.get("lives") < 0){
                     this.destroy();
                    Q.stageScene("gameOver", 2);
-                    Q.audio.play("../sounds/deathsound.mp3");
+                    //Q.audio.play("../sounds/deathsound.mp3");
                 } 
             }
         }
@@ -297,7 +297,7 @@ var game = function () {
         damage: function(dmg){
             this.p.lives_e = this.p.lives_e - dmg;
             if(this.p.lives_e == 0){
-                Q.audio.play("../sounds/gun.mp3");
+                //Q.audio.play("../sounds/gun.mp3");
                 this.destroy();
                 if((Math.floor(Math.random() * 100) + 1) < 50){
                     Q.stage(1).insert(new Q.Vida({x: this.p.x, y: this.p.y}));

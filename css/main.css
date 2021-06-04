@@ -1,0 +1,35 @@
+/* *{
+    border: 1px solid red;
+} */
+
+.controles{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid gray;
+    background-color: rgba(128, 128, 128, 0.36);
+    border-radius: 3px;
+    width: 50%;
+    margin-top: 20px;
+    margin-left: 25%;
+}
+
+.control{
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    justify-content: space-between;
+    margin: 5px 30px;
+}
+
+.columna{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.texto{
+   width: 50%;
+    /* width: fit-content; */
+}
