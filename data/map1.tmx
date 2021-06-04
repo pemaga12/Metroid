@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="203" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="280">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="203" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="282">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="54" columns="9">
   <image source="../images/tiles_metroid_!6x16.png" width="144" height="96"/>
   <tile id="34">
@@ -224,187 +224,84 @@
    </properties>
   </tile>
  </tileset>
- <objectgroup id="4" name="objetos" offsetx="0" offsety="0.25">
-  <object id="9" gid="58" x="1024" y="2144" width="16" height="48">
+ <tileset firstgid="137" name="taladrillo" tilewidth="16" tileheight="24" spacing="2" tilecount="15" columns="15">
+  <image source="../images/taladrillo.png" trans="ff00ff" width="270" height="24"/>
+  <tile id="0">
    <properties>
-    <property name="nextRoom" value="vertical"/>
-    <property name="viewport" type="int" value="1060"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="10" gid="55" x="1072" y="2144" width="16" height="48">
+  </tile>
+  <tile id="1">
    <properties>
-    <property name="nextRoom" value="horizontal"/>
-    <property name="viewport" type="int" value="2044"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="11" gid="55" x="1328.13" y="2144" width="16" height="48">
+  </tile>
+  <tile id="2">
    <properties>
-    <property name="nextRoom" value="vertical"/>
-    <property name="viewport" type="int" value="1060"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="12" gid="58" x="1279.88" y="2144" width="16" height="48">
+  </tile>
+  <tile id="3">
    <properties>
-    <property name="nextRoom" value="horizontal"/>
-    <property name="viewport" type="int" value="2020"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="13" gid="58" x="1280" y="1424" width="16" height="48">
+  </tile>
+  <tile id="4">
    <properties>
-    <property name="nextRoom" value="horizontal"/>
-    <property name="viewport" type="int" value="1300"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="14" gid="55" x="1328" y="1424" width="16" height="48">
+  </tile>
+  <tile id="5">
    <properties>
-    <property name="nextRoom" value="vertical"/>
-    <property name="viewport" type="int" value="1060"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="15" gid="55" x="2144" y="1424" width="16" height="48"/>
-  <object id="16" gid="58" x="2096" y="1424" width="16" height="48"/>
-  <object id="17" gid="55" x="2400" y="1904" width="16" height="48"/>
-  <object id="18" gid="58" x="2352" y="1904" width="16" height="48"/>
-  <object id="19" gid="58" x="1024" y="2384" width="16" height="48">
+  </tile>
+  <tile id="6">
    <properties>
-    <property name="nextRoom" value="vertical"/>
-    <property name="viewport" type="int" value="1060"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="20" gid="55" x="1072" y="2384" width="16" height="48">
+  </tile>
+  <tile id="7">
    <properties>
-    <property name="nextRoom" value="horizontal"/>
-    <property name="viewport" type="int" value="2258"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="21" gid="55" x="1072" y="1424" width="16" height="48">
+  </tile>
+  <tile id="8">
    <properties>
-    <property name="nextRoom" value="horizontal"/>
-    <property name="viewport" type="int" value="1300"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="22" gid="58" x="1023.82" y="1424.18" width="16" height="48">
+  </tile>
+  <tile id="9">
    <properties>
-    <property name="nextRoom" value="vertical"/>
-    <property name="viewport" type="int" value="1060"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="25" gid="55" x="272" y="2384" width="16" height="48">
+  </tile>
+  <tile id="10">
    <properties>
-    <property name="nextRoom" value="vertical"/>
-    <property name="viewport" type="int" value="0"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="26" gid="55" x="272" y="2160" width="16" height="48">
+  </tile>
+  <tile id="11">
    <properties>
-    <property name="nextRoom" value="vertical"/>
-    <property name="viewport" type="int" value="0"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="27" gid="58" x="224" y="2384" width="16" height="48">
+  </tile>
+  <tile id="12">
    <properties>
-    <property name="nextRoom" value="horizontal"/>
-    <property name="viewport" type="int" value="2258"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="28" gid="58" x="224" y="2160" width="16" height="48">
+  </tile>
+  <tile id="13">
    <properties>
-    <property name="nextRoom" value="horizontal"/>
-    <property name="viewport" type="int" value="2044"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="32" gid="62" x="480" y="2128" width="16" height="16">
+  </tile>
+  <tile id="14">
    <properties>
-    <property name="frame" value="1"/>
+    <property name="Class" value="Taladrillo"/>
    </properties>
-  </object>
-  <object id="33" gid="61" x="256" y="1456" width="16" height="16"/>
-  <object id="34" gid="65" x="1104" y="1760" width="16" height="8"/>
-  <object id="35" gid="65" x="1248" y="1728" width="16" height="8"/>
-  <object id="36" gid="65" x="1248" y="1840" width="16" height="8"/>
-  <object id="37" gid="65" x="1232" y="1936" width="16" height="8"/>
-  <object id="38" gid="65" x="720.5" y="1441" width="16" height="8"/>
-  <object id="41" gid="70" x="944" y="1504" width="16" height="16"/>
-  <object id="53" gid="102" x="1184" y="1584" width="16" height="16"/>
-  <object id="54" gid="102" x="1120" y="1648" width="16" height="16"/>
-  <object id="58" gid="102" x="1120" y="2080" width="16" height="16"/>
-  <object id="59" gid="102" x="512" y="1360" width="16" height="16"/>
-  <object id="61" gid="70" x="320" y="1504" width="16" height="16"/>
-  <object id="62" gid="70" x="986.5" y="1500.5" width="16" height="16"/>
-  <object id="64" gid="102" x="608" y="1360" width="16" height="16"/>
-  <object id="66" gid="70" x="208" y="1472" width="16" height="16"/>
-  <object id="153" gid="134" x="848" y="2496" width="16" height="25"/>
-  <object id="156" gid="134" x="576" y="2256" width="16" height="25"/>
-  <object id="157" gid="134" x="560" y="2256" width="16" height="25"/>
-  <object id="158" gid="134" x="544" y="2256" width="16" height="25"/>
-  <object id="159" gid="134" x="480" y="2256" width="16" height="25"/>
-  <object id="160" gid="134" x="528" y="2256" width="16" height="25"/>
-  <object id="161" gid="134" x="512" y="2256" width="16" height="25"/>
-  <object id="162" gid="134" x="496" y="2256" width="16" height="25"/>
-  <object id="163" gid="134" x="464" y="2256" width="16" height="25"/>
-  <object id="164" gid="134" x="448" y="2256" width="16" height="25"/>
-  <object id="165" gid="134" x="432" y="2256" width="16" height="25"/>
-  <object id="166" gid="134" x="416" y="2256" width="16" height="25"/>
-  <object id="167" gid="134" x="400" y="2256" width="16" height="25"/>
-  <object id="168" gid="134" x="384" y="2256" width="16" height="25"/>
-  <object id="169" gid="134" x="320" y="2464" width="16" height="25"/>
-  <object id="170" gid="134" x="336" y="2464" width="16" height="25"/>
-  <object id="171" gid="134" x="352" y="2464" width="16" height="25"/>
-  <object id="172" gid="134" x="368" y="2464" width="16" height="25"/>
-  <object id="173" gid="134" x="448" y="2464" width="16" height="25"/>
-  <object id="174" gid="134" x="432" y="2464" width="16" height="25"/>
-  <object id="175" gid="134" x="496" y="2464" width="16" height="25"/>
-  <object id="176" gid="134" x="512" y="2464" width="16" height="25"/>
-  <object id="177" gid="134" x="576" y="2464" width="16" height="25"/>
-  <object id="178" gid="134" x="592" y="2464" width="16" height="25"/>
-  <object id="179" gid="134" x="656" y="2464" width="16" height="25"/>
-  <object id="180" gid="134" x="672" y="2464" width="16" height="25"/>
-  <object id="181" gid="134" x="848" y="2256" width="16" height="25"/>
-  <object id="184" gid="134" x="416" y="2464" width="16" height="25"/>
-  <object id="185" gid="134" x="400" y="2464" width="16" height="25"/>
-  <object id="186" gid="134" x="384" y="2464" width="16" height="25"/>
-  <object id="239" gid="136" x="592" y="2160" width="16" height="16"/>
-  <object id="240" gid="136" x="608" y="2160" width="16" height="16"/>
-  <object id="241" gid="136" x="624" y="2160" width="16" height="16"/>
-  <object id="242" gid="136" x="640" y="2160" width="16" height="16"/>
-  <object id="243" gid="136" x="656" y="2160" width="16" height="16"/>
-  <object id="244" gid="136" x="672" y="2160" width="16" height="16"/>
-  <object id="245" gid="136" x="688" y="2160" width="16" height="16"/>
-  <object id="246" gid="136" x="704" y="2160" width="16" height="16"/>
-  <object id="247" gid="136" x="720" y="2160" width="16" height="16"/>
-  <object id="248" gid="136" x="736" y="2160" width="16" height="16"/>
-  <object id="249" gid="136" x="768" y="2160" width="16" height="16"/>
-  <object id="250" gid="136" x="784" y="2160" width="16" height="16"/>
-  <object id="251" gid="136" x="752" y="2160" width="16" height="16"/>
-  <object id="252" gid="136" x="592" y="2192" width="16" height="16"/>
-  <object id="253" gid="136" x="592" y="2208" width="16" height="16"/>
-  <object id="254" gid="136" x="608" y="2192" width="16" height="16"/>
-  <object id="255" gid="136" x="608" y="2192" width="16" height="16"/>
-  <object id="256" gid="136" x="624" y="2192" width="16" height="16"/>
-  <object id="257" gid="136" x="640" y="2192" width="16" height="16"/>
-  <object id="258" gid="136" x="640" y="2208" width="16" height="16"/>
-  <object id="259" gid="136" x="624" y="2208" width="16" height="16"/>
-  <object id="260" gid="136" x="608" y="2208" width="16" height="16"/>
-  <object id="261" gid="136" x="656" y="2208" width="16" height="16"/>
-  <object id="262" gid="136" x="672" y="2208" width="16" height="16"/>
-  <object id="263" gid="136" x="688" y="2208" width="16" height="16"/>
-  <object id="264" gid="136" x="704" y="2208" width="16" height="16"/>
-  <object id="265" gid="136" x="720" y="2208" width="16" height="16"/>
-  <object id="266" gid="136" x="752" y="2208" width="16" height="16"/>
-  <object id="267" gid="136" x="768" y="2208" width="16" height="16"/>
-  <object id="268" gid="136" x="784" y="2208" width="16" height="16"/>
-  <object id="269" gid="136" x="736" y="2208" width="16" height="16"/>
-  <object id="270" gid="136" x="1648" y="1504" width="16" height="16"/>
-  <object id="271" gid="136" x="1664" y="1504" width="16" height="16"/>
-  <object id="272" gid="136" x="1680" y="1504" width="16" height="16"/>
-  <object id="273" gid="136" x="1696" y="1504" width="16" height="16"/>
-  <object id="274" gid="136" x="1712" y="1504" width="16" height="16"/>
-  <object id="275" gid="136" x="1728" y="1504" width="16" height="16"/>
-  <object id="276" gid="136" x="1728" y="1504" width="16" height="16"/>
-  <object id="277" gid="136" x="1744" y="1504" width="16" height="16"/>
-  <object id="278" gid="136" x="1760" y="1504" width="16" height="16"/>
-  <object id="279" gid="136" x="1776" y="1504" width="16" height="16"/>
- </objectgroup>
+  </tile>
+ </tileset>
  <layer id="1" name="colision" width="203" height="200">
   <properties>
    <property name="collision" value="true"/>
@@ -17310,7 +17207,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="11"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -17513,7 +17410,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="11"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -17716,7 +17613,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="11"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -17919,7 +17816,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="11"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -18122,7 +18019,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="11"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -18325,7 +18222,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="11"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -18528,7 +18425,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="11"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -18731,7 +18628,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="11"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -18934,7 +18831,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="11"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -19137,7 +19034,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="11"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -41012,4 +40909,186 @@
    <tile gid="10"/>
   </data>
  </layer>
+ <objectgroup id="4" name="objetos" offsetx="0" offsety="0.25">
+  <object id="9" gid="58" x="1024" y="2144" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="vertical"/>
+    <property name="viewport" type="int" value="1060"/>
+   </properties>
+  </object>
+  <object id="10" gid="55" x="1072" y="2144" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="horizontal"/>
+    <property name="viewport" type="int" value="2044"/>
+   </properties>
+  </object>
+  <object id="11" gid="55" x="1328.13" y="2144" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="vertical"/>
+    <property name="viewport" type="int" value="1060"/>
+   </properties>
+  </object>
+  <object id="12" gid="58" x="1279.88" y="2144" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="horizontal"/>
+    <property name="viewport" type="int" value="2020"/>
+   </properties>
+  </object>
+  <object id="13" gid="58" x="1280" y="1424" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="horizontal"/>
+    <property name="viewport" type="int" value="1300"/>
+   </properties>
+  </object>
+  <object id="14" gid="55" x="1328" y="1424" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="vertical"/>
+    <property name="viewport" type="int" value="1060"/>
+   </properties>
+  </object>
+  <object id="15" gid="55" x="2144" y="1424" width="16" height="48"/>
+  <object id="16" gid="58" x="2096" y="1424" width="16" height="48"/>
+  <object id="17" gid="55" x="2400" y="1904" width="16" height="48"/>
+  <object id="18" gid="58" x="2352" y="1904" width="16" height="48"/>
+  <object id="19" gid="58" x="1024" y="2384" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="vertical"/>
+    <property name="viewport" type="int" value="1060"/>
+   </properties>
+  </object>
+  <object id="20" gid="55" x="1072" y="2384" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="horizontal"/>
+    <property name="viewport" type="int" value="2258"/>
+   </properties>
+  </object>
+  <object id="21" gid="55" x="1072" y="1424" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="horizontal"/>
+    <property name="viewport" type="int" value="1300"/>
+   </properties>
+  </object>
+  <object id="22" gid="58" x="1023.82" y="1424.18" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="vertical"/>
+    <property name="viewport" type="int" value="1060"/>
+   </properties>
+  </object>
+  <object id="25" gid="55" x="272" y="2384" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="vertical"/>
+    <property name="viewport" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="26" gid="55" x="272" y="2160" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="vertical"/>
+    <property name="viewport" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="27" gid="58" x="224" y="2384" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="horizontal"/>
+    <property name="viewport" type="int" value="2258"/>
+   </properties>
+  </object>
+  <object id="28" gid="58" x="224" y="2160" width="16" height="48">
+   <properties>
+    <property name="nextRoom" value="horizontal"/>
+    <property name="viewport" type="int" value="2044"/>
+   </properties>
+  </object>
+  <object id="32" gid="62" x="480" y="2128" width="16" height="16">
+   <properties>
+    <property name="frame" value="1"/>
+   </properties>
+  </object>
+  <object id="33" gid="61" x="256" y="1456" width="16" height="16"/>
+  <object id="34" gid="65" x="1104" y="1760" width="16" height="8"/>
+  <object id="35" gid="65" x="1248" y="1728" width="16" height="8"/>
+  <object id="36" gid="65" x="1248" y="1840" width="16" height="8"/>
+  <object id="37" gid="65" x="1232" y="1936" width="16" height="8"/>
+  <object id="38" gid="65" x="720.5" y="1441" width="16" height="8"/>
+  <object id="41" gid="70" x="944" y="1504" width="16" height="16"/>
+  <object id="53" gid="102" x="1184" y="1584" width="16" height="16"/>
+  <object id="54" gid="102" x="1120" y="1648" width="16" height="16"/>
+  <object id="58" gid="102" x="1120" y="2080" width="16" height="16"/>
+  <object id="59" gid="102" x="512" y="1360" width="16" height="16"/>
+  <object id="61" gid="70" x="320" y="1504" width="16" height="16"/>
+  <object id="62" gid="70" x="986.5" y="1500.5" width="16" height="16"/>
+  <object id="64" gid="102" x="608" y="1360" width="16" height="16"/>
+  <object id="66" gid="70" x="208" y="1472" width="16" height="16"/>
+  <object id="153" gid="134" x="848" y="2496" width="16" height="25"/>
+  <object id="156" gid="134" x="576" y="2256" width="16" height="25"/>
+  <object id="157" gid="134" x="560" y="2256" width="16" height="25"/>
+  <object id="158" gid="134" x="544" y="2256" width="16" height="25"/>
+  <object id="159" gid="134" x="480" y="2256" width="16" height="25"/>
+  <object id="160" gid="134" x="528" y="2256" width="16" height="25"/>
+  <object id="161" gid="134" x="512" y="2256" width="16" height="25"/>
+  <object id="162" gid="134" x="496" y="2256" width="16" height="25"/>
+  <object id="163" gid="134" x="464" y="2256" width="16" height="25"/>
+  <object id="164" gid="134" x="448" y="2256" width="16" height="25"/>
+  <object id="165" gid="134" x="432" y="2256" width="16" height="25"/>
+  <object id="166" gid="134" x="416" y="2256" width="16" height="25"/>
+  <object id="167" gid="134" x="400" y="2256" width="16" height="25"/>
+  <object id="168" gid="134" x="384" y="2256" width="16" height="25"/>
+  <object id="169" gid="134" x="320" y="2464" width="16" height="25"/>
+  <object id="170" gid="134" x="336" y="2464" width="16" height="25"/>
+  <object id="171" gid="134" x="352" y="2464" width="16" height="25"/>
+  <object id="172" gid="134" x="368" y="2464" width="16" height="25"/>
+  <object id="173" gid="134" x="448" y="2464" width="16" height="25"/>
+  <object id="174" gid="134" x="432" y="2464" width="16" height="25"/>
+  <object id="175" gid="134" x="496" y="2464" width="16" height="25"/>
+  <object id="176" gid="134" x="512" y="2464" width="16" height="25"/>
+  <object id="177" gid="134" x="576" y="2464" width="16" height="25"/>
+  <object id="178" gid="134" x="592" y="2464" width="16" height="25"/>
+  <object id="179" gid="134" x="656" y="2464" width="16" height="25"/>
+  <object id="180" gid="134" x="672" y="2464" width="16" height="25"/>
+  <object id="181" gid="134" x="848" y="2256" width="16" height="25"/>
+  <object id="184" gid="134" x="416" y="2464" width="16" height="25"/>
+  <object id="185" gid="134" x="400" y="2464" width="16" height="25"/>
+  <object id="186" gid="134" x="384" y="2464" width="16" height="25"/>
+  <object id="239" gid="136" x="592" y="2160" width="16" height="16"/>
+  <object id="240" gid="136" x="608" y="2160" width="16" height="16"/>
+  <object id="241" gid="136" x="624" y="2160" width="16" height="16"/>
+  <object id="242" gid="136" x="640" y="2160" width="16" height="16"/>
+  <object id="243" gid="136" x="656" y="2160" width="16" height="16"/>
+  <object id="244" gid="136" x="672" y="2160" width="16" height="16"/>
+  <object id="245" gid="136" x="688" y="2160" width="16" height="16"/>
+  <object id="246" gid="136" x="704" y="2160" width="16" height="16"/>
+  <object id="247" gid="136" x="720" y="2160" width="16" height="16"/>
+  <object id="248" gid="136" x="736" y="2160" width="16" height="16"/>
+  <object id="249" gid="136" x="768" y="2160" width="16" height="16"/>
+  <object id="250" gid="136" x="784" y="2160" width="16" height="16"/>
+  <object id="251" gid="136" x="752" y="2160" width="16" height="16"/>
+  <object id="252" gid="136" x="592" y="2192" width="16" height="16"/>
+  <object id="253" gid="136" x="592" y="2208" width="16" height="16"/>
+  <object id="254" gid="136" x="608" y="2192" width="16" height="16"/>
+  <object id="255" gid="136" x="608" y="2192" width="16" height="16"/>
+  <object id="256" gid="136" x="624" y="2192" width="16" height="16"/>
+  <object id="257" gid="136" x="640" y="2192" width="16" height="16"/>
+  <object id="258" gid="136" x="640" y="2208" width="16" height="16"/>
+  <object id="259" gid="136" x="624" y="2208" width="16" height="16"/>
+  <object id="260" gid="136" x="608" y="2208" width="16" height="16"/>
+  <object id="261" gid="136" x="656" y="2208" width="16" height="16"/>
+  <object id="262" gid="136" x="672" y="2208" width="16" height="16"/>
+  <object id="263" gid="136" x="688" y="2208" width="16" height="16"/>
+  <object id="264" gid="136" x="704" y="2208" width="16" height="16"/>
+  <object id="265" gid="136" x="720" y="2208" width="16" height="16"/>
+  <object id="266" gid="136" x="752" y="2208" width="16" height="16"/>
+  <object id="267" gid="136" x="768" y="2208" width="16" height="16"/>
+  <object id="268" gid="136" x="784" y="2208" width="16" height="16"/>
+  <object id="269" gid="136" x="736" y="2208" width="16" height="16"/>
+  <object id="270" gid="136" x="1648" y="1504" width="16" height="16"/>
+  <object id="271" gid="136" x="1664" y="1504" width="16" height="16"/>
+  <object id="272" gid="136" x="1680" y="1504" width="16" height="16"/>
+  <object id="273" gid="136" x="1696" y="1504" width="16" height="16"/>
+  <object id="274" gid="136" x="1712" y="1504" width="16" height="16"/>
+  <object id="275" gid="136" x="1728" y="1504" width="16" height="16"/>
+  <object id="276" gid="136" x="1728" y="1504" width="16" height="16"/>
+  <object id="277" gid="136" x="1744" y="1504" width="16" height="16"/>
+  <object id="278" gid="136" x="1760" y="1504" width="16" height="16"/>
+  <object id="279" gid="136" x="1776" y="1504" width="16" height="16"/>
+  <object id="281" gid="137" x="800" y="1344" width="16" height="24"/>
+ </objectgroup>
 </map>

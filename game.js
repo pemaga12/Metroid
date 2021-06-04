@@ -257,7 +257,71 @@ var game = function () {
     });
 
     //Taladrillo
-    Q.Sprite.extend("Taladrillo",{
+    Q.Sprite.extend("Taladrillo", {
+        init: function(p) {
+            this._super(p,{
+            sheet: "taladrillo",
+            sprite: "taladrillo_anim",
+            frame: 0,
+            gravity: 0,
+            lives_e:2,
+            damage:7,
+            vx:0,
+            vy:0,
+            dt: 5,
+            fall:false,
+            });
+            //this.add("2d, aiBounce, animation");
+            this.add("2d, animation");
+            this.play("parado");
+            this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
+
+            // this.on( (this.x < samus.x && this.x + 100 < samus.x)||(this.x < samus.x && this.x + 100 < samus.x) , this, "changeGravity");
+            //this.on("bump.bottom, bump.left, bump.right", this, "kill");
+        }, 
+        kill: function(collision){
+            if(!collision.obj.isA("Samus")) return;
+            console.log("Me di contra un taladrillo");
+            collision.obj.p.vy = -5;
+            collision.obj.p.vx = collision.normalX*-500;
+            collision.obj.p.x += collision.normalX*-5;
+            collision.obj.die(this.p.damage);
+            this.damage(2);
+        },
+        step: function(dt){
+            var samus = Q("Samus").first();
+            
+            if (samus === undefined) return;
+
+            if(this.p.fall && this.p.vy === 0){
+                this.damage(2);
+            }
+
+            if(samus.p.x > (this.p.x - 75) && samus.p.x < (this.p.x + 75)){
+                this.p.gravity = 0.5;
+                this.p.fall = true;
+                this.play("caida");
+                
+            }
+            if(this.p.gravity !== 0 && this.p.x > samus.p.x){
+                this.p.gravityX = -350;
+                return;
+            }
+            if(this.p.gravity !== 0 && this.p.x < samus.p.x){
+                this.p.gravityX = 350;
+                return;
+            }
+        },
+        damage: function(dmg){
+            this.p.lives_e = this.p.lives_e - dmg;
+            if(this.p.lives_e == 0){
+                //Q.audio.play("../sounds/gun.mp3");
+                this.destroy();
+                if((Math.floor(Math.random() * 100) + 1) < 50){
+                    Q.stage(1).insert(new Q.Vida({x: this.p.x, y: this.p.y}));
+                }
+            }
+        },
 
     });
 
@@ -639,7 +703,7 @@ var game = function () {
       });
 
 
-    Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "./Enemys/taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
+    Q.load(["bg.png", "tiles_metroid_!6x16.png","title-screen.gif", "taladrillo.png", "taladrillo.json","samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3", 
     "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
     "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3", "break_block.png",
      "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "lava.png", "lava.json", "larvas.png", "larvas.json", "larvas.tsx", "pinchitosPared.tsx",
@@ -648,7 +712,7 @@ var game = function () {
         function () {
             
             Q.compileSheets("samus.png", "samus.json");
-            Q.compileSheets("./Enemys/taladrillo.png", "taladrillo.json");
+            Q.compileSheets("taladrillo.png", "taladrillo.json");
             Q.compileSheets("pinchitos.png", "pinchitos.json");
             Q.compileSheets("./titleScreens/pantallainicio/pantallainiciotitulo.png","title-screen.json");
             Q.compileSheets("./titleScreens/pantallainicio/pantallainiciostart.png", "title-start.json");
@@ -683,6 +747,11 @@ var game = function () {
 
             Q.animations("larva_anim",{
                 larva: {frames: [0]}
+            });
+
+            Q.animations("taladrillo_anim",{
+                parado: {frames: [0,1,0,2],rate: 1},
+                caida: {frames: [0,1,0,2],rate: 1/2}
             });
 
             Q.animations("title-screen",{
