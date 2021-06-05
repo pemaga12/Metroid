@@ -679,11 +679,12 @@ var game = function () {
           sprite: "vida_anim",
           scale: 1,
           sensor: true,
-          taken: false
+          taken: false,
+          cont_Time: 0,
           });
           this.on("sensor", this, "hit");
           this.add("tween","animation");
-          //this.play("vidas");
+          //this.play("vida");
           
         },
         hit: function(collision){
@@ -693,11 +694,17 @@ var game = function () {
           Q.state.inc("lives", 5);
           this.taken = true;
           this.destroy();
-          //Q.state.inc("lives", 1);
-          //console.log(Q.state.get("lives"));
-          //collision.p.vy = -400;
-          //Q.audio.play("1up.mp3");
-        //this.animate({y:this.p.y - 50, angle: 360}, 0.5, Q.Easing.Quadratic.In, {callback: function(){this.destroy();}});
+        },
+        step: function(dt){
+            if(this.p.time + dt < 0.3){
+                this.p.time += dt;
+                return;
+            }
+            this.p.time = 0;
+            if(this.p.frame === 0) this.p.frame = 1;
+            else{
+                this.p.frame = 0;
+            }
         }
       
       });
@@ -708,7 +715,7 @@ var game = function () {
     "metroid_door.png", "puertas.json","energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3", "break_block.png",
      "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "lava.png", "lava.json", "larvas.png", "larvas.json", "larvas.tsx", "pinchitosPared.tsx",
     "../sounds/lava.mp3","../sounds/item.mp3","../sounds/gun.mp3","../sounds/deathsound.mp3", "gameover.png", "game-over.json", "gameOver.tsx", "../sounds/ending_original.mp3",
-"vidas.png","vidas.json"],
+"vida.png","vida.json"],
         function () {
             
             Q.compileSheets("samus.png", "samus.json");
@@ -721,7 +728,7 @@ var game = function () {
             Q.compileSheets("larvas.png", "larvas.json");
             Q.compileSheets("lava.png", "lava.json");
             Q.compileSheets("gameover.png", "game-over.json");
-            Q.compileSheets("vidas.png", "vidas.json");
+            Q.compileSheets("vida.png", "vida.json");
 
 
             Q.state.set({ lives: 30,
