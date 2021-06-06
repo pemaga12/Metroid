@@ -3,6 +3,7 @@
 } */
 .font{
     font-family: "Metroid-Fusion";
+    color: white;
 }
 
 .controles{
@@ -49,9 +50,17 @@
 h1{
     font-family: 'Metroid-Fusion';
 	src: URL('Metroid-Fusion.ttf') format('truetype');
+    color: white;
 }
 
 h2{
     font-family: 'Metroid-Fusion';
 	src: URL('Metroid-Fusion.ttf') format('truetype');
+    color: white;
+}
+
+img{
+    -moz-box-shadow: 2.5px 2.5px 2.5px white;
+    -webkit-box-shadow: 2.5px 2.5px 2.5px white;
+    box-shadow: 2.5px 2.5px 2.5px white;
 }
