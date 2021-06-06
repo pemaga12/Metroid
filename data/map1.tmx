@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="203" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="282">
+<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="203" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="283">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="54" columns="9">
   <image source="../images/tiles_metroid_!6x16.png" width="144" height="96"/>
   <tile id="34">
@@ -302,6 +302,7 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="152" source="ascensor.tsx"/>
  <layer id="1" name="colision" width="203" height="200">
   <properties>
    <property name="collision" value="true"/>
@@ -27799,10 +27800,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -28002,10 +28003,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -28205,10 +28206,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -28408,10 +28409,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -28611,10 +28612,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -28814,10 +28815,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -29017,10 +29018,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -29220,10 +29221,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -29423,10 +29424,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -29626,10 +29627,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -29829,10 +29830,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -30032,10 +30033,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -30235,10 +30236,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -30438,10 +30439,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -30641,10 +30642,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>
@@ -30844,10 +30845,10 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="6"/>
    <tile/>
    <tile/>
    <tile/>

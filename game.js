@@ -768,13 +768,38 @@ var game = function () {
 
     });
 
+    //Ascensor
+    Q.Sprite.extend("Ascensor", {
+         init: function (p) {
+             this._super(p, {
+                 sheet: "ascensor",
+                 //sprite: "ascensor_anim",
+                 //damage: 7,
+                 frame: 0,
+             });
+             this.add("2d, animation");
+             this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
+             //this.on("bump.bottom, bump.left, bump.right", this, "kill");
+
+
+         },
+         kill: function (collision) {
+             if (!collision.obj.isA("Samus")) return;
+             //collision.obj.p.vy = -200;
+             //collision.obj.p.vx = collision.normalX*-500;
+             //collision.obj.p.x += collision.normalX*-5;
+             console.log("Me he caido en un ascensor");
+             //collision.obj.die(this.p.damage);
+         }
+    });
+    //
 
     Q.load(["bg.png", "tiles_metroid_!6x16.png", "title-screen.gif", "taladrillo.png", "taladrillo.json", "samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3",
         "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
         "metroid_door.png", "puertas.json", "energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3", "break_block.png",
         "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "lava.png", "lava.json", "larvas.png", "larvas.json", "larvas.tsx", "pinchitosPared.tsx",
         "../sounds/lava.mp3", "../sounds/item.mp3", "../sounds/gun.mp3", "../sounds/deathsound.mp3", "gameover.png", "game-over.json", "gameOver.tsx", "../sounds/ending_original.mp3",
-        "vida.png", "vida.json", "explosion.png", "explosion.json"],
+        "vida.png", "vida.json", "explosion.png", "explosion.json", "ascensor.png", "ascensor.tsx", "ascensor.json"],
         function () {
 
             Q.compileSheets("samus.png", "samus.json");
@@ -789,7 +814,7 @@ var game = function () {
             Q.compileSheets("gameover.png", "game-over.json");
             Q.compileSheets("vida.png", "vida.json");
             Q.compileSheets("explosion.png", "explosion.json");
-
+            Q.compileSheets("ascensor.png", "ascensor.json");
 
             Q.state.set({
                 lives: 30,
@@ -812,6 +837,13 @@ var game = function () {
                 morir: { frames: [49, 48], rate: 1 / 50 },
                 samusball: { frames: [11, 12, 13, 14], rate: 1 / 6 }
             });
+
+            /*
+            Q.animations("ascensor_anim", {
+                ascensor:{frames: [0]}
+            });
+            */
+            
 
             Q.animations("larva_anim", {
                 larva: { frames: [0] }
