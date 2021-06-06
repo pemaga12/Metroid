@@ -1058,7 +1058,7 @@ var game = function () {
 
                 stage.add("viewport").follow(samus, { x: true, y: false });
                 stage.viewport.scale = 3.1;
-                stage.viewport.y = 1350;
+                stage.viewport.y = 1355;
                 stage.viewport.x = 400;
 
                 console.log("Ya he generado el titleScreen");
