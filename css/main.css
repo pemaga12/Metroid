@@ -1,6 +1,9 @@
 /* *{
     border: 1px solid red;
 } */
+.font{
+    font-family: "Metroid-Fusion";
+}
 
 .controles{
     text-align: center;
@@ -32,4 +35,23 @@
 .texto{
    width: 50%;
     /* width: fit-content; */
+}
+
+.wallpaper{
+    background-image: url('../images/bckgrnd.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: auto;
+    min-width: 800px;
+}
+
+h1{
+    font-family: 'Metroid-Fusion';
+	src: URL('Metroid-Fusion.ttf') format('truetype');
+}
+
+h2{
+    font-family: 'Metroid-Fusion';
+	src: URL('Metroid-Fusion.ttf') format('truetype');
 }
