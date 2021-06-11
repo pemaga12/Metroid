@@ -129,13 +129,14 @@ var game = function () {
             this._super(p, {
                 sheet: "samus",
                 sprite: "samus_anim",
-                x: 570,
+                x: 1920, //x:570
                 y: 1470,
                 frame: 0,
                 scale: 1,
                 gravityY: 540,
                 canBecomeBall: false,
                 canBreakWall: false,
+                canRedDoors : false,
                 canBeHit: true,
                 ballmode: false,
                 paused: false,
@@ -645,6 +646,112 @@ var game = function () {
         }
     });
 
+    //PuertaIzquierdaRoja
+    Q.Sprite.extend("PuertaRojaIzquierda", {
+        init: function (p) {
+            this._super(p, {
+
+                sheet: "puertaRoja",
+                sprite: "puerta_roja_anim",
+                frame: 3,
+                scale: 1,
+                gravity: 0,
+                is_open: false,
+                lives: 2
+
+            });
+            this.add("2d, animation");
+            //this.on("sensor", this, "open");
+            this.on("bump.left", this, "open");
+        },
+
+        open: function (collision) {
+            if (collision.obj.isA("Samus") && this.p.is_open) {
+                console.log("he tocado una puerta");
+                this.play("puerta_izquierda");
+
+                Q.audio.play("../sounds/go_through_door.mp3");
+                collision.obj.p.x += 81;
+
+                setViewport(this);
+
+                var that = this;
+                setTimeout(function () {
+                    that.play("puerta_iz_arreglando");
+                }, 5000);
+            }
+        },
+
+        damage: function (dmg) {
+            var samus = Q("Samus").first();
+            //if(samus.p.canRedDoors == false){return;}
+            this.p.lives = this.p.lives - dmg;
+            if (this.p.lives == 1) {
+                this.play("puerta_iz_rompiendo");
+            }
+            else if (this.p.lives == 0) {
+                this.play("puerta_rota");
+                this.p.is_open = true;
+                var that = this;
+                setTimeout(function () {
+                    that.p.lives = 2;
+                    that.p.is_open = false;
+                    that.play("puerta_iz_arreglando");
+                }, 5000);
+            }
+        }
+    });
+
+    //PuertaDerechaRoja
+    Q.Sprite.extend("PuertaRojaDerecha", {
+        init: function (p) {
+            this._super(p, {
+                sheet: "puertaRoja",
+                sprite: "puerta_roja_anim",
+                frame: 0,
+                scale: 1,
+                gravity: 0,
+                is_open: false,
+                lives: 2
+            });
+            this.add("2d, animation");
+            this.on("bump.right", this, "open");
+        },
+
+        open: function (collision) {
+            if (collision.obj.isA("Samus") && this.p.is_open) {
+                console.log("he tocado una puerta");
+                this.play("puerta_derecha");
+                Q.audio.play("../sounds/go_through_door.mp3");
+                collision.obj.p.x -= 81;
+
+                setViewport(this);
+
+                var that = this;
+                setTimeout(function () {
+                    that.play("puerta_der_arreglando");
+                }, 5000);
+            }
+        },
+        damage: function (dmg) {
+            var samus = Q("Samus").first();
+            //if(samus.p.canRedDoors == false){return;}
+            this.p.lives = this.p.lives - dmg;
+            if (this.p.lives == 1) {
+                this.play("puerta_der_rompiendo");
+            }
+            else if (this.p.lives == 0) {
+                this.play("puerta_rota");
+                this.p.is_open = true;
+                var that = this;
+                setTimeout(function () {
+                    that.p.lives = 2;
+                    that.p.is_open = false;
+                    that.play("puerta_der_arreglando");
+                }, 5000);
+            }
+        }
+    });
 
     Q.Sprite.extend("Orbe", {
         init: function (p) {
@@ -667,7 +774,8 @@ var game = function () {
             this.taken = true;
             if (this.p.type == "ball") collision.p.canBecomeBall = true;
             else if (this.p.type == "breakWall") collision.p.canBreakWall = true;
-            console.log("He cogido el orbe ", collision.p.canBecomeBall);
+            else if (this.p.type == "redDoors") collision.p.canRedDoors = true;
+            console.log("He cogido el orbe de doors ", collision.p.canRedDoors);
             Q.audio.stop();
             Q.audio.play("../sounds/item.mp3");
 
@@ -891,8 +999,78 @@ var game = function () {
          },
          damage: function (dmg) {
          }
+
+
     });
-    //
+
+    //MotherBrain
+
+    Q.Sprite.extend("MotherBrain", {
+        init: function (p) {
+            this._super(p, {
+                sheet: "motherbrain",
+                sprite: "motherbrain_anim",
+                frame: 0,
+                gravity: 0,
+                damage: 10,
+                lives: 1,
+            });
+            this.add("2d, animation");
+            this.play("motherbrain");
+            this.on("bump.left, bump.right", this, "kill");
+
+
+        },
+        damage: function (dmg) {
+            console.log(this.p.x);
+            this.p.lives = this.p.lives - dmg;
+            this.p.x=2705;
+            if (this.p.lives == 0) {
+                this.destroy();
+                Q.stage(1).insert(new Q.Explosion({ x: this.p.x, y: this.p.y }));
+                if ((Math.floor(Math.random() * 100) + 1) < 50) {
+                    var that = this;
+                    setTimeout(function () {
+                        Q.stage(1).insert(new Q.Vida({ x: that.p.x, y: that.p.y }));
+                    }, 150);
+                }
+            }
+
+        },
+        kill: function (collision) {
+            if (!collision.obj.isA("Samus")) return;
+            Q.audio.play("../sounds/hit.mp3");
+            collision.obj.p.vy = -200;
+            collision.obj.p.vx = collision.normalX*-500;
+            collision.obj.p.x += collision.normalX*-5;
+            console.log("Me he chocado contra motherbrain");
+            collision.obj.die(this.p.damage);
+        }
+
+    });
+
+    //MotherBrain
+
+    Q.Sprite.extend("MotherBrainDoor", {
+        init: function (p) {
+            this._super(p, {
+                asset: "motherbraindoor.png",
+                //sensor: true
+                collision: true
+            });
+            this.add("2d, tween");
+            this.on("bump.left, bump.right", this, "hit");
+        },
+        hit: function (collision) {
+            if (this.taken) return;
+            if (!collision.obj.isA("Bala")) return;
+            this.taken = true;
+            this.destroy();
+        },
+        damage: function (dmg) {
+        }
+        
+    });
 
     Q.load(["bg.png", "tiles_metroid_!6x16.png", "title-screen.gif", "taladrillo.png", "taladrillo.json", "samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3",
         "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
@@ -909,6 +1087,7 @@ var game = function () {
             Q.compileSheets("./titleScreens/pantallainicio/pantallainiciotitulo.png", "title-screen.json");
             Q.compileSheets("./titleScreens/pantallainicio/pantallainiciostart.png", "title-start.json");
             Q.compileSheets("metroid_door.png", "puertas.json");
+            Q.compileSheets("metroidreddoor.png", "puertaRoja.json");
             Q.compileSheets("orbes.png", "orbe.json");
             Q.compileSheets("larvas.png", "larvas.json");
             Q.compileSheets("lava.png", "lava.json");
@@ -964,6 +1143,11 @@ var game = function () {
             Q.animations("start-screen", {
                 animacion2: { frames: [1, 2, 3, 4], rate: 1, next: "fin" },
                 fin: { frames: [4] }
+            }); 
+
+            Q.animations("motherbrain_anim", {
+                motherbrain: { frames: [0, 1, 2, 3], rate: 1},
+                motherbraindamage: { frames: [4], rate:1, next:"motherbrain" }
             });
 
             Q.animations("puerta_anim", {
@@ -977,6 +1161,19 @@ var game = function () {
                 puerta_iz_arreglando: { frames: [5, 4, 3], rate: 1 / 6, next: "puerta_iz_arreglada" },
                 puerta_der_arreglando: { frames: [0, 1, 2], rate: 1 / 6, next: "puerta_der_arreglada" }
             });
+
+            Q.animations("puerta_roja_anim", {
+                puerta_derecha: { frames: [0, 1, 2], rate: 1 / 6, next: "puerta_rota" },
+                puerta_rota: { frames: [2] },
+                puerta_izquierda: { frames: [3, 4, 5], rate: 1 / 6, next: "puerta_rota" },
+                puerta_iz_arreglada: { frames: [3] },
+                puerta_iz_rompiendo: { frames: [4] },
+                puerta_der_rompiendo: { frames: [1] },
+                puerta_der_arreglada: { frames: [0] },
+                puerta_iz_arreglando: { frames: [5, 4, 3], rate: 1 / 6, next: "puerta_iz_arreglada" },
+                puerta_der_arreglando: { frames: [0, 1, 2], rate: 1 / 6, next: "puerta_der_arreglada" }
+            });
+
 
             Q.animations('pinchitos_anim', {
                 pinchitos_normal: { frames: [0, 1], rate: 1 / 3 },

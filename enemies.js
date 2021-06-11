@@ -136,12 +136,12 @@ var game = function () {
 
         Q.compileSheets("pinchitos.png", "pinchitos.json");
 
-            Q.animations('pinchitos_anim', {
-                pinchitos_normal: { frames: [0, 1], rate: 1 / 3 },
-                pinchitos_derecha: { frames: [6, 7], rate: 1 / 3 },
-                pinchitos_izquierda: { frames: [2, 3], rate: 1 / 3 },
-                pinchitos_debajo: { frames: [4, 5], rate: 1 / 3 }
-            });
+        Q.animations('pinchitos_anim', {
+            pinchitos_normal: { frames: [0, 1], rate: 1 / 3 },
+            pinchitos_derecha: { frames: [6, 7], rate: 1 / 3 },
+            pinchitos_izquierda: { frames: [2, 3], rate: 1 / 3 },
+            pinchitos_debajo: { frames: [4, 5], rate: 1 / 3 }
+        });
 
     });
 
