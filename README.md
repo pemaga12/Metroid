@@ -6,22 +6,23 @@
 * Victor Velázquez Cabrera
 * Eva Verdú Rodríguez
 
-# Mecanicas implementadas
-## Samus
-### Disparos ❎
-### Movimiento ✅
-Samus puede moverse en ambas direcciones y saltar hacia ambos lados. Además en función de cuánto tiempo mantengas pulsado el botón de salto lo hará en mayor o menor medida.
-## Enemigos
-### Pinchitos ❎
-### Libelulas ❎
-### Medusas ❎
-## Puertas ❎
-## Power ups ❎
+Memoria del proyecto:
 
-# Fallos a arreglar
-* Los pinchitos son de 17x16px
-  * No entrarían en una casilla de 1x1
-* Las animaciones de Samus no están bien
-* Samus se queda atascado en sitios donde no debería
-* No funciona la animación hacia la izquierda
+1. Diseño del juego: se puede confeccionar a partir del documento de concepto entregado anteriormente, ampliando con las nuevas mecánicas añadidas y explicando mínimamente en qué consisten. 
+
+    1. Objetivo del juego: cómo se gana, cómo se pierde.
+	El objetivo del juego es conseguir llegar a la sala final del jefe y derrotarlo.
+	Se pierde cuando Samus se queda sin vidas.
+
+    2. Principales mecánicas
+	Samus: Tiene varias mecanicas que se van consiguiendo conforme se con distintos power ups.
+		* Al inicio del juego Samus puede moverse en todas direcciones, saltar y disparar.
+		* Con los power ups se pueden conseguir las siguientes mecanicas
+    3. Personajes
+
+3. Diseño de la implementación: arquitectura y principales componentes.
+
+5. Equipo de trabajo y reparto de tareas: descripción del trabajo realizado por cada uno de los integrantes del grupo y carga de trabajo realizada (0%-100%)
+
+6. Fuentes y referencias: Referencias a todos los assets utilizados en la realización del juego. 
 

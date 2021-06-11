@@ -645,6 +645,7 @@ var game = function () {
         }
     });
 
+
     Q.Sprite.extend("Orbe", {
         init: function (p) {
             this._super(p, {
@@ -899,7 +900,7 @@ var game = function () {
         "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "lava.png", "lava.json", "larvas.png", "larvas.json", "larvas.tsx", "pinchitosPared.tsx",
         "../sounds/lava.mp3", "../sounds/item.mp3", "../sounds/gun.mp3", "../sounds/deathsound.mp3", "gameover.png", "game-over.json", "gameOver.tsx", "../sounds/ending_original.mp3",
         "vida.png", "vida.json", "explosion.png", "explosion.json", "ascensor.png", "ascensor.tsx", "ascensor.json", "pause.json", "pause.tsx", "pause.png", "../sounds/pause.mp3",
-        "../sounds/hit.mp3"],
+        "../sounds/hit.mp3", "motherbrainbase.png" , "motherbrainup.png" , "motherbraindoor.png" , "motherbrain.png" , "metroidreddoor.png", "motherbrain.json"],
         function () {
 
             Q.compileSheets("samus.png", "samus.json");
@@ -916,6 +917,7 @@ var game = function () {
             Q.compileSheets("explosion.png", "explosion.json");
             Q.compileSheets("ascensor.png", "ascensor.json");
             Q.compileSheets("pause.png", "pause.json");
+            Q.compileSheets("motherbrain.png", "motherbrain.json");
 
             Q.state.set({
                 lives: 30,
