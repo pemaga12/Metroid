@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.5.0" orientation="orthogonal" renderorder="right-down" width="203" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="323">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="203" height="200" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="323">
  <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="54" columns="9">
   <image source="../images/tiles_metroid_!6x16.png" width="144" height="96"/>
   <tile id="34">
@@ -41008,7 +41008,7 @@
   <object id="18" gid="58" x="2816" y="1904" width="16" height="48">
    <properties>
     <property name="nextRoom" value="vertical"/>
-    <property name="viewport " value="2840"/>
+    <property name="viewport" value="2850"/>
    </properties>
   </object>
   <object id="19" gid="58" x="1024" y="2384" width="16" height="48">

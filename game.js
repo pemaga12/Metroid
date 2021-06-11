@@ -566,11 +566,12 @@ var game = function () {
         open: function (collision) {
             if (collision.obj.isA("Samus") && this.p.is_open) {
                 console.log("he tocado una puerta");
+                
                 this.play("puerta_izquierda");
 
                 Q.audio.play("../sounds/go_through_door.mp3");
                 collision.obj.p.x += 81;
-
+                //console.log(collision.obj.p.x);
                 setViewport(this);
 
                 var that = this;
