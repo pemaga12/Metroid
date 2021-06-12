@@ -69,6 +69,25 @@ var game = function () {
         }
     });
 
+    //Win screen
+    Q.Sprite.extend("WinScreen", {
+        init: function (p) {
+            this._super(p, {
+                sheet: "win-screen",
+                sprite: "win-screen",
+                x: 570,
+                y: 1470,
+                frame: 0,
+                scale: 1,
+                gravityY: 0
+            });
+            this.add("animation");
+        },
+        playAnimation: function () {
+           //this.play("win_animation");
+        }
+    });
+
     //game-over
     Q.Sprite.extend("GameOver", {
         init: function (p) {
@@ -296,7 +315,8 @@ var game = function () {
                 Q.state.dec("lives", damage);
                 if (Q.state.get("lives") < 0) {
                     this.destroy();
-                    Q.stageScene("gameOver", 2);
+                    Q.stageScene("winGame", 2);
+                    //Q.stageScene("gameOver", 2);
                     //Q.audio.play("../sounds/deathsound.mp3");
                 }
             }
@@ -1026,6 +1046,7 @@ var game = function () {
             console.log(this.p.x);
             this.p.lives = this.p.lives - dmg;
             this.p.x=2705;
+            this.play("motherbraindamage");
             if (this.p.lives == 0) {
                 this.destroy();
                 Q.stage(1).insert(new Q.Explosion({ x: this.p.x, y: this.p.y }));
@@ -1073,13 +1094,31 @@ var game = function () {
         
     });
 
+    Q.Sprite.extend("WinZone", {
+      init: function(p) {
+        this._super(p,{
+            asset:"winzone.png"
+        });
+        this.add("2d");
+        //this.add("2d, aiBounce, animation");
+        this.on("bump.top, bump.bottom, bump.left, bump.right", this, "win");
+      },
+      win: function(collision){
+        if(!collision.obj.isA("Samus")) return;
+        Q.stageScene("winGame", 2);
+        Q.audio.stop();
+        collision.obj.destroy();
+        this.destroy();
+      },
+    });
+
     Q.load(["bg.png", "tiles_metroid_!6x16.png", "title-screen.gif", "taladrillo.png", "taladrillo.json", "samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3",
         "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
         "metroid_door.png", "puertas.json", "energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3", "break_block.png",
         "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "lava.png", "lava.json", "larvas.png", "larvas.json", "larvas.tsx", "pinchitosPared.tsx",
         "../sounds/lava.mp3", "../sounds/item.mp3", "../sounds/gun.mp3", "../sounds/deathsound.mp3", "gameover.png", "game-over.json", "gameOver.tsx", "../sounds/ending_original.mp3",
         "vida.png", "vida.json", "explosion.png", "explosion.json", "ascensor.png", "ascensor.tsx", "ascensor.json", "pause.json", "pause.tsx", "pause.png", "../sounds/pause.mp3",
-        "../sounds/hit.mp3", "motherbrainbase.png" , "motherbrainup.png" , "motherbraindoor.png" , "motherbrain.png" , "metroidreddoor.png", "motherbrain.json"],
+        "../sounds/hit.mp3", "motherbrainbase.png" , "motherbrainup.png" , "motherbraindoor.png" , "motherbrain.png" , "metroidreddoor.png", "motherbrain.json","gamewin.png","win-screen.json","winzone.png"],
         function () {
 
             Q.compileSheets("samus.png", "samus.json");
@@ -1087,6 +1126,7 @@ var game = function () {
             Q.compileSheets("pinchitos.png", "pinchitos.json");
             Q.compileSheets("./titleScreens/pantallainicio/pantallainiciotitulo.png", "title-screen.json");
             Q.compileSheets("./titleScreens/pantallainicio/pantallainiciostart.png", "title-start.json");
+            Q.compileSheets("gamewin.png", "win-screen.json");
             Q.compileSheets("metroid_door.png", "puertas.json");
             Q.compileSheets("metroidreddoor.png", "puertaRoja.json");
             Q.compileSheets("orbes.png", "orbe.json");
@@ -1144,6 +1184,10 @@ var game = function () {
             Q.animations("start-screen", {
                 animacion2: { frames: [1, 2, 3, 4], rate: 1, next: "fin" },
                 fin: { frames: [4] }
+            });
+
+            Q.animations("win-screen", {
+                win_animation: { frames: [0, 1], rate: 1 }
             }); 
 
             Q.animations("motherbrain_anim", {
@@ -1271,6 +1315,50 @@ var game = function () {
 
             });
 
+            Q.scene('winGame', function (stage) {
+                console.log("Ganaste el juego");
+                Q.audio.stop();
+                Q.audio.play("../sounds/ending_original.mp3");
+                Q.stageTMX("map1.tmx", stage);
+
+                var win = new Q.WinScreen();
+                stage.insert(win);
+                win.playAnimation();
+
+
+                stage.add("viewport").follow(win, { x: true, y: false });
+                stage.viewport.scale = 3.1;
+                stage.viewport.y = 1355;
+                stage.viewport.x = 400;
+
+                setTimeout(function () {
+                    Q.clearStages();
+                    Q.stageScene("startGame", 1);
+                    //Q.stageScene("hud", 2);
+                    //Q.stageScene("gameOver", 1);
+                }, 10000);
+
+                console.log("Ya he generado el gameWin");
+
+                /*
+                var container = stage.insert(new Q.UI.Container({
+                    x: Q.width / 2, y: Q.height / 2, fill: "rgba(0,0,0,0.5)"
+                }));
+                var button2 = container.insert(new Q.UI.Button({
+                    x: 0, y: 0, fill: "#CCCCCC", label: "Play Again"
+                }));
+                var label = container.insert(new Q.UI.Text({
+                    x: 10, y: -10 - button2.p.h, label: "You Won!"
+                }));
+                button2.on("click", function () {
+                    Q.clearStages();
+                    Q.stageScene('mainTitle');
+                });
+                container.fit(20);
+                */
+
+            });
+
             Q.scene("gameOver", function (stage) {
 
                 console.log("Se acabo el juego");
@@ -1333,7 +1421,7 @@ var game = function () {
 
                 stage.insert(button);
             });
-
+/*
             Q.scene('endGame', function (stage) {
                 var container = stage.insert(new Q.UI.Container({
                     x: Q.width / 2,
@@ -1358,25 +1446,8 @@ var game = function () {
                     Q.stageScene("mainTitle", 1);
                 });
                 container.fit(20);
-            });
-
-            Q.scene('winGame', function (stage) {
-                var container = stage.insert(new Q.UI.Container({
-                    x: Q.width / 2, y: Q.height / 2, fill: "rgba(0,0,0,0.5)"
-                }));
-                var button2 = container.insert(new Q.UI.Button({
-                    x: 0, y: 0, fill: "#CCCCCC", label: "Play Again"
-                }));
-                var label = container.insert(new Q.UI.Text({
-                    x: 10, y: -10 - button2.p.h, label: "You Won!"
-                }));
-                button2.on("click", function () {
-                    Q.clearStages();
-                    Q.stageScene('mainTitle');
-                });
-                container.fit(20);
-            });
-
+            });  
+*/
             Q.stageScene("startGame");
 
         });
