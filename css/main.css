@@ -34,7 +34,7 @@
 
 
 .texto{
-   width: 50%;
+   width: 65%;
     /* width: fit-content; */
 }
 
@@ -59,8 +59,14 @@ h2{
     color: white;
 }
 
-img{
+.teclas{
     -moz-box-shadow: 2.5px 2.5px 2.5px white;
     -webkit-box-shadow: 2.5px 2.5px 2.5px white;
     box-shadow: 2.5px 2.5px 2.5px white;
+}
+
+.orbes{
+    width: 55px;
+    height: 54px;
+    margin-left: 10%;
 }
