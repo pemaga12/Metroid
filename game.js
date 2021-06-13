@@ -208,14 +208,14 @@ var game = function () {
             this._super(p, {
                 sheet: "samus",
                 sprite: "samus_anim",
-                x: 1536, //x:570
-                y: 1470, //y:1470
+                x: 570, //x:570 //1536
+                y: 1470, 
                 frame: 0,
                 scale: 1,
                 gravityY: 540,
-                canBecomeBall: true,
-                canBreakWall: true,
-                canRedDoors : true,
+                canBecomeBall: false,
+                canBreakWall: false,
+                canRedDoors : false,
                 opacity:1,
                 reloadTime:1,
                 reload:1,
