@@ -42,6 +42,16 @@ var game = function () {
         }
     });
 
+    Q.component("canions_default", {
+        extend:{
+            step: function (dt) {
+            this.p.reload -= dt;
+            this.shot_ball();
+            },
+            damage: function (dmg) {
+            }
+        }
+    });
 ////////////////////////////////////////////////////////////////////////
 ////Pantallas, Draw Lines y otros
 ////////////////////////////////////////////////////////////////////////
@@ -613,7 +623,7 @@ var game = function () {
                 frame: 0,
                 gravity: 0,
                 damage: 10,
-                lives: 100,
+                lives: 50,
             });
             this.add("2d, animation");
             this.play("motherbrain");
@@ -1062,6 +1072,102 @@ var game = function () {
         
     });
 
+    //Cañones: Cañón para abajo y cañones diagonales
+    Q.Sprite.extend("Canion", {
+        init: function (p) {
+            this._super(p, {
+                asset: "canion1.png",
+                collision: true,
+                frequency: 4,
+                reload:2,
+                gravity:0
+            });
+            this.add("2d, canions_default");
+        },
+        shot_ball: function (dmg) {
+            if (this.p.reload < 0) {
+                this.p.reload = this.p.frequency;
+                Q.stage().insert(new Q.CanionBall({ x: this.p.x, y: this.p.y + this.p.h,init: this.p.x }));
+            } 
+        }
+    });
+
+    Q.Sprite.extend("Canion2", {
+        init: function (p) {
+            this._super(p, {
+                asset: "canion2.png",
+                collision: true,
+                frequency: 5,
+                reload:5,
+                gravity:0
+            });
+            this.add("2d, canions_default");
+        },
+        shot_ball: function (dmg) {
+            if (this.p.reload < 0) {
+                this.p.reload = this.p.frequency;
+                Q.stage().insert(new Q.CanionBall({ x: this.p.x+ this.p.w, y: this.p.y + this.p.h, vx:50,init: this.p.x }));
+            } 
+        }
+    });
+
+    Q.Sprite.extend("Canion3", {
+        init: function (p) {
+            this._super(p, {
+                asset: "canion3.png",
+                collision: true,
+                frequency: 6,
+                reload:3,
+                gravity:0
+            });
+            this.add("2d, canions_default");
+        },
+        shot_ball: function (dmg) {
+            if (this.p.reload < 0) {
+                this.p.reload = this.p.frequency;
+                Q.stage().insert(new Q.CanionBall({ x: this.p.x - this.p.w, y: this.p.y + this.p.h, vx:-50,init: this.p.x }));
+            } 
+        }
+    });
+
+    // Bala de cañón
+
+    Q.Sprite.extend("CanionBall", {
+        init: function (p) {
+            this._super(p, {
+                asset: "shot_canion.png",
+                damage: 5,
+                init: 0,
+                vy: 50,
+                vx: 0,
+                destruction_time: 3,
+                reload: 3, 
+                max: 120
+            });
+
+            this.on("hit", this, "collision");
+
+        },
+
+        collision: function (collision) {
+            if (collision) {
+                if(collision.obj.isA("Samus")){
+                    collision.obj.die(this.p.damage);
+                }
+            }
+            this.destroy();
+        },
+
+        step: function (dt) {
+            this.p.reload -= dt;
+            this.p.y += this.p.vy * dt;
+            this.p.x += this.p.vx * dt;
+            if (this.p.reload < 0) {
+                this.p.reload = this.p.destruction_time;
+                this.destroy();
+            } 
+        }
+    });
 
     Q.load(["bg.png", "tiles_metroid_!6x16.png", "title-screen.gif", "taladrillo.png", "taladrillo.json", "samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3",
         "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
@@ -1069,7 +1175,8 @@ var game = function () {
         "../sounds/shot.mp3", "../sounds/go_through_door.mp3", "shot.png", "orbes.tsx", "orbe.json", "orbes.png", "pinchitos.png", "pinchitos.json", "lava.png", "lava.json", "larvas.png", "larvas.json", "larvas.tsx", "pinchitosPared.tsx",
         "../sounds/lava.mp3", "../sounds/item.mp3", "../sounds/gun.mp3", "../sounds/deathsound.mp3", "gameover.png", "game-over.json", "gameOver.tsx", "../sounds/ending_original.mp3",
         "vida.png", "vida.json", "explosion.png", "explosion.json", "ascensor.png", "ascensor.tsx", "ascensor.json", "pause.json", "pause.tsx", "pause.png", "../sounds/pause.mp3",
-        "../sounds/hit.mp3", "motherbrainbase.png" , "motherbrainup.png" , "motherbraindoor.png" , "motherbrain.png" , "metroidreddoor.png", "motherbrain.json","gamewin.png","win-screen.json","winzone.png"],
+        "../sounds/hit.mp3", "motherbrainbase.png" , "motherbrainup.png" , "motherbraindoor.png" , "motherbrain.png" , "metroidreddoor.png", "motherbrain.json","gamewin.png","win-screen.json","winzone.png",
+        "canion1.png","canion2.png","canion3.png","shot_canion.png"],
         function () {
 
             Q.compileSheets("samus.png", "samus.json");
