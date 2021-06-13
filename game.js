@@ -9,7 +9,43 @@ var game = function () {
         })
         .controls().controls().enableSound().touch();
 
-    
+////////////////////////////////////////////////////////////////////////
+////Componentes
+////////////////////////////////////////////////////////////////////////
+
+    Q.component("enemy_default", {
+        extend:{
+
+            kill: function (collision) {
+                if (!collision.obj.isA("Samus")) return;
+                Q.audio.play("../sounds/hit.mp3");
+                //collision.obj.p.vy = -5;
+                //collision.obj.p.vx = collision.normalX * -500;
+                //collision.obj.p.x += collision.normalX * -5;
+                collision.obj.die(this.p.damage);
+            },
+
+            damage: function (dmg) {
+                this.p.lives = this.p.lives - dmg;
+                if (this.p.lives == 0) {
+                    this.destroy();
+                    Q.stage(1).insert(new Q.Explosion({ x: this.p.x, y: this.p.y }));
+                    if ((Math.floor(Math.random() * 100) + 1) < 50) {
+                        var that = this;
+                        setTimeout(function () {
+                            Q.stage(1).insert(new Q.Vida({ x: that.p.x, y: that.p.y }));
+                        }, 150);
+                    }
+                }
+            }
+
+        }
+    });
+
+////////////////////////////////////////////////////////////////////////
+////Pantallas, Draw Lines y otros
+////////////////////////////////////////////////////////////////////////
+
     //pause-screen
     Q.Sprite.extend("PauseScreen", {
         init: function (p) {
@@ -22,11 +58,8 @@ var game = function () {
                 scale: 1,
                 gravityY: 0
             });
-            //this.add("animation");
-            //this.play("title-screen");
         },
         playAnimation: function () {
-            //this.play("animacion");
         }
     });
 
@@ -43,7 +76,6 @@ var game = function () {
                 gravityY: 0
             });
             this.add("animation");
-            //this.play("title-screen");
         },
         playAnimation: function () {
             this.play("animacion");
@@ -100,12 +132,8 @@ var game = function () {
                 scale: 1,
                 gravityY: 0
             });
-            //this.add("animation");
-            //this.play("title-screen");
         },
-        playAnimation: function () {
-            //this.play("animacion");
-        }
+        playAnimation: function () {}
     });
 
     function drawLines(ctx) {
@@ -142,21 +170,45 @@ var game = function () {
 
     }
 
-    //Samus
+    Q.Sprite.extend("WinZone", {
+      init: function(p) {
+        this._super(p,{
+            asset:"winzone.png"
+        });
+        this.add("2d");
+        //this.add("2d, aiBounce, animation");
+        this.on("bump.top, bump.bottom, bump.left, bump.right", this, "win");
+      },
+      win: function(collision){
+        if(!collision.obj.isA("Samus")) return;
+        Q.stageScene("winGame", 2);
+        Q.audio.stop();
+        collision.obj.destroy();
+        this.destroy();
+      }
+
+    });
+
+////////////////////////////////////////////////////////////////////////
+////Samus
+////////////////////////////////////////////////////////////////////////
+
     Q.Sprite.extend("Samus", {
         init: function (p) {
             this._super(p, {
                 sheet: "samus",
                 sprite: "samus_anim",
-                x: 1920, //x:570
-                y: 1470,
+                x: 1536, //x:570
+                y: 1470, //y:1470
                 frame: 0,
                 scale: 1,
                 gravityY: 540,
-                canBecomeBall: false,
-                canBreakWall: false,
-                canRedDoors : false,
-                canBeHit: true,
+                canBecomeBall: true,
+                canBreakWall: true,
+                canRedDoors : true,
+                opacity:1,
+                reloadTime:1,
+                reload:1,
                 ballmode: false,
                 paused: false,
                 actualViewport: "horizontal",
@@ -250,7 +302,17 @@ var game = function () {
             Q.input.on("fire", this, "shoot");
 
         },
+
         step: function (dt) {
+
+            this.p.reload -= dt;
+            if(this.p.reload < 0){
+                this.p.opacity = 1;
+            }
+            else{
+                this.p.opacity = 0.75;
+            }
+
             if (this.p.vx > 0) {
                 if (this.p.ballmode) {
                     this.play("samusball");
@@ -278,14 +340,8 @@ var game = function () {
                     }
                 }
             }
-
-            if (!this.p.canBeHit) {
-                var that = this;
-                setInterval(function () {
-                    that.p.canBeHit = true;
-                }, 1000);
-            }
         },
+
         shoot: function () {
             Q.audio.play("../sounds/shot.mp3");
 
@@ -309,15 +365,14 @@ var game = function () {
 
         die: function (damage) {
             console.log(Q.state.get("lives"));
-            if (this.p.canBeHit) {
-                this.p.canBeHit = false;
+            if (this.p.reload < 0) {
+                this.p.reload = this.p.reloadTime;
                 this.play("morir");
                 Q.state.dec("lives", damage);
                 if (Q.state.get("lives") < 0) {
                     this.destroy();
-                    Q.stageScene("winGame", 2);
-                    //Q.stageScene("gameOver", 2);
-                    //Q.audio.play("../sounds/deathsound.mp3");
+                    Q.stageScene("gameOver", 2);
+                    Q.audio.play("../sounds/deathsound.mp3");
                 }
             }
         }
@@ -361,6 +416,10 @@ var game = function () {
         }
     });
 
+////////////////////////////////////////////////////////////////////////
+////Enemigos
+////////////////////////////////////////////////////////////////////////
+
     //Taladrillo
     Q.Sprite.extend("Taladrillo", {
         init: function (p) {
@@ -369,28 +428,18 @@ var game = function () {
                 sprite: "taladrillo_anim",
                 frame: 0,
                 gravity: 0,
-                lives_e: 2,
+                lives: 2,
                 damage: 7,
                 vx: 0,
                 vy: 0,
                 dt: 5,
                 fall: false,
             });
-            //this.add("2d, aiBounce, animation");
-            this.add("2d, animation");
+            this.add("2d, animation, enemy_default");
             this.play("parado");
             this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
         },
-        kill: function (collision) {
-            if (!collision.obj.isA("Samus")) return;
-            Q.audio.play("../sounds/hit.mp3");
-            console.log("Me di contra un taladrillo");
-            collision.obj.p.vy = -5;
-            collision.obj.p.vx = collision.normalX * -500;
-            collision.obj.p.x += collision.normalX * -5;
-            collision.obj.die(this.p.damage);
-            this.damage(2);
-        },
+    
         step: function (dt) {
             var samus = Q("Samus").first();
 
@@ -415,20 +464,6 @@ var game = function () {
                 return;
             }
         },
-        damage: function (dmg) {
-            this.p.lives_e = this.p.lives_e - dmg;
-            if (this.p.lives_e == 0) {
-                //Q.audio.play("../sounds/gun.mp3");
-                this.destroy();
-                Q.stage(1).insert(new Q.Explosion({ x: this.p.x, y: this.p.y }));
-                if ((Math.floor(Math.random() * 100) + 1) < 50) {
-                    var that = this;
-                    setTimeout(function () {
-                        Q.stage(1).insert(new Q.Vida({ x: that.p.x, y: that.p.y }));
-                    }, 150);
-                }
-            }
-        },
 
     });
 
@@ -442,12 +477,11 @@ var game = function () {
                 y: 1465,
                 frame: 0,
                 gravityY: 540,
-                lives_e: 2,
+                lives: 2,
                 damage: 7,
                 vx: 50
             });
-            //this.add("2d, aiBounce, animation");
-            this.add("2d, animation, aiBounce");
+            this.add("2d, animation, aiBounce, enemy_default");
             this.play("pinchitos_normal");
             this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
             //this.on(this.p.vy > 0, this, "changeGravity");
@@ -456,32 +490,7 @@ var game = function () {
 
         onTop: function (collision) {
             this.destroy();
-        },
-        kill: function (collision) {
-            if (!collision.obj.isA("Samus")) return;
-            console.log("Me di contra un pinchito");
-            Q.audio.play("../sounds/hit.mp3");
-            collision.obj.p.vy = -5;
-            collision.obj.p.vx = collision.normalX * -500;
-            collision.obj.p.x += collision.normalX * -5;
-            collision.obj.die(this.p.damage);
-        },
-        damage: function (dmg) {
-            this.p.lives_e = this.p.lives_e - dmg;
-            if (this.p.lives_e == 0) {
-                //Q.audio.play("../sounds/gun.mp3");
-                this.destroy();
-                Q.stage(1).insert(new Q.Explosion({ x: this.p.x, y: this.p.y }));
-                if ((Math.floor(Math.random() * 100) + 1) < 50) {
-                    var that = this;
-                    setTimeout(function () {
-                        Q.stage(1).insert(new Q.Vida({ x: that.p.x, y: that.p.y }));
-                    }, 150);
-                }
-
-
-            }
-        },
+        }
     });
 
     //PinchitosPared:
@@ -494,12 +503,12 @@ var game = function () {
                 y: 1465,
                 frame: 0,
                 gravityY: 540,
-                lives_e: 2,
+                lives: 2,
                 damage: 7,
                 vx: 25
             });
             //this.add("2d, aiBounce, animation");
-            this.add("2d, animation");
+            this.add("2d, animation, enemy_default");
             this.play("pinchitos_normal");
             this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
             //this.on(this.p.vy > 0, this, "changeGravity");
@@ -509,27 +518,7 @@ var game = function () {
         // onTop: function(collision){
         //     this.destroy();
         // },
-        kill: function (collision) {
-            if (!collision.obj.isA("Samus")) return;
-            console.log("Me di contra un pinchito");
-            Q.audio.play("../sounds/hit.mp3");
-            collision.obj.die(this.p.damage);
-        },
-        damage: function (dmg) {
-            this.p.lives_e = this.p.lives_e - dmg;
-            if (this.p.lives_e == 0) {
-                this.destroy();
-                Q.stage(1).insert(new Q.Explosion({ x: this.p.x, y: this.p.y }));
-                if ((Math.floor(Math.random() * 100) + 1) < 50) {
-                    var that = this;
-                    setTimeout(function () {
-                        Q.stage(1).insert(new Q.Vida({ x: that.p.x, y: that.p.y }));
-                    }, 150);
-                }
-            }
 
-
-        },
         step: function (dt) {
             if (this.p.vx > 5 && (this.p.vy == 0 || this.p.gravityX == 1000)) {
                 this.play("pinchitos_normal");
@@ -563,6 +552,109 @@ var game = function () {
             }
         }
     });
+
+    //Larva
+    Q.Sprite.extend("Larva", {
+        init: function (p) {
+            this._super(p, {
+                sheet: "larvas",
+                sprite: "larvas_anim",
+                //x:400+(Math.random()*200),
+                //y:250,
+                frame: 0,
+                vx: 60,
+                gravity: 0,
+                damage: 7,
+                lives: 2,
+            });
+            this.add("2d, aiBounce, animation, enemy_default");
+            this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
+        },
+        
+    });
+
+    //Lava
+    Q.Sprite.extend("Lava", {
+        init: function (p) {
+            this._super(p, {
+                sheet: "lava",
+                sprite: "lava_anim",
+                damage: 7,
+                frame: 0,
+            });
+            this.add("2d, aiBounce, animation");
+            this.play("lava");
+            this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
+            //this.on("bump.bottom, bump.left, bump.right", this, "kill");
+
+
+        },
+        
+        kill: function (collision) {
+            if (!collision.obj.isA("Samus")) return;
+            //collision.obj.p.vy = -200;
+            //collision.obj.p.vx = collision.normalX*-500;
+            //collision.obj.p.x += collision.normalX*-5;
+            console.log("Me he caido en la lava");
+            Q.audio.play("../sounds/hit.mp3");
+            collision.obj.die(this.p.damage);
+        },
+        damage: function (dmg) {
+        }
+    });
+
+    //MotherBrain
+
+    Q.Sprite.extend("MotherBrain", {
+        init: function (p) {
+            this._super(p, {
+                sheet: "motherbrain",
+                sprite: "motherbrain_anim",
+                frame: 0,
+                gravity: 0,
+                damage: 10,
+                lives: 100,
+            });
+            this.add("2d, animation");
+            this.play("motherbrain");
+            this.on("bump.left, bump.right", this, "kill");
+
+
+        },
+
+        damage: function (dmg) {
+            console.log(this.p.lives);
+            console.log(dmg);
+            this.p.lives = this.p.lives - dmg;
+            this.p.x=1953;
+            this.play("motherbraindamage");
+            if (this.p.lives == 0) {
+                this.destroy();
+                Q.stage(1).insert(new Q.Explosion({ x: this.p.x, y: this.p.y }));
+                if ((Math.floor(Math.random() * 100) + 1) < 50) {
+                    var that = this;
+                    setTimeout(function () {
+                        Q.stage(1).insert(new Q.Vida({ x: that.p.x, y: that.p.y }));
+                    }, 150);
+                }
+            }
+        },
+
+        kill: function (collision) {
+            if (!collision.obj.isA("Samus")) return;
+            Q.audio.play("../sounds/hit.mp3");
+            collision.obj.p.vy = -200;
+            collision.obj.p.vx = collision.normalX*-500;
+            collision.obj.p.x += collision.normalX*-5;
+            console.log("Me he chocado contra motherbrain");
+            collision.obj.die(this.p.damage);
+        }
+
+    });
+
+////////////////////////////////////////////////////////////////////////
+////Objetos
+////////////////////////////////////////////////////////////////////////
 
     //PuertaIzquierda
     Q.Sprite.extend("PuertaIzquierda", {
@@ -705,7 +797,7 @@ var game = function () {
 
         damage: function (dmg) {
             var samus = Q("Samus").first();
-            //if(samus.p.canRedDoors == false){return;}
+            if(samus.p.canRedDoors == false){return;}
             this.p.lives = this.p.lives - dmg;
             if (this.p.lives == 1) {
                 this.play("puerta_iz_rompiendo");
@@ -756,7 +848,7 @@ var game = function () {
         },
         damage: function (dmg) {
             var samus = Q("Samus").first();
-            //if(samus.p.canRedDoors == false){return;}
+            if(samus.p.canRedDoors == false){return;}
             this.p.lives = this.p.lives - dmg;
             if (this.p.lives == 1) {
                 this.play("puerta_der_rompiendo");
@@ -837,80 +929,6 @@ var game = function () {
         }
     });
 
-    //Larva
-    Q.Sprite.extend("Larva", {
-        init: function (p) {
-            this._super(p, {
-                sheet: "larvas",
-                sprite: "larvas_anim",
-                //x:400+(Math.random()*200),
-                //y:250,
-                frame: 0,
-                vx: 60,
-                gravity: 0,
-                damage: 7,
-                lives: 2,
-            });
-            this.add("2d, aiBounce, animation");
-            //this.play("goomba");
-            this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
-            //this.on("bump.bottom, bump.left, bump.right", this, "kill");
-
-
-        },
-        damage: function (dmg) {
-            this.p.lives = this.p.lives - dmg;
-            if (this.p.lives == 0) {
-                this.destroy();
-                Q.stage(1).insert(new Q.Explosion({ x: this.p.x, y: this.p.y }));
-                if ((Math.floor(Math.random() * 100) + 1) < 50) {
-                    var that = this;
-                    setTimeout(function () {
-                        Q.stage(1).insert(new Q.Vida({ x: that.p.x, y: that.p.y }));
-                    }, 150);
-                }
-            }
-
-        },
-        kill: function (collision) {
-            if (!collision.obj.isA("Samus")) return;
-            Q.audio.play("../sounds/hit.mp3");
-            //collision.obj.p.vy = -200;
-            //collision.obj.p.vx = collision.normalX*-500;
-            //collision.obj.p.x += collision.normalX*-5;
-            console.log("Me he chocado contra una larva");
-            collision.obj.die(this.p.damage);
-        }
-    });
-    //Lava
-    Q.Sprite.extend("Lava", {
-        init: function (p) {
-            this._super(p, {
-                sheet: "lava",
-                sprite: "lava_anim",
-                damage: 7,
-                frame: 0,
-            });
-            this.add("2d, aiBounce, animation");
-            this.play("lava");
-            this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
-            //this.on("bump.bottom, bump.left, bump.right", this, "kill");
-
-
-        },
-        kill: function (collision) {
-            if (!collision.obj.isA("Samus")) return;
-            //collision.obj.p.vy = -200;
-            //collision.obj.p.vx = collision.normalX*-500;
-            //collision.obj.p.x += collision.normalX*-5;
-            console.log("Me he caido en la lava");
-            Q.audio.play("../sounds/hit.mp3");
-            collision.obj.die(this.p.damage);
-        },
-        damage: function (dmg) {
-        }
-    });
-
     //Vidas
     Q.Sprite.extend("Vida", {
         init: function (p) {
@@ -950,7 +968,6 @@ var game = function () {
         }
 
     });
-
 
     //Explosion
     Q.Sprite.extend("Explosion", {
@@ -1006,7 +1023,7 @@ var game = function () {
             //collision.obj.p.x += collision.normalX*-5;
             console.log("Me he caido en un ascensor");
             
-            this.p.vy = 30;
+            this.p.vy = 50;
             var that = this;
             setTimeout(function () {
                 console.log(that);
@@ -1020,58 +1037,9 @@ var game = function () {
          },
          damage: function (dmg) {
          }
-
-
     });
 
-    //MotherBrain
-
-    Q.Sprite.extend("MotherBrain", {
-        init: function (p) {
-            this._super(p, {
-                sheet: "motherbrain",
-                sprite: "motherbrain_anim",
-                frame: 0,
-                gravity: 0,
-                damage: 10,
-                lives: 1,
-            });
-            this.add("2d, animation");
-            this.play("motherbrain");
-            this.on("bump.left, bump.right", this, "kill");
-
-
-        },
-        damage: function (dmg) {
-            console.log(this.p.x);
-            this.p.lives = this.p.lives - dmg;
-            this.p.x=2705;
-            this.play("motherbraindamage");
-            if (this.p.lives == 0) {
-                this.destroy();
-                Q.stage(1).insert(new Q.Explosion({ x: this.p.x, y: this.p.y }));
-                if ((Math.floor(Math.random() * 100) + 1) < 50) {
-                    var that = this;
-                    setTimeout(function () {
-                        Q.stage(1).insert(new Q.Vida({ x: that.p.x, y: that.p.y }));
-                    }, 150);
-                }
-            }
-
-        },
-        kill: function (collision) {
-            if (!collision.obj.isA("Samus")) return;
-            Q.audio.play("../sounds/hit.mp3");
-            collision.obj.p.vy = -200;
-            collision.obj.p.vx = collision.normalX*-500;
-            collision.obj.p.x += collision.normalX*-5;
-            console.log("Me he chocado contra motherbrain");
-            collision.obj.die(this.p.damage);
-        }
-
-    });
-
-    //MotherBrain
+    //MotherBrainDoor
 
     Q.Sprite.extend("MotherBrainDoor", {
         init: function (p) {
@@ -1094,23 +1062,6 @@ var game = function () {
         
     });
 
-    Q.Sprite.extend("WinZone", {
-      init: function(p) {
-        this._super(p,{
-            asset:"winzone.png"
-        });
-        this.add("2d");
-        //this.add("2d, aiBounce, animation");
-        this.on("bump.top, bump.bottom, bump.left, bump.right", this, "win");
-      },
-      win: function(collision){
-        if(!collision.obj.isA("Samus")) return;
-        Q.stageScene("winGame", 2);
-        Q.audio.stop();
-        collision.obj.destroy();
-        this.destroy();
-      },
-    });
 
     Q.load(["bg.png", "tiles_metroid_!6x16.png", "title-screen.gif", "taladrillo.png", "taladrillo.json", "samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3",
         "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
