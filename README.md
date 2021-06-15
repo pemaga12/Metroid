@@ -40,9 +40,11 @@ Tiene varias mecanicas que se van consiguiendo conforme va recogiendo distintos 
 	* Diseño del mapa 	
  	* Implementación de la funcionalidad de las puertas
 	* Implementación del enemigo Zoomer/Pinchitos
-	* Orbes
+	* Gestión de los orbes a la hora de cogerlos
 	* Pantallas de títulos
 	* Menú de pausa
+	* Movimiento y animaciones de Samus
+	* Ayuda en implementación de ascensor
 * Ramon Rosa Pérez
 	* Búsqueda y preparación de sprites de pantallas de títulos
 	* Audio del juego
