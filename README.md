@@ -46,7 +46,7 @@ Tiene varias mecanicas que se van consiguiendo conforme va recogiendo distintos 
 	* Movimiento y animaciones de Samus
 	* Ayuda en implementación de ascensor
 	* Pantalla de partida perdida
-	* Ayuda en la gestión del audio del juego
+	* Audio del juego
 * Ramon Rosa Pérez
 	* Búsqueda y preparación de sprites de pantallas de títulos
 	* Audio del juego
