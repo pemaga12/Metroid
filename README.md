@@ -39,11 +39,20 @@ Tiene varias mecanicas que se van consiguiendo conforme va recogiendo distintos 
 	* 
 	*
 * Pedro Martínez Gamero
- 	* 
-	*
+	* Diseño del mapa 	
+ 	* Implementación de la funcionalidad de las puertas
+	* Implementación del enemigo Zoomer/Pinchitos
+	* Orbes
+	* Pantallas de títulos
+	* Menú de pausa
 * Ramon Rosa Pérez
-	* 
-	*
+	* Búsqueda y preparación de sprites de pantallas de títulos
+	* Audio del juego
+	* Implementación del powerup ballmode
+	* Implementación de los disparos
+	* Animación de las puertas
+	* Ayuda en implementación del enemigo Zoomer/Pinchitos
+	* Ascensor
 * Victor Velázquez Cabrera
 	* Búsqueda y preparación de sprites de Samus, energía y explosiones.
 	* Cambios de cámaras al pasar a otra sala.
