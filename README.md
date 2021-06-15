@@ -28,6 +28,7 @@ Tiene varias mecanicas que se van consiguiendo conforme va recogiendo distintos 
 * Zoomer/Pinchitos: Enemigo que hace daño por contacto, hemos implementado dos tipos distintos, uno que rebota al chocar con otro personaje o pared, y otro que al encontrarse con una pared la escala pegado a ella.
 * Skree/Taladrillos: Enemigo que permanece inmovil en el techo de la sala hasta que detecta a Samus acercandose. Se lanza desde el techo siguiendo la posición de samus y explota al contacto con el suelo y con Samus infringiendole daño.
 * Ripper/Larbitas: Enermigo que flota siempre a una misma altura rebotando al chocar con otros personajes o paredes. Hace daño a Samus si estos dos colisionan.
+* Mother Brain: Enemigo final. En realidad el enemigo no hace nada, solo tiene una puerta protectora que se rope a los dos toques. La dificultad es matarlo (ya que tiene mucha vida) mientras evitas todos los cañones y enemigos en la sala. Si Samus se acerca Mother Brain le hará 10 de daño.
 
 ### 4. Diseño de la implementación: arquitectura y principales componentes.
 
@@ -35,9 +36,6 @@ Tiene varias mecanicas que se van consiguiendo conforme va recogiendo distintos 
 
 ### 5. Equipo de trabajo y reparto de tareas: descripción del trabajo realizado por cada uno de los integrantes del grupo y carga de trabajo realizada (0%-100%)
 
-* Eva Verdú Rodríguez 
-	* 
-	*
 * Pedro Martínez Gamero
 	* Diseño del mapa 	
  	* Implementación de la funcionalidad de las puertas
@@ -62,6 +60,16 @@ Tiene varias mecanicas que se van consiguiendo conforme va recogiendo distintos 
 	* Guía de controles y orbes.
 	* Implementación y animación del enemigo Skree/Taladrillos.
 	* Animaciones de explosión de los enemigos, energía y Samus en modo bola.
+* Eva Verdú Rodríguez 
+	* Mother Brain.
+	* Cañones.
+	* Presentacion de juego para la asignatura.
+	* Puertas rojas.
+	* Tiempo de daño de samus.
+	* Ajuste y creación de Sprites de enemigos, Tiles, Orbes, cañones.
+	* Ganar el juego.
+	* Retoques en la organización del mapa.
+	* Organización en componentes.
 
 ### 6. Fuentes y referencias: Referencias a todos los assets utilizados en la realización del juego. 
 
