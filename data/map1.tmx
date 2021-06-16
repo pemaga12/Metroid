@@ -33420,9 +33420,9 @@
    <tile gid="11"/>
    <tile gid="10"/>
    <tile gid="11"/>
-   <tile gid="165"/>
-   <tile gid="166"/>
-   <tile gid="167"/>
+   <tile gid="53"/>
+   <tile gid="53"/>
+   <tile gid="53"/>
    <tile gid="11"/>
    <tile gid="11"/>
    <tile gid="10"/>
@@ -33623,9 +33623,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="165"/>
-   <tile gid="166"/>
-   <tile gid="167"/>
+   <tile gid="53"/>
+   <tile gid="53"/>
+   <tile gid="53"/>
    <tile/>
    <tile/>
    <tile/>
@@ -33826,9 +33826,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="165"/>
-   <tile gid="166"/>
-   <tile gid="167"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
    <tile/>
    <tile/>
    <tile/>
@@ -34029,9 +34029,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="171"/>
-   <tile gid="172"/>
-   <tile gid="173"/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -35042,13 +35042,13 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="174"/>
-   <tile gid="175"/>
-   <tile gid="176"/>
-   <tile gid="177"/>
-   <tile gid="178"/>
-   <tile gid="179"/>
-   <tile gid="180"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
    <tile/>
    <tile/>
    <tile/>
@@ -35245,13 +35245,13 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="181"/>
-   <tile gid="182"/>
-   <tile gid="183"/>
-   <tile gid="184"/>
-   <tile gid="185"/>
-   <tile gid="186"/>
-   <tile gid="187"/>
+   <tile gid="3"/>
+   <tile gid="40"/>
+   <tile gid="26"/>
+   <tile gid="40"/>
+   <tile gid="26"/>
+   <tile gid="40"/>
+   <tile gid="3"/>
    <tile/>
    <tile/>
    <tile/>
@@ -35448,13 +35448,13 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="188"/>
-   <tile gid="189"/>
-   <tile gid="190"/>
-   <tile gid="191"/>
-   <tile gid="192"/>
-   <tile gid="193"/>
-   <tile gid="194"/>
+   <tile gid="3"/>
+   <tile gid="26"/>
+   <tile gid="40"/>
+   <tile gid="26"/>
+   <tile gid="40"/>
+   <tile gid="26"/>
+   <tile gid="3"/>
    <tile/>
    <tile/>
    <tile/>
@@ -35651,13 +35651,13 @@
    <tile gid="11"/>
    <tile/>
    <tile/>
-   <tile gid="195"/>
-   <tile gid="196"/>
-   <tile gid="197"/>
-   <tile gid="198"/>
-   <tile gid="199"/>
-   <tile gid="200"/>
-   <tile gid="201"/>
+   <tile gid="3"/>
+   <tile gid="40"/>
+   <tile gid="26"/>
+   <tile gid="40"/>
+   <tile gid="26"/>
+   <tile gid="40"/>
+   <tile gid="3"/>
    <tile/>
    <tile/>
    <tile/>
@@ -35854,13 +35854,13 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="202"/>
-   <tile gid="203"/>
-   <tile gid="204"/>
-   <tile gid="205"/>
-   <tile gid="206"/>
-   <tile gid="207"/>
-   <tile gid="208"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
+   <tile gid="3"/>
    <tile/>
    <tile/>
    <tile/>

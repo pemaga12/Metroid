@@ -74,7 +74,6 @@ Tiene varias mecanicas que se van consiguiendo conforme va recogiendo distintos 
 	* Ganar el juego.
 	* Retoques en la organización del mapa.
 	* Organización en componentes.
-	* Saltamontes
 
 ### 6. Fuentes y referencias: Referencias a todos los assets utilizados en la realización del juego. 
 

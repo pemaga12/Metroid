@@ -5,7 +5,6 @@ var game = function () {
         .setup("myGame", {
             width: 768,
             height: 720,
-            // scaleToFit: true
         })
         .controls().controls().enableSound().touch();
 
@@ -208,7 +207,7 @@ var game = function () {
             this._super(p, {
                 sheet: "samus",
                 sprite: "samus_anim",
-                x: 1536, //x:570 //1536
+                x: 570, //x:570 //1536
                 y: 1470, 
                 frame: 0,
                 scale: 1,
@@ -476,7 +475,7 @@ var game = function () {
         },
 
     });
-
+/*
     //Pinchitos:
     Q.Sprite.extend("Pinchito", {
         init: function (p) {
@@ -562,7 +561,7 @@ var game = function () {
             }
         }
     });
-
+*/
     //Larva
     Q.Sprite.extend("Larva", {
         init: function (p) {
@@ -621,6 +620,7 @@ var game = function () {
             sheet: "saltamontes",
             sprite: "saltamontes_anim",
             frame: 0,
+            lives: 3,
             gravity: 0.2,
             damage: 7,
             reload:3,
@@ -660,15 +660,6 @@ var game = function () {
                         this.play("saltamontes_parado");
                     }
                 }
-                /*
-                else if(this.p.reload < 2 && this.p.reload > 0){
-                    this.play("salatamontes_preparado");
-                }
-                
-                else{
-                    this.play("salatamontes_parado");
-                }
-                */
             }
         }
     });
@@ -694,9 +685,8 @@ var game = function () {
 
         damage: function (dmg) {
             console.log(this.p.lives);
-            console.log(dmg);
             this.p.lives = this.p.lives - dmg;
-            this.p.x=1953;
+            this.p.x = 2195;
             this.play("motherbraindamage");
             if (this.p.lives == 0) {
                 this.destroy();
@@ -1229,6 +1219,8 @@ var game = function () {
         }
     });
 
+    
+
     Q.load(["bg.png", "tiles_metroid_!6x16.png", "title-screen.gif", "taladrillo.png", "taladrillo.json", "samus.png", "samus.json", "map1.tmx", "../sounds/elevatormusic.mp3",
         "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
         "metroid_door.png", "puertas.json", "energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "titleScreen.tsx", "letras.png", "Startscreen.tsx", "title-start.json", "../sounds/jump.mp3", "break_block.png",
@@ -1238,7 +1230,7 @@ var game = function () {
         "../sounds/hit.mp3", "motherbrainbase.png" , "motherbrainup.png" , "motherbraindoor.png" , "motherbrain.png" , "metroidreddoor.png", "motherbrain.json","gamewin.png","win-screen.json","winzone.png",
         "canion1.png","canion2.png","canion3.png","shot_canion.png", "saltamontes.png", "saltamontes.json"],
         function () {
-
+            enemies();
             Q.compileSheets("samus.png", "samus.json");
             Q.compileSheets("taladrillo.png", "taladrillo.json");
             Q.compileSheets("pinchitos.png", "pinchitos.json");
@@ -1574,6 +1566,7 @@ var game = function () {
             });  
 */
             Q.stageScene("startGame");
+
 
         });
 }

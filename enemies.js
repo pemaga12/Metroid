@@ -1,4 +1,4 @@
-var game = function () {
+var enemies = function () {
 //Pinchitos:
     Q.Sprite.extend("Pinchito", {
         init: function (p) {
