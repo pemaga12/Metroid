@@ -208,7 +208,7 @@ var game = function () {
             this._super(p, {
                 sheet: "samus",
                 sprite: "samus_anim",
-                x: 570, //x:570 //1536
+                x: 1536, //x:570 //1536
                 y: 1470, 
                 frame: 0,
                 scale: 1,
@@ -610,6 +610,66 @@ var game = function () {
             collision.obj.die(this.p.damage);
         },
         damage: function (dmg) {
+        }
+    });
+
+    //Saltamontes
+
+    Q.Sprite.extend("Saltamontes", {
+        init: function(p) {
+            this._super(p,{
+            sheet: "saltamontes",
+            sprite: "saltamontes_anim",
+            frame: 0,
+            gravity: 0.2,
+            damage: 7,
+            reload:3,
+            reloadTime: 3,
+            vx:0,
+            vy:0 
+            });
+            this.add("2d, aiBounce, animation, enemy_default");
+            this.play("saltamontes_parado");
+            this.on("bump.bottom, bump.top, bump.left, bump.right", this, "kill");
+
+        },
+        step:function(dt){
+            this.p.reload -= dt;
+
+            var samus = Q("Samus").first();
+            if (samus === undefined) return;
+
+            if (this.p.vy==0) {
+                if(this.p.reload < 0){
+                    this.p.reload = this.p.reloadTime;
+                    this.play("saltamontes_salto");
+                    this.p.vy = -150;
+                    if(this.p.x > samus.p.x){
+                        this.p.vx = -50;
+                    }
+                    else if(this.p.x < samus.p.x){
+                         this.p.vx = 50;
+                    } 
+                }
+                else{
+                    this.p.vx=0;
+                    if(this.p.reload < 1){
+                        this.play("saltamontes_preparado");
+                    }
+                    else{
+                        this.play("saltamontes_parado");
+                    }
+                }
+                /*
+                else if(this.p.reload < 2 && this.p.reload > 0){
+                    this.play("salatamontes_preparado");
+                }
+                
+                else{
+                    this.play("salatamontes_parado");
+                }
+                */
+            }
         }
     });
 
@@ -1176,7 +1236,7 @@ var game = function () {
         "../sounds/lava.mp3", "../sounds/item.mp3", "../sounds/gun.mp3", "../sounds/deathsound.mp3", "gameover.png", "game-over.json", "gameOver.tsx", "../sounds/ending_original.mp3",
         "vida.png", "vida.json", "explosion.png", "explosion.json", "ascensor.png", "ascensor.tsx", "ascensor.json", "pause.json", "pause.tsx", "pause.png", "../sounds/pause.mp3",
         "../sounds/hit.mp3", "motherbrainbase.png" , "motherbrainup.png" , "motherbraindoor.png" , "motherbrain.png" , "metroidreddoor.png", "motherbrain.json","gamewin.png","win-screen.json","winzone.png",
-        "canion1.png","canion2.png","canion3.png","shot_canion.png"],
+        "canion1.png","canion2.png","canion3.png","shot_canion.png", "saltamontes.png", "saltamontes.json"],
         function () {
 
             Q.compileSheets("samus.png", "samus.json");
@@ -1195,6 +1255,7 @@ var game = function () {
             Q.compileSheets("explosion.png", "explosion.json");
             Q.compileSheets("ascensor.png", "ascensor.json");
             Q.compileSheets("pause.png", "pause.json");
+            Q.compileSheets("saltamontes.png", "saltamontes.json");
             Q.compileSheets("motherbrain.png", "motherbrain.json");
 
             Q.state.set({
@@ -1287,6 +1348,12 @@ var game = function () {
 
             Q.animations("lava_anim", {
                 lava: { frames: [0, 1], rate: 1 }
+            });
+
+            Q.animations("saltamontes_anim", {
+                saltamontes_parado:     { frames: [0], rate: 1},
+                saltamontes_preparado:  { frames: [1], rate: 1},
+                saltamontes_salto:      { frames: [2], rate: 1}
             });
 
             Q.animations("vida_anim", {
