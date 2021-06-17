@@ -14,7 +14,7 @@
 
 El objetivo del juego es conseguir llegar a la sala del jefe final para enfrentarnos a él, para esto deberemos explorar el mapa hasta encontrar los power-ups que nos permetirán seguir avanzando. Ganaremos si somos capaces de llegar y derrotar al jefe final, y perderemos si nuestra vida (energía) baja a 0 al ser golpeados por los enemigos o caer en las superficies con lava.
 
-### 2. Principales mecánicas
+### Principales mecánicas
 
 Los movimientos básicos al inicio del juego que puede hacer son el moverse en todas direcciones, saltar y disparar.
 
@@ -22,7 +22,7 @@ Gracias a los disparos, podemos activar las puertas las cuales se abrirán tras 
 
 Tiene varias mecanicas que se van consiguiendo conforme va recogiendo distintos power ups. Dichos power-ups se obtienen por medio de los orbes distribuidos a lo largo del mapa que nos daran la posibilidad de convertirnos en bola y pasar por espacios más pequeños, el romper unos bloques específicos al contacto con ellos y el atravesar unas puertas rojas.
 
-### 3. Personajes
+### Personajes
 
 * Samus: Personaje que controlamos.
 * Zoomer/Pinchitos: Enemigo que hace daño por contacto, hemos implementado dos tipos distintos, uno que rebota al chocar con otro personaje o pared, y otro que al encontrarse con una pared la escala pegado a ella.
@@ -31,7 +31,7 @@ Tiene varias mecanicas que se van consiguiendo conforme va recogiendo distintos 
 * Sidehoppers/Saltamontes: Enemigo que hace daño por contacto. Su forma de moverse es realizando saltos en dirección a Samus.
 * Mother Brain: Enemigo final. En realidad el enemigo no hace nada, solo tiene una puerta protectora que se rope a los dos toques. La dificultad es matarlo (ya que tiene mucha vida) mientras evitas todos los cañones y enemigos en la sala. Si Samus se acerca Mother Brain le hará 10 de daño.
 
-### 4. Diseño de la implementación: arquitectura y principales componentes.
+## 2. Diseño de la implementación: arquitectura y principales componentes.
 
 El modo en el que hemos estructurado el proyecto ha sido el siguiente:
 
@@ -39,7 +39,7 @@ El modo en el que hemos estructurado el proyecto ha sido el siguiente:
 * Enemies.js : Incluimos el componente enemy:default definiendo los metodos kill y damage comunes para todos los enemigos del juego. Junto con el componente, creamos todos los enemigos explicados en el apartado anterior con el objeto vidas, que se refiere a las vidas que aleatoriamente sueltan los enemigos al morir; así como los loads necesarios para los enemigos y sus animaciones.
 * Objects.js : Formado por el componente _canions_default_ , la función que se encarga de gestionar la vista dependiendo de la sala a la que se accede, el ascensor, los distintos tipos de puertas, lor orbes que funcionan como power-ups, la zona de finalización del juego y los cañones junto con su proyectil. Por último, también incorporamos el load de los ficheros necesarios junto con las animaciones de los anteriores objetos.
 
-### 5. Equipo de trabajo y reparto de tareas
+## 3. Equipo de trabajo y reparto de tareas
 * Eva Verdú Rodríguez (25%)
 	* Mother Brain
 	* Cañones
@@ -83,7 +83,7 @@ El modo en el que hemos estructurado el proyecto ha sido el siguiente:
 	* Memoria
 
 
-### 6. Fuentes y referencias: Referencias a todos los assets utilizados en la realización del juego. 
+## 4. Fuentes y referencias: Referencias a todos los assets utilizados en la realización del juego. 
 
 * [Sprites Samus, Energía y Explosiones](https://ar.pinterest.com/pin/215187688422562272/)
 * [Letras energía HUB](https://www.spriters-resource.com/nes/metroid/sheet/1777/?source=genre)
