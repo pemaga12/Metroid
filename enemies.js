@@ -396,7 +396,7 @@ var enemies = function () {
             "motherbrain.png", "motherbrain.json", 
             "lava.png", "lava.json",
             "vida.png", "vida.json",
-            "explosion.png", "explosion.json","../sounds/hopper.mp3","../sounds/motherbrain.mp3","../sounds/elevatormusic.mp3","../sounds/ending_alternative.mp3"],
+            "explosion.png", "explosion.json","../sounds/hopper.mp3","../sounds/motherbrain.mp3","../sounds/generalmusic.mp3","../sounds/ending_alternative.mp3"],
 
 
     function(){

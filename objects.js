@@ -325,10 +325,10 @@ var objects = function () {
             Q.audio.stop();
             Q.audio.play("../sounds/item.mp3");
 
-            Q.audio.stop("../sounds/elevatormusic.mp3");
+            Q.audio.stop("../sounds/generalmusic.mp3");
             setTimeout(function () {
-                Q.audio.play("../sounds/elevatormusic.mp3");
-            }, 3000)
+                Q.audio.play("../sounds/generalmusic.mp3");
+            }, 5000)
             //collision.p.vy = -400;
             //Q.audio.play("1up.mp3");
             this.destroy();

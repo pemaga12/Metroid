@@ -288,7 +288,7 @@ var game = function () {
                 if (Q.state.get("lives") < 0) {
                     this.destroy();
                     Q.stageScene("gameOver", 2);
-                    Q.audio.play("../sounds/deathsound.mp3");
+                    Q.audio.stop();
                 }
             }
         }
@@ -355,7 +355,7 @@ var game = function () {
         //audios:
             "../sounds/elevatormusic.mp3", "../sounds/titlescreen.mp3", "../sounds/elevatormusic.mp3", "../sounds/ending_alternative.mp3", "../sounds/start.mp3",
             "../sounds/jump.mp3", "../sounds/pause.mp3",  "../sounds/ending_original.mp3", "../sounds/hit.mp3", "../sounds/shot.mp3", "../sounds/go_through_door.mp3",
-            "../sounds/lava.mp3", "../sounds/item.mp3", "../sounds/gun.mp3", "../sounds/deathsound.mp3",
+            "../sounds/lava.mp3", "../sounds/item.mp3", "../sounds/gun.mp3", "../sounds/deathsound.mp3","../sounds/generalmusic.mp3",
         //enemigos:
             "pinchitos.png","pinchitos.json",
             "taladrillo.png", "taladrillo.json",
@@ -433,8 +433,8 @@ var game = function () {
                 Q.audio.play("../sounds/start.mp3");
 
                 setTimeout(function () {
-                    Q.audio.play("../sounds/elevatormusic.mp3", { loop: true });
-                }, 5000);
+                    Q.audio.play("../sounds/generalmusic.mp3", { loop: true });
+                }, 7000);
 
                 stage.on("destroy", function () {
                     samus.destroy();
