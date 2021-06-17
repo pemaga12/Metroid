@@ -487,14 +487,11 @@ var game = function () {
             });
 
             Q.scene('winGame', function (stage) {
-                Q.audio.stop();
-                Q.audio.play("../sounds/ending_original.mp3");
                 Q.stageTMX("map1.tmx", stage);
 
                 var win = new Q.WinScreen();
                 stage.insert(win);
                 win.playAnimation();
-
 
                 stage.add("viewport").follow(win, { x: true, y: false });
                 stage.viewport.scale = 3.1;

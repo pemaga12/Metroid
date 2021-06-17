@@ -204,6 +204,11 @@ var enemies = function () {
 
             if (this.p.vy==0) {
                 if(this.p.reload < 0){
+                  
+                    if (samus.p.x > (this.p.x - 75) && samus.p.x < (this.p.x + 75) && samus.p.y > (this.p.y - 150) && samus.p.y < (this.p.y + 150)) {
+                        Q.audio.play("../sounds/hopper.mp3");
+                    }
+                    
                     this.p.reload = this.p.reloadTime;
                     this.play("saltamontes_salto");
                     this.p.vy = -150;
@@ -238,6 +243,7 @@ var enemies = function () {
                 gravity: 0,
                 damage: 10,
                 lives: 50,
+                music: false
             });
             this.add("2d, animation");
             this.play("motherbrain");
@@ -245,12 +251,22 @@ var enemies = function () {
 
 
         },
-
+        step:function(dt){
+            var samus = Q("Samus").first();
+            if (samus === undefined) return;
+            if (!this.p.music && samus.p.x > (this.p.x - 400) && samus.p.x < (this.p.x + 400) && samus.p.y > (this.p.y - 200) && samus.p.y < (this.p.y + 200)) {
+                Q.audio.stop("../sounds/elevatormusic.mp3");
+                Q.audio.play("../sounds/motherbrain.mp3");
+                this.p.music=true;
+            }
+        },
         damage: function (dmg) {
             this.p.lives = this.p.lives - dmg;
             this.p.x = 2195;
             this.play("motherbraindamage");
             if (this.p.lives == 0) {
+                Q.audio.stop("../sounds/motherbrain.mp3");
+                Q.audio.play("../sounds/ending_alternative.mp3");
                 this.destroy();
                 Q.stage(1).insert(new Q.Explosion({ x: this.p.x, y: this.p.y }));
                 if ((Math.floor(Math.random() * 100) + 1) < 50) {
@@ -380,7 +396,7 @@ var enemies = function () {
             "motherbrain.png", "motherbrain.json", 
             "lava.png", "lava.json",
             "vida.png", "vida.json",
-            "explosion.png", "explosion.json"],
+            "explosion.png", "explosion.json","../sounds/hopper.mp3","../sounds/motherbrain.mp3","../sounds/elevatormusic.mp3","../sounds/ending_alternative.mp3"],
 
 
     function(){

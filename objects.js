@@ -354,7 +354,7 @@ var objects = function () {
             
             if (!collision.obj.p.canBreakWall) return;
             if (!collision.obj.p.ballmode) return;
-
+            Q.audio.play("../sounds/breakwall.mp3");
             this.taken = true;
             this.destroy();
         },
@@ -377,6 +377,11 @@ var objects = function () {
         shot_ball: function (dmg) {
             if (this.p.reload < 0) {
                 this.p.reload = this.p.frequency;
+                var samus = Q("Samus").first();
+                if (samus === undefined) return;
+                if (samus.p.x > (this.p.x - 75) && samus.p.x < (this.p.x + 75)) {
+                    Q.audio.play("../sounds/cañon.mp3");
+                }
                 Q.stage().insert(new Q.CanionBall({ x: this.p.x, y: this.p.y + this.p.h,init: this.p.x }));
             } 
         }
@@ -396,6 +401,11 @@ var objects = function () {
         shot_ball: function (dmg) {
             if (this.p.reload < 0) {
                 this.p.reload = this.p.frequency;
+                var samus = Q("Samus").first();
+                if (samus === undefined) return;
+                if (samus.p.x > (this.p.x - 75) && samus.p.x < (this.p.x + 75)) {
+                    Q.audio.play("../sounds/cañon.mp3");
+                }
                 Q.stage().insert(new Q.CanionBall({ x: this.p.x+ this.p.w, y: this.p.y + this.p.h, vx:50,init: this.p.x }));
             } 
         }
@@ -415,6 +425,11 @@ var objects = function () {
         shot_ball: function (dmg) {
             if (this.p.reload < 0) {
                 this.p.reload = this.p.frequency;
+                var samus = Q("Samus").first();
+                if (samus === undefined) return;
+                if (samus.p.x > (this.p.x - 75) && samus.p.x < (this.p.x + 75)) {
+                    Q.audio.play("../sounds/cañon.mp3");
+                }
                 Q.stage().insert(new Q.CanionBall({ x: this.p.x - this.p.w, y: this.p.y + this.p.h, vx:-50,init: this.p.x }));
             } 
         }
@@ -492,7 +507,7 @@ var objects = function () {
             "orbe.json", "orbes.png",
             "break_block.png",
             "canion1.png","canion2.png","canion3.png","shot_canion.png",  
-            "winzone.png"
+            "winzone.png","../sounds/cañon.mp3","../sounds/breakwall.mp3"
     	],
 
     function(){
