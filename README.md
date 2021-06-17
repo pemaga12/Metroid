@@ -40,7 +40,7 @@ El modo en el que hemos estructurado el proyecto ha sido el siguiente:
 * Objects.js : Formado por el componente _canions_default_ , la función que se encarga de gestionar la vista dependiendo de la sala a la que se accede, el ascensor, los distintos tipos de puertas, lor orbes que funcionan como power-ups, la zona de finalización del juego y los cañones junto con su proyectil. Por último, también incorporamos el load de los ficheros necesarios junto con las animaciones de los anteriores objetos.
 
 ### 5. Equipo de trabajo y reparto de tareas
-* Eva Verdú Rodríguez 25%
+* Eva Verdú Rodríguez (25%)
 	* Mother Brain
 	* Cañones
 	* Presentacion de juego para la asignatura
@@ -50,7 +50,7 @@ El modo en el que hemos estructurado el proyecto ha sido el siguiente:
 	* Ganar el juego
 	* Retoques en la organización del mapa
 	* Organización en componentes
-* Pedro Martínez Gamero 25%
+* Pedro Martínez Gamero (25%)
 	* Diseño del mapa 	
  	* Implementación de la funcionalidad de las puertas
 	* Implementación del enemigo Zoomer/Pinchitos
@@ -61,7 +61,7 @@ El modo en el que hemos estructurado el proyecto ha sido el siguiente:
 	* Ayuda en implementación de ascensor
 	* Pantalla de partida perdida
 	* Audio del juego
-* Ramon Rosa Pérez 25%
+* Ramon Rosa Pérez (25%)
 	* Búsqueda y preparación de sprites de pantallas de títulos
 	* Audio del juego
 	* Implementación del powerup ballmode
@@ -71,7 +71,7 @@ El modo en el que hemos estructurado el proyecto ha sido el siguiente:
 	* Ascensor
 	* Solución de bugs
 	* Recopilación de fuentes utilizadas
-* Victor Velázquez Cabrera 25%
+* Victor Velázquez Cabrera (25%)
 	* Búsqueda y preparación de sprites de Samus, energía y explosiones
 	* Cambios de cámaras al pasar a otra sala
 	* Implementación y animación de la lava
