@@ -108,6 +108,23 @@ var game = function () {
         playAnimation: function () {}
     });
 
+    //Credits Screen
+
+    Q.Sprite.extend("CreditsScreen", {
+        init: function (p) {
+            this._super(p, {
+                asset: "credits.png",
+                x: 570,
+                y: 1470,
+                scale: 1,
+                gravityY: 0
+            });
+        },
+        playAnimation: function () {}
+    });
+
+    // funcion drawLines para testeo
+
     function drawLines(ctx) {
         ctx.save();
         ctx.strokeStyle = '#FFFFFF';
@@ -118,7 +135,7 @@ var game = function () {
             ctx.stroke();
         }
         ctx.restore();
-    }
+    };
 
 ////////////////////////////////////////////////////////////////////////
 ////Samus
@@ -288,7 +305,6 @@ var game = function () {
                 if (Q.state.get("lives") < 0) {
                     this.destroy();
                     Q.stageScene("gameOver", 2);
-                    Q.audio.stop();
                 }
             }
         }
@@ -341,7 +357,7 @@ var game = function () {
             "bg.png", "tiles_metroid_!6x16.png", "map1.tmx",
             "title-screen.gif", "title-screen.json", "./titleScreens/pantallainicio/pantallainiciotitulo.png",
             "energia.png", "./titleScreens/pantallainicio/pantallainiciostart.png", "letras.png", "title-start.json",  
-            "gameover.png", "game-over.json", "pause.json", "pause.png", "gamewin.png","win-screen.json",
+            "gameover.png", "game-over.json", "pause.json", "pause.png", "gamewin.png","win-screen.json", "credits.png",
         //samus
             "samus.png", "samus.json", "shot.png",
         //objetos:
@@ -391,12 +407,12 @@ var game = function () {
                 walk_left: { frames: [30, 31, 32], rate: 1 / 6, next: "parado_l" },
                 jump_right: { frames: [7, 8, 9, 10], rate: 1 / 6, next: "parado_r" },
                 jump_left: { frames: [7, 8, 9, 10], rate: 1 / 6, next: "parado_l" },
-                parado_r: { frames: [53] },
-                parado_l: { frames: [52] },
-                parado_up_r: { frames: [2] },
-                parado_up_l: { frames: [29] },
-                shoot_r: { frames: [1] },
-                shoot_l: { frames: [28] },
+                parado_r: { frames: [53], rate:1 },
+                parado_l: { frames: [52], rate:1 },
+                parado_up_r: { frames: [2], rate:1 },
+                parado_up_l: { frames: [29], rate:1 },
+                shoot_r: { frames: [1], rate:1 },
+                shoot_l: { frames: [28], rate: 1 },
                 morir: { frames: [49, 48], rate: 1 / 50 },
                 samusball: { frames: [11, 12, 13, 14], rate: 1 / 6 }
             });
@@ -407,7 +423,7 @@ var game = function () {
 
             Q.animations("start-screen", {
                 animacion2: { frames: [1, 2, 3, 4], rate: 1, next: "fin" },
-                fin: { frames: [4] }
+                fin: { frames: [4], rate: 1}
             });
 
             Q.animations("win-screen", {
@@ -487,6 +503,8 @@ var game = function () {
             });
 
             Q.scene('winGame', function (stage) {
+                Q.audio.stop();
+                Q.audio.play("../sounds/ending_original.mp3");
                 Q.stageTMX("map1.tmx", stage);
 
                 var win = new Q.WinScreen();
@@ -500,7 +518,7 @@ var game = function () {
 
                 setTimeout(function () {
                     Q.clearStages();
-                    Q.stageScene("startGame", 1);
+                    Q.stageScene("creditsGame", 1);
                 }, 10000);
 
             });
@@ -527,8 +545,28 @@ var game = function () {
 
             });
 
-            Q.scene("startGame", function (stage) {
+            Q.scene("creditsGame", function (stage) {
+                Q.stageTMX("map1.tmx", stage);
 
+                var credits = new Q.CreditsScreen();
+                stage.insert(credits);
+                credits.playAnimation();
+
+
+                stage.add("viewport").follow(credits, { x: true, y: false });
+                stage.viewport.scale = 3.1;
+                stage.viewport.y = 1355;
+                stage.viewport.x = 400;
+
+                setTimeout(function () {
+                    Q.clearStages();
+                    Q.stageScene("startGame", 1);
+                }, 5000);
+
+            });
+
+            Q.scene("startGame", function (stage) {
+                Q.audio.stop();
                 Q.audio.play("../sounds/titlescreen.mp3", { loop: true });
                 Q.stageTMX("map1.tmx", stage);
 

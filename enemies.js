@@ -421,7 +421,7 @@ var enemies = function () {
             caida: { frames: [0, 1, 0, 2], rate: 1 / 2 }
         });
         Q.animations("larva_anim", {
-                larva: { frames: [0] }
+                larva: { frames: [0], rate: 1}
         });
         Q.animations("saltamontes_anim", {
             saltamontes_parado:     { frames: [0], rate: 1},

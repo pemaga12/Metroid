@@ -341,7 +341,6 @@ var objects = function () {
         init: function (p) {
             this._super(p, {
                 asset: "break_block.png",
-                //sensor: true
                 collision: true
             });
             this.add("2d, tween");
@@ -491,7 +490,6 @@ var objects = function () {
 	    win: function(collision){
 	        if(!collision.obj.isA("Samus")) return;
 	        Q.stageScene("winGame", 2);
-	        Q.audio.stop();
 	        collision.obj.destroy();
 	        this.destroy();
 	    },
@@ -518,24 +516,24 @@ var objects = function () {
 
         Q.animations("puerta_anim", {
             puerta_derecha: { frames: [0, 1, 2], rate: 1 / 6, next: "puerta_rota" },
-            puerta_rota: { frames: [2] },
+            puerta_rota: { frames: [2] , rate:1},
             puerta_izquierda: { frames: [3, 4, 5], rate: 1 / 6, next: "puerta_rota" },
-            puerta_iz_arreglada: { frames: [3] },
-            puerta_iz_rompiendo: { frames: [4] },
-            puerta_der_rompiendo: { frames: [1] },
-            puerta_der_arreglada: { frames: [0] },
+            puerta_iz_arreglada: { frames: [3], rate:1 },
+            puerta_iz_rompiendo: { frames: [4] , rate:1},
+            puerta_der_rompiendo: { frames: [1], rate:1 },
+            puerta_der_arreglada: { frames: [0], rate:1 },
             puerta_iz_arreglando: { frames: [5, 4, 3], rate: 1 / 6, next: "puerta_iz_arreglada" },
             puerta_der_arreglando: { frames: [0, 1, 2], rate: 1 / 6, next: "puerta_der_arreglada" }
         });
 
         Q.animations("puerta_roja_anim", {
             puerta_derecha: { frames: [0, 1, 2], rate: 1 / 6, next: "puerta_rota" },
-            puerta_rota: { frames: [2] },
+            puerta_rota: { frames: [2], rate:1 },
             puerta_izquierda: { frames: [3, 4, 5], rate: 1 / 6, next: "puerta_rota" },
-            puerta_iz_arreglada: { frames: [3] },
-            puerta_iz_rompiendo: { frames: [4] },
-            puerta_der_rompiendo: { frames: [1] },
-            puerta_der_arreglada: { frames: [0] },
+            puerta_iz_arreglada: { frames: [3] , rate:1},
+            puerta_iz_rompiendo: { frames: [4] , rate:1},
+            puerta_der_rompiendo: { frames: [1] , rate:1},
+            puerta_der_arreglada: { frames: [0] , rate:1},
             puerta_iz_arreglando: { frames: [5, 4, 3], rate: 1 / 6, next: "puerta_iz_arreglada" },
             puerta_der_arreglando: { frames: [0, 1, 2], rate: 1 / 6, next: "puerta_der_arreglada" }
         });
